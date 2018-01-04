@@ -1,0 +1,56 @@
+# IGNORE TEMPORARY COMPILATION FILES
+# ----------------------------------
+#
+# ----------------------------------
+# x86 Debug
+# ----------------------------------
+/uad_progra3/Debug/*.obj
+/uad_progra3/Debug/*.log
+/uad_progra3/Debug/*.pdb
+/uad_progra3/Debug/*.ilk
+/uad_progra3/Debug/*.idb
+/uad_progra3/Debug/uad_progra3.tlog/*
+# ----------------------------------
+# x86 Release
+# ----------------------------------
+/uad_progra3/Release/*.obj
+/uad_progra3/Release/*.iobj
+/uad_progra3/Release/*.log
+/uad_progra3/Release/*.pdb
+/uad_progra3/Release/*.ipdb
+/uad_progra3/Release/*.ilk
+/uad_progra3/Release/*.idb
+/uad_progra3/Release/uad_progra3.tlog/*
+# ------------------------------------------------------
+# x64 Debug
+# ------------------------------------------------------
+/uad_progra3/x64/Debug/*.obj
+/uad_progra3/x64/Debug/*.log
+/uad_progra3/x64/Debug/*.pdb
+/uad_progra3/x64/Debug/*.ilk
+/uad_progra3/x64/Debug/*.idb
+/uad_progra3/x64/Debug/uad_progra3.tlog/*
+# ------------------------------------------------------
+# x64 Release
+# ------------------------------------------------------
+/uad_progra3/x64/Release/*.obj
+/uad_progra3/x64/Release/*.iobj
+/uad_progra3/x64/Release/*.log
+/uad_progra3/x64/Release/*.pdb
+/uad_progra3/x64/Release/*.ipdb
+/uad_progra3/x64/Release/*.ilk
+/uad_progra3/x64/Release/*.idb
+/uad_progra3/x64/Release/uad_progra3.tlog/*
+# ------------------------------------------------------
+# Examen Final Progra2 and C3DModel.cpp
+# ------------------------------------------------------
+/uad_progra3/Include/CAppExamenFinal.h
+/uad_progra3/Include/CSceneManager.h
+/uad_progra3/Source/CAppExamenFinal.cpp
+/uad_progra3/Source/C3DModel.cpp
+/uad_progra3/Source/CSceneManager.cpp
+# ------------------------------------------------------
+# Visual Studio Intellisense *VC.db file
+# ------------------------------------------------------
+/uad_progra3/uad_progra3.VC.db
+#
