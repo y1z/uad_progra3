@@ -16,7 +16,7 @@ private:
 	C3DModel *m_p3DModel;
 
 	//
-	int m_animationFrameCounter;
+	double m_currentDeltaTime;
 
 protected:
 	// Method to initialize the menu
@@ -30,6 +30,9 @@ public:
 
 	// Inherited methods from CApp
 	// ---------------------------
+
+	// Method to update any objecs based on time elapsed since last frame
+	void update(double deltaTime);
 
 	// Method to run the app
 	void run();

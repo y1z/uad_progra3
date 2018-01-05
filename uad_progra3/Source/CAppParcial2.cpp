@@ -15,7 +15,7 @@ using namespace std;
 /* */
 CAppParcial2::CAppParcial2() : 
 	m_p3DModel(NULL),
-	m_animationFrameCounter{ 1 }
+	m_currentDeltaTime{ 0.0 }
 {
 	cout << "Constructor: CAppParcial2()" << endl;
 }
@@ -206,6 +206,12 @@ bool CAppParcial2::initializeMenu()
 }
 
 /* */
+void CAppParcial2::update(double deltaTime)
+{
+	m_currentDeltaTime = deltaTime;
+}
+
+/* */
 void CAppParcial2::render()
 {
 	CGameMenu *menu = getMenu();
@@ -220,9 +226,6 @@ void CAppParcial2::render()
 		// White 
 		float color[3] = {0.95f, 0.95f, 0.95f};
 
-		// Update counter each frame (not for each object)
-		m_animationFrameCounter++;
-
 		if (m_p3DModel != NULL && m_p3DModel->isInitialized())
 		{
 			getOpenGLRenderer()->renderObject(
@@ -230,13 +233,13 @@ void CAppParcial2::render()
 				m_p3DModel->getGraphicsMemoryObjectId(),
 				m_p3DModel->getNumFaces(), 
 				color,
-				&m_animationFrameCounter
+				&m_currentDeltaTime
 			);
 		}
 		else
 		{
 			// No model loaded, show test cube
-			getOpenGLRenderer()->renderTestObject(&m_animationFrameCounter);
+			getOpenGLRenderer()->renderTestObject(&m_currentDeltaTime);
 		}
 	}
 }

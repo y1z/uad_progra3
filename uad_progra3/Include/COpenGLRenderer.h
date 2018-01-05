@@ -11,6 +11,7 @@
 #define MIN_CAMERA_DISTANCE 5.0f
 #define MAX_CAMERA_DISTANCE 100.0f
 #define MOVE_CAMERA_DELTA 1.5f
+#define DEFAULT_ROTATION_SPEED 75.0
 
 // Class for a simple OpenGL renderer targeted for OpenGL 4.3
 // UAD lab PCs support it
@@ -27,7 +28,8 @@ private:
 	GLint sh_ProjUniformLocation;
 	GLint sh_colorUniformLocation;
 
-	float m_cameraDistance;
+	float m_cameraDistance; // Distance from camera view point to target point, expressed in OpenGL units
+	double m_rotationSpeed;  // Object rotation speed (degrees per second)
 
 	// TEST OBJECT VARS
 	// When no 3D object is loaded, we display a test object (spinning cube)
@@ -40,8 +42,6 @@ private:
 	GLuint mVertexPositionBuffer;
 	GLuint mVertexColorBuffer;
 	GLuint mIndexBuffer;
-
-	int m_DrawCount;
 	// ===========================
 
 	//
@@ -134,7 +134,7 @@ public:
 	bool createTextureObject(unsigned int *textureObjectId, unsigned char *textureData, int width, int height);
 
 	// 
-	bool renderObject(unsigned int *shaderProgramId, unsigned int *vertexArrayObjectId, int numFaces, GLfloat *objectColor, int *animationFrameCounter = NULL);
+	bool renderObject(unsigned int *shaderProgramId, unsigned int *vertexArrayObjectId, int numFaces, GLfloat *objectColor, double *deltaTime = NULL);
 
 	//
 	bool renderMenuItem(
@@ -150,7 +150,7 @@ public:
 	void setWindowHeight(int height) { m_windowHeight = height; }
 
 	//
-	void renderTestObject(int *animationFrameCounter = NULL);
+	void renderTestObject(double *deltaTime = NULL);
 	void initializeTestObjects();
 
 	//
@@ -180,6 +180,12 @@ public:
 
 	//
 	void clearScreen() { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
+
+	// rotationSpeed: degrees per second to rotate the object
+	void setObjectRotationSpeed(double rotationSpeed) { m_rotationSpeed = rotationSpeed; }
+
+	//
+	double getRotationSpeed() const { return m_rotationSpeed; }
 };
 
 #endif // !_OPENGL_RENDERER_H

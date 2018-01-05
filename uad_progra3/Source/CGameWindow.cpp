@@ -149,10 +149,13 @@ bool CGameWindow::create(const char *windowTitle)
 void CGameWindow::mainLoop(void *appPointer)
 {
 	// Variables for time-based animation
-	DWORD last_time = GetTickCount();
-	DWORD dt = 1000 / 6;  // constant dt step of 1 frame every 60 seconds
-	DWORD accumulator = 0;
-	DWORD current_time, passed_time;
+	double last_time = 0;
+	double dt = 1000 / 60;  // constant dt step of 1 frame every 60 seconds
+	double accumulator = 0;
+	double current_time, delta_time;
+	double PCFreq = 0.0;
+	__int64 CounterStart = 0;
+	LARGE_INTEGER li;
 
 	if (m_Window == NULL || appPointer == NULL || m_ReferenceRenderer == NULL)
 		return;
@@ -161,6 +164,17 @@ void CGameWindow::mainLoop(void *appPointer)
 
 	m_ReferenceRenderer->setViewport(m_Width, m_Height);
 	m_ReferenceRenderer->enableDepthTest();
+
+	if (!QueryPerformanceFrequency(&li))
+	{
+		cout << "QueryPerformanceFrequency failed!\n";
+		return;
+	}
+
+	PCFreq = double(li.QuadPart) / 1000.0;
+	QueryPerformanceCounter(&li);
+	CounterStart = li.QuadPart;
+	last_time = double(li.QuadPart) / PCFreq;
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(m_Window))
@@ -171,15 +185,19 @@ void CGameWindow::mainLoop(void *appPointer)
 		/* Process user input */
 		processInput(appPointer);
 
-		/* Time-based animation */
+		/* Time-based animation using a high-performance counter */
 		// Good example of frame-based animation vs time-based animation: http://blog.sklambert.com/using-time-based-animation-implement/
-		current_time = GetTickCount();           // Get current time
-		passed_time  = current_time - last_time; // Calculate elapsed time
+		QueryPerformanceCounter(&li);
+		current_time = double(li.QuadPart - CounterStart) / PCFreq;
+		delta_time   = current_time - last_time; // Calculate elapsed time
 		last_time    = current_time;             // Update last time to be the current time
-		accumulator += passed_time;              // 
+		accumulator += delta_time;               // 
 		while (accumulator >= dt) {              //
 			accumulator -= dt;
 		}
+
+		/* Update */
+		((CApp *)appPointer)->update((float)delta_time);
 
 		/* Render */
 		((CApp *)appPointer)->render();
