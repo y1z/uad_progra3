@@ -4,10 +4,10 @@
 // You can replace this with your favorite math library that's suitable for your target platforms, e.g. DirectXMath or GLM.
 
 #include <math.h>
+#include "CVector3.h"
 
 namespace MathHelper
 {
-
 	struct Matrix4
 	{
 		Matrix4(float m00, float m01, float m02, float m03,
@@ -24,15 +24,36 @@ namespace MathHelper
 		float m[4][4];
 	};
 
-	inline static Matrix4 SimpleModelMatrix(float radians)
+	inline static Matrix4 IdentityMatrix()
 	{
-		float cosine = cosf(radians);
-		float sine = sinf(radians);
+		return Matrix4(1.0f, 0.0f, 0.0f, 0.0f,
+            		   0.0f, 1.0f, 0.0f, 0.0f,
+			           0.0f, 0.0f, 1.0f, 0.0f,
+			           0.0f, 0.0f, 0.0f, 1.0f);
+	}
 
-		return Matrix4(cosine, 0.0f, -sine, 0.0f,
-			0.0f, 1.0f, 0.0f, 0.0f,
-			sine, 0.0f, cosine, 0.0f,
-			0.0f, 0.0f, 0.0f, 1.0f);
+	// Rotate around Y
+	inline static Matrix4 SimpleModelMatrix(float angleInRadians)
+	{
+		float cosine = cosf(angleInRadians);
+		float sine = sinf(angleInRadians);
+		
+		return Matrix4(cosine, 0.0f, -sine,  0.0f,
+			           0.0f,   1.0f, 0.0f,   0.0f,
+			           sine,   0.0f, cosine, 0.0f,
+			           0.0f,   0.0f, 0.0f,   1.0f);
+	}
+
+	// Rotate around Y + Translate
+	inline static Matrix4 ModelMatrix(float angleInRadians, CVector3 translation)
+	{
+		float cosine = cosf(angleInRadians);
+		float sine = sinf(angleInRadians);
+
+		return Matrix4(cosine,             0.0f,               -sine,              0.0f,
+			           0.0f,               1.0f,               0.0f,               0.0f,
+			           sine,               0.0f,               cosine,             0.0f,
+			           translation.getX(), translation.getY(), translation.getZ(), 1.0f);
 	}
 
 	inline static Matrix4 SimpleViewMatrix(float cameraDistance)
@@ -42,10 +63,10 @@ namespace MathHelper
 		// Camera Up is hardcoded to (0, 1, 0).
 		const float sqrt3over2 = 0.86603f;
 
-		return Matrix4(1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, sqrt3over2, 0.5f, 0.0f,
-			0.0f, -0.5f, sqrt3over2, 0.0f,
-			0.0f, 0.0f, -cameraDistance, 1.0f);
+		return Matrix4(1.0f,  0.0f,      0.0f,           0.0f,
+			           0.0f, sqrt3over2, 0.5f,           0.0f,
+			           0.0f, -0.5f,      sqrt3over2,     0.0f,
+			           0.0f,  0.0f,     -cameraDistance, 1.0f);
 	}
 
 	inline static Matrix4 SimpleProjectionMatrix(float aspectRatio)
@@ -54,9 +75,9 @@ namespace MathHelper
 		// FoV is hardcoded to pi/3.
 		const float cotangent = 1 / tanf(3.14159f / 6.0f);
 
-		return Matrix4(cotangent / aspectRatio, 0.0f, 0.0f, 0.0f,
-			0.0f, cotangent, 0.0f, 0.0f,
-			0.0f, 0.0f, -50.0f / (50.0f - 1.0f), (-50.0f * 1.0f) / (50.0f - 1.0f),
-			0.0f, 0.0f, -1.0f, 0.0f);
+		return Matrix4(cotangent / aspectRatio, 0.0f,      0.0f,                   0.0f,
+			           0.0f,                    cotangent, 0.0f,                   0.0f,
+			           0.0f,                    0.0f,     -50.0f / (50.0f - 1.0f), (-50.0f * 1.0f) / (50.0f - 1.0f),
+			           0.0f,                    0.0f,     -1.0f,                   0.0f);
 	}
 }

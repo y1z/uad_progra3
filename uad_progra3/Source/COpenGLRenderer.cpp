@@ -16,8 +16,7 @@ using namespace std;
 */
 COpenGLRenderer::COpenGLRenderer():
 	m_OpenGLError{ false },
-	m_cameraDistance{ MIN_CAMERA_DISTANCE },
-	m_rotationSpeed{ DEFAULT_ROTATION_SPEED }
+	m_cameraDistance{ MIN_CAMERA_DISTANCE }
 {
 }
 
@@ -548,7 +547,12 @@ bool COpenGLRenderer::generateRenderGeometry(
 
 /*
 */
-bool COpenGLRenderer::renderObject(unsigned int *shaderProgramId, unsigned int *vertexArrayObjectId, int numFaces, GLfloat *objectColor, double *deltaTime)
+bool COpenGLRenderer::renderObject(
+	unsigned int *shaderProgramId, 
+	unsigned int *vertexArrayObjectId, 
+	int numFaces, 
+	GLfloat *objectColor,
+	MathHelper::Matrix4 *objectTransformation)
 {
 	if (m_windowWidth > 0
 		&& m_windowHeight > 0
@@ -558,34 +562,6 @@ bool COpenGLRenderer::renderObject(unsigned int *shaderProgramId, unsigned int *
 		&& objectColor != NULL
 		&& !m_OpenGLError)
 	{
-		static double totalDegreesRotated = 0.0;
-		static double totalDegreesRotatedRadians = 0.0;
-		double localDeltaTime = 0.0;
-		double degreesToRotate = 0.0;
-
-		// Got delta time from main loop?
-		if (deltaTime != NULL)
-		{
-			localDeltaTime = *deltaTime;
-
-			if (localDeltaTime < 0.0)
-			{
-				return true;
-			}
-		}
-
-		// Calculate degrees to rotate
-		degreesToRotate            = m_rotationSpeed * (localDeltaTime / 1000.0); // degrees = rotation speed * delta time (convert delta time from milliseconds to seconds)
-		totalDegreesRotated       += degreesToRotate;	                          // accumulate rotation degrees
-
-        // Reset rotation if needed
-		if (totalDegreesRotated > 360.0)
-		{
-			totalDegreesRotated -= 360.0;
-		}
-
-		totalDegreesRotatedRadians = totalDegreesRotated * 3.1459 / 180.0;        // convert total degrees rotated to radians
-
 		if (!useShaderProgram(shaderProgramId))
 		{
 			m_OpenGLError = true;
@@ -607,8 +583,15 @@ bool COpenGLRenderer::renderObject(unsigned int *shaderProgramId, unsigned int *
 		// This needs to be done per-frame because the values change over time
 		if (sh_ModelUniformLocation >= 0)
 		{
-			MathHelper::Matrix4 modelMatrix = MathHelper::SimpleModelMatrix((float)(totalDegreesRotatedRadians));
-			glUniformMatrix4fv(sh_ModelUniformLocation, 1, GL_FALSE, &(modelMatrix.m[0][0]));
+			if (objectTransformation == NULL)
+			{
+				MathHelper::Matrix4 modelMatrix = MathHelper::SimpleModelMatrix(0.0f);
+				glUniformMatrix4fv(sh_ModelUniformLocation, 1, GL_FALSE, &(modelMatrix.m[0][0]));
+			}
+			else
+			{
+				glUniformMatrix4fv(sh_ModelUniformLocation, 1, GL_FALSE, &(objectTransformation->m[0][0]));
+			}
 		}
 
 		if (sh_ViewUniformLocation >= 0)
@@ -953,6 +936,7 @@ void COpenGLRenderer::renderTestObject(double *deltaTime)
 	static double totalDegreesRotatedRadians = 0.0;
 	double degreesToRotate = 0.0;
 	double localDeltaTime = 0.01;
+	double m_rotationSpeed = 75.0f; //  Object rotation speed (degrees per second)
 
 	// Got delta time from main loop?
 	if (deltaTime != NULL)

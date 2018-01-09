@@ -15,7 +15,10 @@ using namespace std;
 /* */
 CAppParcial2::CAppParcial2() : 
 	m_p3DModel(NULL),
-	m_currentDeltaTime{ 0.0 }
+	m_currentDeltaTime{ 0.0 },
+	m_objectRotation{ 0.0 },
+	m_objectPosition{ 0.0f, 0.0f, 0.0f },
+	m_rotationSpeed{ DEFAULT_ROTATION_SPEED }
 {
 	cout << "Constructor: CAppParcial2()" << endl;
 }
@@ -23,7 +26,11 @@ CAppParcial2::CAppParcial2() :
 /* */
 CAppParcial2::CAppParcial2(int window_width, int window_height) : 
 	CApp(window_width, window_height),
-	m_p3DModel(NULL)
+	m_p3DModel(NULL),
+	m_currentDeltaTime{ 0.0 },
+	m_objectRotation{ 0.0 },
+	m_objectPosition{ 0.0f, 0.0f, 0.0f },
+	m_rotationSpeed{ DEFAULT_ROTATION_SPEED }
 {
 	cout << "Constructor: CAppParcial2(int window_width, int window_height)" << endl;
 }
@@ -208,7 +215,25 @@ bool CAppParcial2::initializeMenu()
 /* */
 void CAppParcial2::update(double deltaTime)
 {
+	double degreesToRotate = 0.0;
+
+	if (deltaTime <= 0.0f)
+	{
+		return;
+	}
+
+	// Save current delta time
 	m_currentDeltaTime = deltaTime;
+
+	// Calculate degrees to rotate
+	degreesToRotate   = m_rotationSpeed * (deltaTime / 1000.0); // degrees = rotation speed * delta time (convert delta time from milliseconds to seconds)
+	m_objectRotation += degreesToRotate;	                    // accumulate rotation degrees
+
+	// Reset rotation if needed
+	if (m_objectRotation > 360.0)
+	{
+		m_objectRotation -= 360.0;
+	}
 }
 
 /* */
@@ -228,12 +253,17 @@ void CAppParcial2::render()
 
 		if (m_p3DModel != NULL && m_p3DModel->isInitialized())
 		{
+			// convert total degrees rotated to radians;
+			double totalDegreesRotatedRadians = m_objectRotation * 3.1459 / 180.0;
+			// Get a matrix that has both the object rotation and translation
+			MathHelper::Matrix4 modelMatrix   = MathHelper::ModelMatrix((float)totalDegreesRotatedRadians, m_objectPosition);
+
 			getOpenGLRenderer()->renderObject(
 				m_p3DModel->getShaderProgramId(),
 				m_p3DModel->getGraphicsMemoryObjectId(),
 				m_p3DModel->getNumFaces(), 
 				color,
-				&m_currentDeltaTime
+				&modelMatrix
 			);
 		}
 		else

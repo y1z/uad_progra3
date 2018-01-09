@@ -25,6 +25,11 @@ public:
 	float getY() const { return m_Y; }
 	float getZ() const { return m_Z; }
 	void getValues(float *values) const { values[0] = m_X; values[1] = m_Y; values[2] = m_Z; }
+
+	inline static CVector3 ZeroVector()
+	{
+		return CVector3(0.0f, 0.0f, 0.0f);
+	}
 };
 
 #endif // !CVECTOR3_H
