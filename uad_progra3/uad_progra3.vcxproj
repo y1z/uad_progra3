@@ -73,21 +73,29 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)Dependencies\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)Dependencies\GLAD\glad-4.5-core\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(LibraryPath)</LibraryPath>
+    <IntDir>Binaries\Intermediate\x86\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)Binaries\Exe\x86\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)Dependencies\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)Dependencies\GLAD\glad-4.5-core\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\GLFW\glfw-3.2.1.bin.WIN64\lib-vc2015;$(LibraryPath)</LibraryPath>
+    <IntDir>Binaries\Intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)Binaries\Exe\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)Dependencies\GLFW\glfw-3.2.1.bin.WIN32\include;$(SolutionDir)Dependencies\GLAD\glad-4.5-core\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\GLFW\glfw-3.2.1.bin.WIN32\lib-vc2015;$(LibraryPath)</LibraryPath>
+    <IntDir>Binaries\Intermediate\x86\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)Binaries\Exe\x86\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)Dependencies\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)Dependencies\GLAD\glad-4.5-core\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\GLFW\glfw-3.2.1.bin.WIN64\lib-vc2015;$(LibraryPath)</LibraryPath>
+    <IntDir>Binaries\Intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)Binaries\Exe\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
