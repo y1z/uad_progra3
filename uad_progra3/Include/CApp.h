@@ -59,6 +59,11 @@ public:
 	virtual void onF10(int mods) {}                       // F10
 	virtual void onF11(int mods) {}                       // F11
 
+	virtual void onArrowUp(int mods) {}
+	virtual void onArrowDown(int mods) {}
+	virtual void onArrowLeft(int mods) {}
+	virtual void onArrowRight(int mods) {}
+
 	// Methods to run/render the app and initialize the menu
 	// *Note: They are PURE VIRTUAL METHODS, so we cannot create an object of this base class (compiler won't allow it),
 	//        instead we need to create an object of one of the derived classes, i.e: CAppParcial2

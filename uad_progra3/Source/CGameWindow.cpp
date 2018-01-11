@@ -27,6 +27,10 @@ bool CGameWindow::requestF12                = false;
 bool CGameWindow::requestExecuteAction      = false;
 bool CGameWindow::requestSelectNextMenuItem = false;
 bool CGameWindow::requestSelectPrevMenuItem = false;
+bool CGameWindow::requestArrowUp            = false;
+bool CGameWindow::requestArrowDown          = false;
+bool CGameWindow::requestArrowLeft          = false;
+bool CGameWindow::requestArrowRight         = false;
 int  CGameWindow::keyMods                   = 0;
 
 int  CGameWindow::newWidth                  = 0;
@@ -268,14 +272,25 @@ void CGameWindow::keyboardCallback(GLFWwindow * window, int key, int scancode, i
 		case GLFW_KEY_F12:
 			CGameWindow::requestF12 = true;
 			break;
-		// ARROW DOWN key selects the next menu item
+		// ARROW DOWN key selects the next menu item if menu is active, application-specific otherwise
 		case GLFW_KEY_DOWN:
 			CGameWindow::requestSelectNextMenuItem = true;
+			CGameWindow::requestArrowDown = true;
 			break;
-		// ARROW UP key selects the prev menu item
+		// ARROW UP key selects the prev menu item if menu is active, application-specific otherwise
 		case GLFW_KEY_UP:
 			CGameWindow::requestSelectPrevMenuItem = true;
+			CGameWindow::requestArrowUp = true;
 			break;
+		// ARROW LEFT, app-specific
+		case GLFW_KEY_LEFT:
+			CGameWindow::requestArrowLeft = true;
+			break;
+		// ARROW RIGHT, app-specific
+		case GLFW_KEY_RIGHT:
+			CGameWindow::requestArrowRight = true;
+			break;
+		// ARROW RIGHT, app-specific
 		// ENTER key executes the current menu item action
 		case GLFW_KEY_ENTER:
 			CGameWindow::requestExecuteAction = true;
@@ -286,6 +301,22 @@ void CGameWindow::keyboardCallback(GLFWwindow * window, int key, int scancode, i
 	{
 		// Clear key modifiers
 		CGameWindow::keyMods = 0;
+
+		switch (key)
+		{
+		case GLFW_KEY_UP:
+			CGameWindow::requestArrowUp = false;
+			break;
+		case GLFW_KEY_DOWN:
+			CGameWindow::requestArrowDown = false;
+			break;
+		case GLFW_KEY_LEFT:
+			CGameWindow::requestArrowLeft = false;
+			break;
+		case GLFW_KEY_RIGHT:
+			CGameWindow::requestArrowRight = false;
+			break;
+		}
 	}
 }
 
@@ -408,6 +439,24 @@ void CGameWindow::processInput(void *appPointer)
 			CGameWindow::requestExecuteAction      = false;
 			CGameWindow::requestSelectNextMenuItem = false;
 			CGameWindow::requestSelectPrevMenuItem = false;
+
+			// Check the arrow keys
+			if (CGameWindow::requestArrowUp)
+			{
+				((CApp *)appPointer)->onArrowUp(CGameWindow::keyMods);
+			}
+			if (CGameWindow::requestArrowDown)
+			{
+				((CApp *)appPointer)->onArrowDown(CGameWindow::keyMods);
+			}
+			if (CGameWindow::requestArrowLeft)
+			{
+				((CApp *)appPointer)->onArrowLeft(CGameWindow::keyMods);
+			}
+			if (CGameWindow::requestArrowRight)
+			{
+				((CApp *)appPointer)->onArrowRight(CGameWindow::keyMods);
+			}
 		}
 	}
 }
