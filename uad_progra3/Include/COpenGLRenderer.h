@@ -192,6 +192,12 @@ public:
 
 	//
 	void clearScreen() { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
+
+	//
+	void drawGrid();
+
+	//
+	void drawString(unsigned int *textureObjectId, std::string &text, float x, float y, CVector3 &color);
 };
 
 #endif // !_OPENGL_RENDERER_H

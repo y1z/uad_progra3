@@ -11,6 +11,7 @@ using namespace std;
 #include "../Include/COpenGLRenderer.h"
 #include "../Include/LoadShaders.h"
 #include "../Include/MathHelper.h"
+#include "../Include/CWideStringHelper.h"
 
 /*
 */
@@ -716,10 +717,25 @@ bool COpenGLRenderer::renderMenuItem(
 */
 void COpenGLRenderer::initializeTestObjects()
 {
+	std::wstring wresourceFilenameVS;
+	std::wstring wresourceFilenameFS;
+	std::string resourceFilenameVS;
+	std::string resourceFilenameFS;
+
+	// If resource files cannot be found, return
+	if (!CWideStringHelper::GetResourceFullPath(VERTEX_SHADER_TEST_OBJECT,   wresourceFilenameVS, resourceFilenameVS) ||
+		!CWideStringHelper::GetResourceFullPath(FRAGMENT_SHADER_TEST_OBJECT, wresourceFilenameFS, resourceFilenameFS))
+	{
+		cout << "ERROR: Unable to find one or more resources: " << endl;
+		cout << "  " << VERTEX_SHADER_TEST_OBJECT << endl;
+		cout << "  " << FRAGMENT_SHADER_TEST_OBJECT << endl;
+		return;
+	}
+
 	if (createShaderProgram(
 		&mTestshaderProgramID,
-		VERTEX_SHADER_TEST_OBJECT,
-		FRAGMENT_SHADER_TEST_OBJECT
+		resourceFilenameVS.c_str(),
+		resourceFilenameFS.c_str()
 	))
 	{
 		useShaderProgram(&mTestshaderProgramID);
@@ -1076,3 +1092,16 @@ void COpenGLRenderer::deleteTexture(unsigned int *id)
 	} 
 }
 
+/*
+*/
+void COpenGLRenderer::drawGrid()
+{
+	// TO-DO
+}
+
+/*
+*/
+void COpenGLRenderer::drawString(unsigned int *textureObjectId, std::string &text, float x, float y, CVector3 &color)
+{
+	// TO-DO
+}

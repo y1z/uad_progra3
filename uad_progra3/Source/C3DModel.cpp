@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 #include "../Include/C3DModel.h"
@@ -122,12 +123,36 @@ void C3DModel::reset()
 bool C3DModel::loadFromFile(const char * const filename)
 {
 	bool readFileOk = false;
+	bool modelNeedsNormals = false;
 
 	// Free any previous resources
 	reset();
 	
+	// Check the file type
+	// We could use the "PathFindExtension" function but that needs the shlwapi.lib, instead we'll keep it simple and avoid more dependencies
+	std::string stdFilename(filename);
+	size_t dotIndex = stdFilename.rfind('.', stdFilename.length());
+	if (dotIndex != string::npos) 
+	{
+		std::string fileExtension = stdFilename.substr(dotIndex + 1, stdFilename.length() - dotIndex);
+
+		// Convert to lowercase
+		// NOTE: ::tolower works on single bytes, which can be a problem for multi-byte encoding, like UTF8
+		std::transform(fileExtension.begin(), fileExtension.end(), fileExtension.begin(), ::tolower);
+
+		// Now check the file type and see if it's a supported type
+		// ...
+		// TO-DO
+
+	}
+	else
+	{
+		cout << "ERROR: Cannot determine the file type" << endl;
+		return false;
+	}
+
 	// First pass is to count the number of vertices, normals, UVs, faces
-	readFileOk = readFile(filename, true);
+	readFileOk = readObjFile(filename, true);
 
 	// Display count
 	cout << "Finished reading 3D model" << endl;
@@ -144,6 +169,20 @@ bool C3DModel::loadFromFile(const char * const filename)
 			cout << "Error: object cannot have more than 65535 vertices" << endl;
 			cout << "Object attempted to load has: " << m_numVertices << " vertices" << endl;
 			return false;
+		}
+
+		// If model was read without normals or UVCoords, we'll set a default value for them
+		// i.e.:
+		//   0,0 for UV coords
+		//   face normal for normal
+		if (m_numNormals == 0)
+		{
+			modelNeedsNormals = true;
+			m_numNormals = m_numVertices;
+		}
+		if (m_numUVCoords == 0)
+		{
+			m_numUVCoords = m_numVertices;
 		}
 
 		// Allocate memory for the arrays
@@ -166,11 +205,16 @@ bool C3DModel::loadFromFile(const char * const filename)
 		memset(m_uvCoordsRaw,   0, sizeof(float) * m_numUVCoords * 2);
 
 		// Second pass is to read the data
-		readFileOk = readFile(filename, false);
+		readFileOk = readObjFile(filename, false);
 
 		if (readFileOk)
 		{
 			m_Initialized = true;
+
+			if (modelNeedsNormals)
+			{
+				computeFaceNormals();
+			}
 		}
 	}
 	else
@@ -183,7 +227,7 @@ bool C3DModel::loadFromFile(const char * const filename)
 
 /*
 */
-bool C3DModel::readFile(const char * filename, bool countOnly)
+bool C3DModel::readObjFile(const char * filename, bool countOnly)
 {
 	ifstream infile;
 	string lineBuffer;
@@ -197,7 +241,7 @@ bool C3DModel::readFile(const char * filename, bool countOnly)
 		getline(infile, lineBuffer);
 		lineNumber++;
 
-		if (!(this->parseLine(lineBuffer, countOnly, lineNumber)))
+		if (!(this->parseObjLine(lineBuffer, countOnly, lineNumber)))
 		{
 			readFileOk = false;
 			break;
@@ -220,7 +264,7 @@ bool C3DModel::readFile(const char * filename, bool countOnly)
  * TO-DO...
  * Also, this reads files with triangles, not quads. This is also a TO-DO...
 */
-bool C3DModel::parseLine(std::string line, bool countOnly, int lineNumber)
+bool C3DModel::parseObjLine(std::string line, bool countOnly, int lineNumber)
 {
 	bool parsed = false;
 	bool unrecognizedLine = false;
@@ -293,6 +337,9 @@ bool C3DModel::parseLine(std::string line, bool countOnly, int lineNumber)
 
 				if (countOnly)
 				{
+					// Check if this line is a quad or a triangle
+					std::string nextStrToken(nextToken);
+
 					m_numFaces++;
 				}
 			}
@@ -420,17 +467,14 @@ bool C3DModel::parseLine(std::string line, bool countOnly, int lineNumber)
 									switch(currentToken)
 									{
 									case 0:
-										//m_vertexIndices[m_currentFace + i] = (unsigned short)(atoi(token));
 										// Indices in .obj format start at 1, but our arrays start from index 0
 										m_vertexIndices[m_currentFace + i] = (unsigned short)(atoi(token)) - 1;
 										break;
 									case 1:
-										//m_UVindices[m_currentFace + i] = (unsigned short)(atoi(token));
 										// Indices in .obj format start at 1, but our arrays start from index 0
 										m_UVindices[m_currentFace + i] = (unsigned short)(atoi(token)) - 1;
 										break;
 									case 2:
-										//m_normalIndices[m_currentFace + i] = (unsigned short)(atoi(token));
 										// Indices in .obj format start at 1, but our arrays start from index 0
 										m_normalIndices[m_currentFace + i] = (unsigned short)(atoi(token)) - 1;
 										break;
@@ -449,17 +493,14 @@ bool C3DModel::parseLine(std::string line, bool countOnly, int lineNumber)
 									switch (currentToken)
 									{
 									case 0:
-										//m_vertexIndices[m_currentFace + i] = (unsigned short)(atoi(token));
 										// Indices in .obj format start at 1, but our arrays start from index 0
 										m_vertexIndices[m_currentFace + i] = (unsigned short)(atoi(token)) - 1;
 										break;
 									case 1:
-										//m_UVindices[m_currentFace + i] = (unsigned short)(atoi(token));
 										// Indices in .obj format start at 1, but our arrays start from index 0
 										m_UVindices[m_currentFace + i] = (unsigned short)(atoi(token)) - 1;
 										break;
 									case 2:
-										//m_normalIndices[m_currentFace + i] = (unsigned short)(atoi(token));
 										// Indices in .obj format start at 1, but our arrays start from index 0
 										m_normalIndices[m_currentFace + i] = (unsigned short)(atoi(token)) - 1;
 										break;
@@ -479,4 +520,11 @@ bool C3DModel::parseLine(std::string line, bool countOnly, int lineNumber)
 	}
 
 	return parsed;
+}
+
+/*
+*/
+void C3DModel::computeFaceNormals()
+{
+
 }

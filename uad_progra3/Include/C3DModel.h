@@ -31,10 +31,14 @@ private:
 	bool m_Initialized;                                               // Does this C3DModel object contain valid data? (loaded from file)
 
     // Methods to read a model in the .obj file format
-	bool readFile(const char * const filename, bool countOnly);       // Read object from file 
-	bool parseLine(std::string line, bool countOnly, int lineNumber); // Parse line
+	bool readObjFile(const char * const filename, bool countOnly);       // Read object from file 
+	bool parseObjLine(std::string line, bool countOnly, int lineNumber); // Parse line
+
+	// Methods to read models in other formats
+	// ...
 
 	void reset();                                                     // Cleanup any allocated memory
+	void computeFaceNormals();                                        // If model didn't have any normals, compute face normals
 
 public:
 	C3DModel();

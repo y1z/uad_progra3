@@ -156,9 +156,11 @@ void CGameWindow::mainLoop(void *appPointer)
 	double last_time = 0;
 	double dt = 1000 / 60;  // constant dt step of 1 frame every 60 seconds
 	double accumulator = 0;
-	double current_time, delta_time;
+	double current_time, delta_time, one_second = 0;
 	double PCFreq = 0.0;
+	double fps = 0.0;
 	__int64 CounterStart = 0;
+	int numFramesRendered = 0;
 	LARGE_INTEGER li;
 
 	if (m_Window == NULL || appPointer == NULL || m_ReferenceRenderer == NULL)
@@ -183,6 +185,8 @@ void CGameWindow::mainLoop(void *appPointer)
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(m_Window))
 	{
+		numFramesRendered++;
+
 		/* Clear color and depth buffer */
 		m_ReferenceRenderer->clearScreen();
 
@@ -198,6 +202,19 @@ void CGameWindow::mainLoop(void *appPointer)
 		accumulator += delta_time;               // 
 		while (accumulator >= dt) {              //
 			accumulator -= dt;
+		}
+
+		// With this information we can calculate the FPS we're running at
+		if (delta_time > 0.0)
+		{
+			one_second += delta_time;
+			if (one_second > 1000.0)
+			{
+				fps = (numFramesRendered / (one_second / 1000.0));
+				one_second -= 1000.0;
+				cout << "fps: " << fps << endl;
+				numFramesRendered = 1;
+			}
 		}
 
 		/* Update */

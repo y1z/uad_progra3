@@ -11,6 +11,7 @@ using namespace std;
 #include "../Include/CAppParcial2.h"
 #include "../Include/C3DModel.h"
 #include "../Include/LoadTGA.h"
+#include "../Include/CWideStringHelper.h"
 
 /* */
 CAppParcial2::CAppParcial2() : 
@@ -77,6 +78,25 @@ bool CAppParcial2::initializeMenu()
 {
 	cout << "CAppParcial2::initializeMenu()" << endl;
 
+	std::wstring wresourceFilenameVS;
+	std::wstring wresourceFilenameFS;
+	std::wstring wresourceFilenameTexture;
+	std::string resourceFilenameVS;
+	std::string resourceFilenameFS;
+	std::string resourceFilenameTexture;
+
+	// If resource files cannot be found, return
+	if (!CWideStringHelper::GetResourceFullPath(VERTEX_SHADER_MENU, wresourceFilenameVS, resourceFilenameVS) ||
+		!CWideStringHelper::GetResourceFullPath(FRAGMENT_SHADER_MENU, wresourceFilenameFS, resourceFilenameFS) ||
+		!CWideStringHelper::GetResourceFullPath(MENU_TEXTURE_FILE, wresourceFilenameTexture, resourceFilenameTexture))
+	{
+		cout << "ERROR: Unable to find one or more resources: " << endl;
+		cout << "  " << VERTEX_SHADER_MENU << endl;
+		cout << "  " << FRAGMENT_SHADER_MENU << endl;
+		cout << "  " << MENU_TEXTURE_FILE << endl;
+		return false;
+	}
+
 	if (getMenu() != NULL)
 	{
 		CGameMenu *const menu = getMenu();
@@ -95,8 +115,8 @@ bool CAppParcial2::initializeMenu()
 		// Create a shader program to use for the menu
 		if (!getOpenGLRenderer()->createShaderProgram(
 			&menuShaderProgramId,
-			VERTEX_SHADER_MENU,
-			FRAGMENT_SHADER_MENU))
+			resourceFilenameVS.c_str(),
+			resourceFilenameFS.c_str()))
 		{
 			return false;
 		}
@@ -107,7 +127,7 @@ bool CAppParcial2::initializeMenu()
 		TGAFILE tgaFile;
 		tgaFile.imageData = NULL;
 
-		if (LoadTGAFile(MENU_TEXTURE_FILE, &tgaFile))
+		if (LoadTGAFile(resourceFilenameTexture.c_str(), &tgaFile))
 		{
 			if (tgaFile.imageData == NULL ||
 				tgaFile.imageHeight < 0 ||
@@ -277,6 +297,22 @@ void CAppParcial2::render()
 /* */
 bool CAppParcial2::load3DModel(const char * const filename)
 {
+	std::wstring wresourceFilenameVS;
+	std::wstring wresourceFilenameFS;
+	std::string resourceFilenameVS;
+	std::string resourceFilenameFS;
+
+	// If resource files cannot be found, return
+	if (!CWideStringHelper::GetResourceFullPath(VERTEX_SHADER_3D_OBJECTS, wresourceFilenameVS, resourceFilenameVS) ||
+		!CWideStringHelper::GetResourceFullPath(FRAGMENT_SHADER_3D_OBJECTS, wresourceFilenameFS, resourceFilenameFS))
+	{
+		cout << "ERROR: Unable to find one or more resources: " << endl;
+		cout << "  " << VERTEX_SHADER_3D_OBJECTS << endl;
+		cout << "  " << FRAGMENT_SHADER_3D_OBJECTS << endl;
+
+		return false;
+	}
+
 	// Unload any current 3D model
 	unloadCurrent3DModel();
 	
@@ -291,8 +327,8 @@ bool CAppParcial2::load3DModel(const char * const filename)
 		// Allocate graphics memory for object
 		loaded = getOpenGLRenderer()->allocateGraphicsMemoryForObject(
 			m_p3DModel->getShaderProgramId(),
-			VERTEX_SHADER_3D_OBJECTS,
-			FRAGMENT_SHADER_3D_OBJECTS,
+			resourceFilenameVS.c_str(),
+			resourceFilenameFS.c_str(),
 			m_p3DModel->getGraphicsMemoryObjectId(),
 			m_p3DModel->getModelVertices(),
 			m_p3DModel->getNumVertices(),
