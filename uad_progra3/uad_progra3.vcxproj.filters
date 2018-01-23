@@ -30,9 +30,6 @@
     <ClInclude Include="Include\CApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\CAppExamenFinal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\CAppParcial2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -63,9 +60,6 @@
     <ClInclude Include="Include\COpenGLRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\CSceneManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\CVector3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -81,6 +75,9 @@
     <ClInclude Include="Include\MathHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\CWideStringHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -93,9 +90,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\CApp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CAppExamenFinal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\CAppParcial2.cpp">
@@ -117,9 +111,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\COpenGLRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CSceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\CVector3.cpp">

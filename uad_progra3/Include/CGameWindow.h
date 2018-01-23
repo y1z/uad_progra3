@@ -43,8 +43,13 @@ private:
 
 	                                       // Specific keys for the actions of the menu
 	static bool requestExecuteAction;      // Enter
-	static bool requestSelectNextMenuItem; // Key arrow down
-	static bool requestSelectPrevMenuItem; // Key arrow up
+	static bool requestSelectNextMenuItem; // Select next menu item
+	static bool requestSelectPrevMenuItem; // Select previous menu item
+
+	static bool requestArrowUp;            // Arrow up
+	static bool requestArrowDown;          // Arrow down
+	static bool requestArrowLeft;          // Arrow left
+	static bool requestArrowRight;         // Arrow right
 
 	static int  keyMods;                   // Key modifiers, they match the GLFW key modifiers (alt, ctrl, shift)
 

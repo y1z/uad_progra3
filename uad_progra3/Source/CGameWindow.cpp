@@ -27,6 +27,10 @@ bool CGameWindow::requestF12                = false;
 bool CGameWindow::requestExecuteAction      = false;
 bool CGameWindow::requestSelectNextMenuItem = false;
 bool CGameWindow::requestSelectPrevMenuItem = false;
+bool CGameWindow::requestArrowUp            = false;
+bool CGameWindow::requestArrowDown          = false;
+bool CGameWindow::requestArrowLeft          = false;
+bool CGameWindow::requestArrowRight         = false;
 int  CGameWindow::keyMods                   = 0;
 
 int  CGameWindow::newWidth                  = 0;
@@ -152,9 +156,11 @@ void CGameWindow::mainLoop(void *appPointer)
 	double last_time = 0;
 	double dt = 1000 / 60;  // constant dt step of 1 frame every 60 seconds
 	double accumulator = 0;
-	double current_time, delta_time;
+	double current_time, delta_time, one_second = 0;
 	double PCFreq = 0.0;
+	double fps = 0.0;
 	__int64 CounterStart = 0;
+	int numFramesRendered = 0;
 	LARGE_INTEGER li;
 
 	if (m_Window == NULL || appPointer == NULL || m_ReferenceRenderer == NULL)
@@ -174,11 +180,13 @@ void CGameWindow::mainLoop(void *appPointer)
 	PCFreq = double(li.QuadPart) / 1000.0;
 	QueryPerformanceCounter(&li);
 	CounterStart = li.QuadPart;
-	last_time = double(li.QuadPart) / PCFreq;
+	last_time = double(li.QuadPart - CounterStart) / PCFreq;
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(m_Window))
 	{
+		numFramesRendered++;
+
 		/* Clear color and depth buffer */
 		m_ReferenceRenderer->clearScreen();
 
@@ -191,13 +199,28 @@ void CGameWindow::mainLoop(void *appPointer)
 		current_time = double(li.QuadPart - CounterStart) / PCFreq;
 		delta_time   = current_time - last_time; // Calculate elapsed time
 		last_time    = current_time;             // Update last time to be the current time
-		accumulator += delta_time;               // 
-		while (accumulator >= dt) {              //
-			accumulator -= dt;
-		}
 
-		/* Update */
-		((CApp *)appPointer)->update((float)delta_time);
+		if (delta_time > 0.0)
+		{
+			accumulator += delta_time;
+
+			while (accumulator >= dt) {
+				/* Update */
+				((CApp *)appPointer)->update(dt);
+
+				accumulator -= dt;
+			}
+
+			// Calculate FPS
+			one_second += delta_time;
+			if (one_second > 1000.0)
+			{
+				fps = (numFramesRendered / (one_second / 1000.0));
+				one_second -= 1000.0;
+				cout << "fps: " << fps << endl;
+				numFramesRendered = 0;
+			}
+		}
 
 		/* Render */
 		((CApp *)appPointer)->render();
@@ -268,14 +291,25 @@ void CGameWindow::keyboardCallback(GLFWwindow * window, int key, int scancode, i
 		case GLFW_KEY_F12:
 			CGameWindow::requestF12 = true;
 			break;
-		// ARROW DOWN key selects the next menu item
+		// ARROW DOWN key selects the next menu item if menu is active, application-specific otherwise
 		case GLFW_KEY_DOWN:
 			CGameWindow::requestSelectNextMenuItem = true;
+			CGameWindow::requestArrowDown = true;
 			break;
-		// ARROW UP key selects the prev menu item
+		// ARROW UP key selects the prev menu item if menu is active, application-specific otherwise
 		case GLFW_KEY_UP:
 			CGameWindow::requestSelectPrevMenuItem = true;
+			CGameWindow::requestArrowUp = true;
 			break;
+		// ARROW LEFT, app-specific
+		case GLFW_KEY_LEFT:
+			CGameWindow::requestArrowLeft = true;
+			break;
+		// ARROW RIGHT, app-specific
+		case GLFW_KEY_RIGHT:
+			CGameWindow::requestArrowRight = true;
+			break;
+		// ARROW RIGHT, app-specific
 		// ENTER key executes the current menu item action
 		case GLFW_KEY_ENTER:
 			CGameWindow::requestExecuteAction = true;
@@ -286,6 +320,22 @@ void CGameWindow::keyboardCallback(GLFWwindow * window, int key, int scancode, i
 	{
 		// Clear key modifiers
 		CGameWindow::keyMods = 0;
+
+		switch (key)
+		{
+		case GLFW_KEY_UP:
+			CGameWindow::requestArrowUp = false;
+			break;
+		case GLFW_KEY_DOWN:
+			CGameWindow::requestArrowDown = false;
+			break;
+		case GLFW_KEY_LEFT:
+			CGameWindow::requestArrowLeft = false;
+			break;
+		case GLFW_KEY_RIGHT:
+			CGameWindow::requestArrowRight = false;
+			break;
+		}
 	}
 }
 
@@ -408,6 +458,24 @@ void CGameWindow::processInput(void *appPointer)
 			CGameWindow::requestExecuteAction      = false;
 			CGameWindow::requestSelectNextMenuItem = false;
 			CGameWindow::requestSelectPrevMenuItem = false;
+
+			// Check the arrow keys
+			if (CGameWindow::requestArrowUp)
+			{
+				((CApp *)appPointer)->onArrowUp(CGameWindow::keyMods);
+			}
+			if (CGameWindow::requestArrowDown)
+			{
+				((CApp *)appPointer)->onArrowDown(CGameWindow::keyMods);
+			}
+			if (CGameWindow::requestArrowLeft)
+			{
+				((CApp *)appPointer)->onArrowLeft(CGameWindow::keyMods);
+			}
+			if (CGameWindow::requestArrowRight)
+			{
+				((CApp *)appPointer)->onArrowRight(CGameWindow::keyMods);
+			}
 		}
 	}
 }
