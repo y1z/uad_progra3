@@ -180,7 +180,7 @@ void CGameWindow::mainLoop(void *appPointer)
 	PCFreq = double(li.QuadPart) / 1000.0;
 	QueryPerformanceCounter(&li);
 	CounterStart = li.QuadPart;
-	last_time = double(li.QuadPart) / PCFreq;
+	last_time = double(li.QuadPart - CounterStart) / PCFreq;
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(m_Window))
@@ -199,26 +199,28 @@ void CGameWindow::mainLoop(void *appPointer)
 		current_time = double(li.QuadPart - CounterStart) / PCFreq;
 		delta_time   = current_time - last_time; // Calculate elapsed time
 		last_time    = current_time;             // Update last time to be the current time
-		accumulator += delta_time;               // 
-		while (accumulator >= dt) {              //
-			accumulator -= dt;
-		}
 
-		// With this information we can calculate the FPS we're running at
 		if (delta_time > 0.0)
 		{
+			accumulator += delta_time;
+
+			while (accumulator >= dt) {
+				/* Update */
+				((CApp *)appPointer)->update(dt);
+
+				accumulator -= dt;
+			}
+
+			// Calculate FPS
 			one_second += delta_time;
 			if (one_second > 1000.0)
 			{
 				fps = (numFramesRendered / (one_second / 1000.0));
 				one_second -= 1000.0;
 				cout << "fps: " << fps << endl;
-				numFramesRendered = 1;
+				numFramesRendered = 0;
 			}
 		}
-
-		/* Update */
-		((CApp *)appPointer)->update((float)delta_time);
 
 		/* Render */
 		((CApp *)appPointer)->render();

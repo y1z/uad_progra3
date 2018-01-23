@@ -29,6 +29,8 @@ public:
 	// https://msdn.microsoft.com/en-us/library/windows/desktop/dd319072(v=vs.85).aspx
 	// Documentation for WideCharToMultiByte
 	// https://msdn.microsoft.com/en-us/library/windows/desktop/dd374130(v=vs.85).aspx
+	// Secure version of CRT functions
+	// https://msdn.microsoft.com/en-us/library/wd3wzwts.aspx
 	// ============================================================================================================================================
 	static bool GetResourceFullPath(const char *resourceFileName, std::wstring &resourceFullPathUTF16, std::string &resourceFullPath)
 	{
@@ -40,7 +42,7 @@ public:
 		// ----------------------------------------------------------------------------------
 		// Check if UNICODE is defined in the project properties:
 		//   Configuration Properties --> General --> Project Defaults --> Character Set
-#ifndef UNICODE
+#ifdef UNICODE
 
 		// Get the full path of the current module (the .EXE that's being executed)
 		vector<wchar_t> pathBuf;
@@ -61,14 +63,19 @@ public:
 		resourceFullPathUTF16.append(path);
 
 		// Convert the resource name from char* to wchar_t
-		std::string tempResource(resourceFileName);
-		std::wstring wresource = UTF8_to_UTF16(tempResource);
+		wchar_t* wResource = UTF8_to_UTF16(resourceFileName);
+
+		if (wResource == nullptr)
+		{
+			return false;
+		}
 
 		// Now append the relative path where the resources are located
 		resourceFullPathUTF16.append(L"\\..\\..\\..\\..\\Resources\\MEDIA\\");
 
 		// Append the filename
-		resourceFullPathUTF16.append(wresource);
+		resourceFullPathUTF16.append(wResource);
+		delete[] wResource;
 
 		// Finally, check for the file existence
 		errno_t err = _wfopen_s(&filePtr, &resourceFullPathUTF16[0], L"r, ccs=UTF-16LE");
@@ -78,8 +85,20 @@ public:
 			resourceFound = true;
 
 			// We need to return both UTF8 and UTF16
-			std::string resource = UTF16_to_UTF8(resourceFullPathUTF16);
+			// -------------------------------------
+			char* resource = UTF16_to_UTF8(&resourceFullPathUTF16.at(0));
+
+			if (resource == nullptr)
+			{
+				if (filePtr != nullptr)
+				{
+					fclose(filePtr);
+				}
+				return false;
+			}
+
 			resourceFullPath.append(resource);
+			delete[] resource;
 		}
 
 		if (filePtr != nullptr)
@@ -117,8 +136,20 @@ public:
 			resourceFound = true;
 
 			// We need to return both UTF8 and UTF16
-			std::wstring wresource = UTF8_to_UTF16(resourceFullPath);
-			resourceFullPathUTF16.append(wresource);
+			// -------------------------------------
+			wchar_t* resourceW = UTF8_to_UTF16(resourceFullPath.c_str());
+
+			if (resourceW == nullptr)
+			{
+				if (filePtr != nullptr)
+				{
+					fclose(filePtr);
+				}
+				return false;
+			}
+
+			resourceFullPathUTF16.append(resourceW);
+			delete[] resourceW;
 		}
 
 		if (filePtr != nullptr)
@@ -132,42 +163,107 @@ public:
 
 	// ============================================================================================================================================
 	// Convert a multi-byte string to UTF16
+	// IMPORTANT: The caller of this function is responsible for freeing up the memory allocated for the wchar_t*
 	// ============================================================================================================================================
-	static wstring UTF8_to_UTF16(const std::string &str)
+	static wchar_t* UTF8_to_UTF16(const char * str)
 	{
-		if (str.empty())
+		/*
+		int MultiByteToWideChar(
+			_In_      UINT   CodePage,
+			_In_      DWORD  dwFlags,
+			_In_      LPCSTR lpMultiByteStr,
+			_In_      int    cbMultiByte,
+			_Out_opt_ LPWSTR lpWideCharStr,
+			_In_      int    cchWideChar
+		);	*/
+
+		if (str == nullptr)
 		{
-			return wstring();
+			return nullptr;
 		}
 
-		size_t charsNeeded = ::MultiByteToWideChar(CP_UTF8, 0, str.data(), (int)str.size(), NULL, 0);
+		// Calculate the number of characters (including the null terminator) needed to hold the wide character version of the string
+		int numWideCharsNeeded = MultiByteToWideChar(CP_UTF8, 0, str, (int)-1, NULL, 0);
 
-		if (charsNeeded == 0)
+		if (numWideCharsNeeded == 0)
 		{
 			cout << "Failed converting UTF-8 string to UTF-16" << endl;
-			return wstring();
+			return nullptr;
 		}
 
-		vector<wchar_t> buffer(charsNeeded);
-		int charsConverted = ::MultiByteToWideChar(CP_UTF8, 0, str.data(), (int)str.size(), &buffer[0], (int)buffer.size());
+		wchar_t *wstr = new wchar_t[numWideCharsNeeded];
+		int numCharsConverted = MultiByteToWideChar(
+			CP_UTF8, 
+			0, 
+			str, 
+			(int)( sizeof(char) * (strlen(str) + 1) ), 
+			&wstr[0], 
+			numWideCharsNeeded);
 
-		if (charsConverted == 0)
+		if (numCharsConverted == 0 || 
+			numWideCharsNeeded != numCharsConverted)
 		{
 			cout << "Failed converting UTF-8 string to UTF-16" << endl;
-			return wstring();
+			return nullptr;
 		}
 
-		return wstring(&buffer[0], charsConverted);
+		return wstr;
 	}
 
 	// ============================================================================================================================================
 	// Convert a UTF16 string to UTF8
+	// IMPORTANT: The caller of this function is responsible for freeing up the memory allocated for the char*
 	// ============================================================================================================================================
-	static string UTF16_to_UTF8(const std::wstring &str)
+	static char* UTF16_to_UTF8(const wchar_t *wstr)
 	{
-		// HOMEWORK !!!
-		return string();
+		/*
+		int WideCharToMultiByte(
+			_In_      UINT    CodePage,
+			_In_      DWORD   dwFlags,
+			_In_      LPCWSTR lpWideCharStr,
+			_In_      int     cchWideChar,
+			_Out_opt_ LPSTR   lpMultiByteStr,
+			 _In_      int     cbMultiByte,
+			_In_opt_  LPCSTR  lpDefaultChar,
+			_Out_opt_ LPBOOL  lpUsedDefaultChar
+		); */
+
+		if (wstr == nullptr)
+		{
+			return nullptr;
+		}
+
+		// Calculate the number of characters (including the null terminator) needed to hold the multibyte character version of the string
+		int numCharsNeeded = WideCharToMultiByte(CP_UTF8, 0, wstr, (int)-1, NULL, 0, NULL, NULL);
+
+		if (numCharsNeeded == 0)
+		{
+			cout << "Failed converting UTF-16 string to UTF-8" << endl;
+			return nullptr;
+		}
+
+		char *str = new char[numCharsNeeded];
+		int numCharsConverted = WideCharToMultiByte(
+			CP_UTF8,
+			0,
+			wstr,
+			numCharsNeeded,
+			&str[0],
+			(int)(numCharsNeeded * sizeof(char)),
+			NULL,
+			NULL);
+
+		if (numCharsConverted == 0 ||
+			numCharsNeeded != numCharsConverted)
+		{
+			cout << "Failed converting UTF-16 string to UTF-8" << endl;
+			return nullptr;
+		}
+
+		return str;
 	}
+
+
 };
 
 #endif // !_WIDESTRING_HELPER_H

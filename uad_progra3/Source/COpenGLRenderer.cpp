@@ -944,60 +944,8 @@ bool COpenGLRenderer::allocateGraphicsMemoryForMenuItem(
 
 /*
 */
-void COpenGLRenderer::renderTestObject(double *deltaTime)
+void COpenGLRenderer::renderTestObject(MathHelper::Matrix4 *objectTransformation)
 {
-	static double green = 0.0f;
-	static int dir = 1;
-	static double totalDegreesRotated = 0.0;
-	static double totalDegreesRotatedRadians = 0.0;
-	double degreesToRotate = 0.0;
-	double localDeltaTime = 0.01;
-	double m_rotationSpeed = 75.0f; //  Object rotation speed (degrees per second)
-
-	// Got delta time from main loop?
-	if (deltaTime != NULL)
-	{
-		localDeltaTime = *deltaTime;
-
-		if (localDeltaTime < 0.0)
-		{
-			return;
-		}
-	}
-
-	// Calculate degrees to rotate
-	degreesToRotate            = m_rotationSpeed * (localDeltaTime / 1000.0); // degrees = rotation speed * delta time (convert delta time from milliseconds to seconds)
-	totalDegreesRotated       += degreesToRotate;	                          // accumulate rotation degrees
-
-	// Reset rotation if needed
-	if (totalDegreesRotated > 360.0)
-	{
-		totalDegreesRotated -= 360.0;
-	}
-
-	totalDegreesRotatedRadians = totalDegreesRotated * 3.1459 / 180.0;        // convert total degrees rotated to radians
-
-    // Test, update background color
-	{
-		double colorCycleSpeed = 0.5;
-		double deltaGreen = colorCycleSpeed * (localDeltaTime / 1000.0);
-
-		green += deltaGreen * dir;
-
-		if (green > 1.0)
-		{
-			green = 1.0;
-			dir = -1;
-		}
-		else if (green < 0.0)
-		{
-			green = 0.0;
-			dir = 1;
-		}
-
-		glClearColor(0.25f, (float)(green), 0.75f, 1.f);
-	}
-
 	if (m_windowWidth > 0 
 		&& m_windowHeight > 0 
 		&& !m_OpenGLError)
@@ -1019,8 +967,15 @@ void COpenGLRenderer::renderTestObject(double *deltaTime)
 		sh_ViewUniformLocation  = glGetUniformLocation(mTestshaderProgramID, "uViewMatrix");
 		sh_ProjUniformLocation  = glGetUniformLocation(mTestshaderProgramID, "uProjMatrix");
 
-		MathHelper::Matrix4 modelMatrix = MathHelper::SimpleModelMatrix((float)(totalDegreesRotatedRadians));
-		glUniformMatrix4fv(sh_ModelUniformLocation, 1, GL_FALSE, &(modelMatrix.m[0][0]));
+		if (objectTransformation == NULL)
+		{
+			MathHelper::Matrix4 modelMatrix = MathHelper::SimpleModelMatrix(0.0f);
+			glUniformMatrix4fv(sh_ModelUniformLocation, 1, GL_FALSE, &(modelMatrix.m[0][0]));
+		}
+		else
+		{
+			glUniformMatrix4fv(sh_ModelUniformLocation, 1, GL_FALSE, &(objectTransformation->m[0][0]));
+		}
 
 		MathHelper::Matrix4 viewMatrix = MathHelper::SimpleViewMatrix(m_cameraDistance);
 		glUniformMatrix4fv(sh_ViewUniformLocation, 1, GL_FALSE, &(viewMatrix.m[0][0]));

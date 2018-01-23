@@ -246,13 +246,21 @@ void CAppParcial2::update(double deltaTime)
 	m_currentDeltaTime = deltaTime;
 
 	// Calculate degrees to rotate
-	degreesToRotate   = m_rotationSpeed * (deltaTime / 1000.0); // degrees = rotation speed * delta time (convert delta time from milliseconds to seconds)
-	m_objectRotation += degreesToRotate;	                    // accumulate rotation degrees
+	// ----------------------------------------------------------------------------------------------------------------------------------------
+	// degrees = rotation speed * delta time 
+	// deltaTime is expressed in milliseconds, but our rotation speed is expressed in seconds (convert delta time from milliseconds to seconds)
+	degreesToRotate = m_rotationSpeed * (deltaTime / 1000.0); 
+	// accumulate rotation degrees
+	m_objectRotation += degreesToRotate;
 
 	// Reset rotation if needed
-	if (m_objectRotation > 360.0)
+	while (m_objectRotation > 360.0)
 	{
 		m_objectRotation -= 360.0;
+	}
+	if (m_objectRotation < 0.0)
+	{
+		m_objectRotation = 0.0;
 	}
 }
 
@@ -260,6 +268,8 @@ void CAppParcial2::update(double deltaTime)
 void CAppParcial2::render()
 {
 	CGameMenu *menu = getMenu();
+	CVector3 objPos2;
+	objPos2.setValues(m_objectPosition.getX() + 2.5f, m_objectPosition.getY(), m_objectPosition.getZ());
 
 	// If menu is active, render menu
 	if (menu != NULL && menu->isInitialized() && menu->isActive())
@@ -275,6 +285,7 @@ void CAppParcial2::render()
 		{
 			// convert total degrees rotated to radians;
 			double totalDegreesRotatedRadians = m_objectRotation * 3.1459 / 180.0;
+
 			// Get a matrix that has both the object rotation and translation
 			MathHelper::Matrix4 modelMatrix   = MathHelper::ModelMatrix((float)totalDegreesRotatedRadians, m_objectPosition);
 
@@ -288,8 +299,14 @@ void CAppParcial2::render()
 		}
 		else
 		{
+			// convert total degrees rotated to radians;
+			double totalDegreesRotatedRadians = m_objectRotation * 3.1459 / 180.0;
+
+			// Get a matrix that has both the object rotation and translation
+			MathHelper::Matrix4 modelMatrix = MathHelper::ModelMatrix((float)totalDegreesRotatedRadians, m_objectPosition);
+
 			// No model loaded, show test cube
-			getOpenGLRenderer()->renderTestObject(&m_currentDeltaTime);
+			getOpenGLRenderer()->renderTestObject(&modelMatrix);
 		}
 	}
 }

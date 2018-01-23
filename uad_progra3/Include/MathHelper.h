@@ -50,6 +50,7 @@ namespace MathHelper
 		float cosine = cosf(angleInRadians);
 		float sine = sinf(angleInRadians);
 
+		// NOTE: Remember this needs to be a transpose of the rotation matrix
 		return Matrix4(cosine,             0.0f,               -sine,              0.0f,
 			           0.0f,               1.0f,               0.0f,               0.0f,
 			           sine,               0.0f,               cosine,             0.0f,

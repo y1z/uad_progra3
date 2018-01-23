@@ -162,7 +162,7 @@ public:
 	void setWindowHeight(int height) { m_windowHeight = height; }
 
 	//
-	void renderTestObject(double *deltaTime = NULL);
+	void renderTestObject(MathHelper::Matrix4 *objectTransformation = NULL);
 	void initializeTestObjects();
 
 	//
