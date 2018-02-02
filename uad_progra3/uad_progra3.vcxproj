@@ -166,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\C3DModel.h" />
+    <ClInclude Include="Include\C3DModel_Obj.h" />
     <ClInclude Include="Include\CApp.h" />
     <ClInclude Include="Include\CAppParcial2.h" />
     <ClInclude Include="Include\CBinaryTree.h" />
@@ -194,6 +195,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\C3DModel.cpp" />
+    <ClCompile Include="Source\C3DModel_Obj.cpp" />
     <ClCompile Include="Source\CApp.cpp" />
     <ClCompile Include="Source\CAppParcial2.cpp" />
     <ClCompile Include="Source\CCircularDoubleLinkedList.cpp" />

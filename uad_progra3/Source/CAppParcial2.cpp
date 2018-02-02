@@ -334,10 +334,16 @@ bool CAppParcial2::load3DModel(const char * const filename)
 	unloadCurrent3DModel();
 	
 	// Create new 3D object
-	m_p3DModel = new C3DModel();
+	m_p3DModel = C3DModel::load(filename);
+
+	if (m_p3DModel == nullptr)
+	{
+		cout << "ERROR: Unable read model from file" << endl;
+		return false;
+	}
 
 	// Load object from file
-	bool loaded = m_p3DModel->loadFromFile(filename);
+	bool loaded = m_p3DModel->isInitialized();
 
 	if (loaded)
 	{

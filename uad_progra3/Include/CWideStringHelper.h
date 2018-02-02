@@ -72,7 +72,7 @@ public:
 
 		// Now append the relative path where the resources are located
 		resourceFullPathUTF16.append(L"\\..\\..\\..\\..\\Resources\\MEDIA\\");
-
+		
 		// Append the filename
 		resourceFullPathUTF16.append(wResource);
 		delete[] wResource;
