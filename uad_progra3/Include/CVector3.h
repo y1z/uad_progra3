@@ -18,6 +18,8 @@ public:
 
 	CVector3& operator=(const CVector3 &other);
 	CVector3& operator+=(const CVector3 &other);
+	CVector3 CVector3::cross(const CVector3 & other);
+	CVector3 CVector3::operator-(const CVector3 & other);
 
 	void setValues(float _x, float _y, float _z);
 	void setValues(float *values);
@@ -25,6 +27,7 @@ public:
 	float getY() const { return m_Y; }
 	float getZ() const { return m_Z; }
 	void getValues(float *values) const { values[0] = m_X; values[1] = m_Y; values[2] = m_Z; }
+	void normalize();
 
 	inline static CVector3 ZeroVector()
 	{

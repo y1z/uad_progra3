@@ -26,6 +26,8 @@ private:
 	int          m_Height;                 // Window height
 	GLFWwindow * m_Window;                 // Pointer to GLFW window
 	string       m_WindowTitle;            // Title 
+	double       m_CursorPosX;
+	double       m_CursorPosY;
 
 	                                       // Generic variables for F1..F12 keys, CApp derived class decides what to do for F2..F11
 	static bool requestF1;                 // F1 always toggles the menu on/off
