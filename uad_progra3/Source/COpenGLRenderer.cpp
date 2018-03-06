@@ -97,7 +97,7 @@ bool COpenGLRenderer::deleteShaderProgram(unsigned int *shaderProgramId)
 
 /*
 */
-bool COpenGLRenderer::useShaderProgram(unsigned int *shaderProgramId) const
+bool COpenGLRenderer::useShaderProgram(const unsigned int * const shaderProgramId) const
 {
 	if (shaderProgramId != NULL && *shaderProgramId > 0)
 	{
@@ -420,6 +420,93 @@ bool COpenGLRenderer::allocateGraphicsMemoryForObject(
 
 /*
 */
+bool COpenGLRenderer::allocateGraphicsMemoryForObject(
+	const unsigned int * const shaderProgramId,
+	unsigned int *vertexArrayObjectID,
+	GLfloat *vertices, int numVertices,
+	unsigned short *indicesVertices, int numIndicesVert)
+{
+	GLuint vertexPositionBuffer = 0;
+	GLuint indicesVertexBuffer = 0;
+
+	if (shaderProgramId == nullptr 
+		|| vertexArrayObjectID == nullptr
+		|| vertices == nullptr 
+		|| indicesVertices == nullptr 
+		|| *shaderProgramId <= 0
+		|| !useShaderProgram(shaderProgramId))
+	{
+		return false;
+	}
+
+	*vertexArrayObjectID = 0;
+
+	// Attributes change per-vertex
+	GLint vertexPosAttribLocation = glGetAttribLocation(*shaderProgramId, "attPosition");
+
+	// Check attribute locations are valid
+	if (vertexPosAttribLocation < 0)
+	{
+		cout << "Unable to get shader program attribute locations" << endl;
+		cout << "vertexPosAttribLocation: " << vertexPosAttribLocation << endl;
+		glUseProgram(0);
+		return false;
+	}
+
+	// Uniforms change per-object
+	sh_ModelUniformLocation = glGetUniformLocation(*shaderProgramId, "uModelMatrix");
+	sh_ViewUniformLocation = glGetUniformLocation(*shaderProgramId, "uViewMatrix");
+	sh_ProjUniformLocation = glGetUniformLocation(*shaderProgramId, "uProjMatrix");
+	sh_colorUniformLocation = glGetUniformLocation(*shaderProgramId, "uColor");
+
+	if (sh_ModelUniformLocation < 0
+		|| sh_ViewUniformLocation < 0
+		|| sh_ProjUniformLocation < 0
+		|| sh_colorUniformLocation < 0)
+	{
+		cout << "Unable to get shader program uniform locations" << endl;
+		cout << "sh_ModelUniformLocation: " << sh_ModelUniformLocation << endl;
+		cout << "sh_ViewUniformLocation: " << sh_ViewUniformLocation << endl;
+		cout << "sh_ProjUniformLocation: " << sh_ProjUniformLocation << endl;
+		cout << "sh_colorUniformLocation: " << sh_colorUniformLocation << endl;
+		glUseProgram(0);
+		return false;
+	}
+
+	// Create and bind a vertex array object
+	*vertexArrayObjectID = (unsigned int)generateVertexArrayObjectID();
+
+	// Generate a buffer for the vertices and set its data
+	glGenBuffers(1, &vertexPositionBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexPositionBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * numVertices * 3, vertices, GL_STATIC_DRAW);
+	// Link the vertex position buffer with the shader
+	glVertexAttribPointer(vertexPosAttribLocation, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
+	glEnableVertexAttribArray(vertexPosAttribLocation);
+
+	// Generate a buffer for the triangle indices and set its data
+
+	glGenBuffers(1, &indicesVertexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesVertexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * numIndicesVert * 3, indicesVertices, GL_STATIC_DRAW);
+
+	// Unbind vertex array
+	glBindVertexArray(0);
+
+	// Unbind buffers
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	// Delete buffers
+	deleteBufferObject(&vertexPositionBuffer);
+	deleteBufferObject(&indicesVertexBuffer);
+
+	glUseProgram(0);
+
+	return true;
+}
+
+/*
+*/
 bool COpenGLRenderer::generateRenderGeometry(
 	GLfloat *vertices, int numVertices,
 	GLfloat *normals, int numNormals,
@@ -548,12 +635,67 @@ bool COpenGLRenderer::generateRenderGeometry(
 
 /*
 */
+GLenum COpenGLRenderer::primitiveModeToGLEnum(EPRIMITIVE_MODE mode) const
+{
+	GLenum result = GL_TRIANGLES;
+
+	switch (mode)
+	{
+	case POINTS:
+		result = GL_POINTS;
+		break;
+	case LINES:
+		result = GL_LINES;
+		break;
+	case LINE_STRIP:
+		result = GL_LINE_STRIP;
+		break;
+	case LINE_LOOP:
+		result = GL_LINE_LOOP;
+		break;
+	case TRIANGLES:
+		result = GL_TRIANGLES;
+		break;
+	case TRIANGLE_STRIP:
+		result = GL_TRIANGLE_STRIP;
+		break;
+	case TRIANGLE_FAN:
+		result = GL_TRIANGLE_FAN;
+		break;
+	}
+
+	return result;
+}
+
+/*
+*/
+bool COpenGLRenderer::renderWireframeObject(
+	unsigned int *shaderProgramId,
+	unsigned int *vertexArrayObjectId,
+	int numFaces,
+	GLfloat *objectColor,
+	MathHelper::Matrix4 *objectTransformation)
+{
+	return renderObject(
+		shaderProgramId,
+		vertexArrayObjectId,
+		numFaces,
+		objectColor,
+		objectTransformation,
+		LINES,
+		true);
+}
+
+/*
+*/
 bool COpenGLRenderer::renderObject(
 	unsigned int *shaderProgramId, 
 	unsigned int *vertexArrayObjectId, 
 	int numFaces, 
 	GLfloat *objectColor,
-	MathHelper::Matrix4 *objectTransformation)
+	MathHelper::Matrix4 *objectTransformation,
+	EPRIMITIVE_MODE mode,
+	bool drawIndexedPrimitives)
 {
 	if (m_windowWidth > 0
 		&& m_windowHeight > 0
@@ -569,6 +711,8 @@ bool COpenGLRenderer::renderObject(
 			glUseProgram(0);
 			return false;
 		}
+
+		GLenum drawingPrimitiveMode = primitiveModeToGLEnum(mode);
 
 		// Bind vertex array object for this 3D object
 		glBindVertexArray((GLuint)*vertexArrayObjectId);
@@ -612,23 +756,29 @@ bool COpenGLRenderer::renderObject(
 			glUniform3f(sh_colorUniformLocation, objectColor[0], objectColor[1], objectColor[2]);
 		}
 
-		// Commented out ***, not using indices, we have flattened arrays
-		// Draw 
-		/* *** glDrawElements(
-			GL_TRIANGLES,      // Triangles
-			numFaces * 3,      // Number of indices
-			GL_UNSIGNED_SHORT, // Data type
-			0);*/
+		if (drawIndexedPrimitives)
+		{
+			glDrawElements(
+				drawingPrimitiveMode,
+				numFaces * 3,			// Number of indices
+				GL_UNSIGNED_SHORT,		// Data type
+				0);
 
-		// Draw
-		glDrawArrays(
-			GL_TRIANGLES,
-			0,
-			numFaces * 3 // 3 indices per face
-		);
+			// Check for OpenGL errors
+			m_OpenGLError = checkOpenGLError("glDrawElements()");
+		}
+		else
+		{
+			// Draw
+			glDrawArrays(
+				drawingPrimitiveMode,
+				0,
+				numFaces * 3 // 3 indices per face
+			);
 
-		// Check for OpenGL errors
-		m_OpenGLError = checkOpenGLError("glDrawElements(GL_TRIANGLES)");
+			// Check for OpenGL errors
+			m_OpenGLError = checkOpenGLError("glDrawArrays()");
+		}
 
 		// Unbind vertex array object
 		glBindVertexArray(0);
@@ -1045,13 +1195,6 @@ void COpenGLRenderer::deleteTexture(unsigned int *id)
 	{ 
 		glDeleteTextures(1, id);
 	} 
-}
-
-/*
-*/
-void COpenGLRenderer::drawGrid()
-{
-	// TO-DO
 }
 
 /*

@@ -15,6 +15,8 @@
 #define FRAGMENT_SHADER_3D_OBJECTS     "SHADERS\\glsl_3dobject.frag"
 #define VERTEX_SHADER_MENU             "SHADERS\\glsl_menu.vert"
 #define FRAGMENT_SHADER_MENU           "SHADERS\\glsl_menu.frag"
+#define VERTEX_SHADER_WIREFRAME        "SHADERS\\glsl_wireframe.vert"
+#define FRAGMENT_SHADER_WIREFRAME      "SHADERS\\glsl_wireframe.frag"
 
 // TEXTURE FILENAMES
 #define MENU_TEXTURE_FILE              "TEXTURES\\Menu.tga"

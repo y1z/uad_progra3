@@ -19,6 +19,18 @@
 // *NOTE: This code has been tested to work fine on NVidia cards. Radeon cards seem to behave differently...
 class COpenGLRenderer
 {
+public:
+	enum EPRIMITIVE_MODE
+	{
+		POINTS = 0,
+		LINES,
+		LINE_STRIP,
+		LINE_LOOP,
+		TRIANGLES,
+		TRIANGLE_STRIP,
+		TRIANGLE_FAN
+	};
+
 private:
 	int m_windowWidth;
 	int m_windowHeight;
@@ -69,7 +81,7 @@ private:
 	);
 
 	//
-	bool useShaderProgram(unsigned int *shaderProgramId) const;
+	bool useShaderProgram(const unsigned int * const shaderProgramId) const;
 
 	//
 	GLuint generateVertexArrayObjectID() const;
@@ -82,6 +94,9 @@ private:
 
 	//
 	void deleteVertexArrayObject(GLuint *id);
+
+	//
+	GLenum primitiveModeToGLEnum(EPRIMITIVE_MODE mode) const;
 
 public:
 	// Constructor and Destructor
@@ -102,6 +117,15 @@ public:
 		unsigned short *indicesVertices, int numIndicesVert,
 		unsigned short *indicesNormals, int numIndicesNormals,
 		unsigned short *indicesUVCoords, int numIndicesUVCoords);
+
+	// =================================================================
+	// Allocates graphics memory for a given 3D object 
+	// =================================================================
+	bool allocateGraphicsMemoryForObject(
+		const unsigned int * const shaderProgramId,
+		unsigned int *vertexArrayObjectID,
+		GLfloat *vertices, int numVertices,
+		unsigned short *indicesVertices, int numIndicesVert);
 
 	// =================================================================
 	// Free graphics memory for a given 3D object 
@@ -141,12 +165,22 @@ public:
 		int height);
 
 	// 
+	bool renderWireframeObject(
+		unsigned int *shaderProgramId,
+		unsigned int *vertexArrayObjectId,
+		int numFaces,
+		GLfloat *objectColor,
+		MathHelper::Matrix4 *objectTransformation);
+
+	// 
 	bool renderObject(
-		unsigned int *shaderProgramId, 
-		unsigned int *vertexArrayObjectId, 
-		int numFaces, 
-		GLfloat *objectColor, 
-		MathHelper::Matrix4 *objectTransformation = NULL);
+		unsigned int *shaderProgramId,
+		unsigned int *vertexArrayObjectId,
+		int numFaces,
+		GLfloat *objectColor,
+		MathHelper::Matrix4 *objectTransformation = NULL,
+		EPRIMITIVE_MODE mode = TRIANGLES,
+		bool drawIndexedPrimitives = false);
 
 	//
 	bool renderMenuItem(
@@ -192,9 +226,6 @@ public:
 
 	//
 	void clearScreen() { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
-
-	//
-	void drawGrid();
 
 	//
 	void drawString(unsigned int *textureObjectId, std::string &text, float x, float y, CVector3 &color);
