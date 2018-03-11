@@ -7,7 +7,6 @@
 using namespace std;
 
 #include "C3DModel.h"
-#include "CVector3.h"
 
 class C3DModel_Obj : public C3DModel
 {

@@ -6,8 +6,6 @@
 #include <string>
 using namespace std;
 
-#include "CVector3.h"
-
 class C3DModel
 {
 protected:

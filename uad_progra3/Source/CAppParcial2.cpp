@@ -44,8 +44,16 @@ CAppParcial2::~CAppParcial2()
 }
 
 /* */
+void CAppParcial2::initialize()
+{
+
+}
+
+/* */
 void CAppParcial2::run()
 {
+	initialize();
+
 	// Check if CGameWindow object and window library been initialized
 	if (canRun())
 	{
@@ -294,7 +302,9 @@ void CAppParcial2::render()
 				m_p3DModel->getGraphicsMemoryObjectId(),
 				m_p3DModel->getNumFaces(), 
 				color,
-				&modelMatrix
+				&modelMatrix,
+				COpenGLRenderer::EPRIMITIVE_MODE::LINES,
+				false
 			);
 		}
 		else

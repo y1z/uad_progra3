@@ -70,6 +70,7 @@ public:
 	// *Note: They are PURE VIRTUAL METHODS, so we cannot create an object of this base class (compiler won't allow it),
 	//        instead we need to create an object of one of the derived classes, i.e: CAppParcial2
 	//        and the derived class MUST override these methods
+	virtual void initialize() = 0;
 	virtual void update(double delta_time) = 0;
 	virtual void run()    = 0;
 	virtual void render() = 0;
