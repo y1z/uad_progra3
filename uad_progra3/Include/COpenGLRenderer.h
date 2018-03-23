@@ -54,6 +54,16 @@ private:
 	GLuint mVertexPositionBuffer;
 	GLuint mVertexColorBuffer;
 	GLuint mIndexBuffer;
+
+	GLuint mMCCubeShaderProgramID;
+	GLuint mMCCubeVAOID;
+	GLint  sh_MCCubeUVAttribLocation;
+	GLuint mMCCubeVertexUVBuffer;
+	GLuint mMCCubeVertexPositionBuffer;
+	GLuint mMCCubeVertexColorBuffer;
+	GLuint mMCCubeIndexBuffer;
+	GLint  mMCCubeTextureUniformLocation;
+	GLuint mMCCubeTextureID;
 	// ===========================
 
 	//
@@ -198,6 +208,10 @@ public:
 	//
 	void renderTestObject(MathHelper::Matrix4 *objectTransformation = NULL);
 	void initializeTestObjects();
+
+	//
+	void renderMCCube(MathHelper::Matrix4 *objectTransformation = NULL);
+	void initializeMCCube(unsigned int textureObjectId);
 
 	//
 	bool checkOpenGLError(char *operationAttempted);

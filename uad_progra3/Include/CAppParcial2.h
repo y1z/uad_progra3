@@ -34,6 +34,8 @@ private:
 protected:
 	// Method to initialize the menu
 	bool initializeMenu();
+	// Method to initialize a MC cube and its texture
+	bool initializeMCCube();
 
 public:
 	// Constructors and destructor

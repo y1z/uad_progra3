@@ -19,6 +19,8 @@ COpenGLRenderer::COpenGLRenderer():
 	m_OpenGLError{ false },
 	m_cameraDistance{ MIN_CAMERA_DISTANCE }
 {
+	mMCCubeTextureUniformLocation = -1;
+	mMCCubeTextureID = -1;
 }
 
 /*
@@ -53,6 +55,42 @@ COpenGLRenderer::~COpenGLRenderer()
 	if (mVertexPositionArrayObjectID != 0)
 	{
 		deleteVertexArrayObject(&mVertexPositionArrayObjectID);
+	}
+
+	// MC Cube
+	if (mMCCubeShaderProgramID != 0)
+	{
+		glDeleteProgram(mMCCubeShaderProgramID);
+		mMCCubeShaderProgramID = 0;
+	}
+
+	if (mMCCubeVertexPositionBuffer != 0)
+	{
+		deleteBufferObject(&mMCCubeVertexPositionBuffer);
+		mMCCubeVertexPositionBuffer = 0;
+	}
+
+	if (mMCCubeVertexColorBuffer != 0)
+	{
+		deleteBufferObject(&mMCCubeVertexColorBuffer);
+		mMCCubeVertexColorBuffer = 0;
+	}
+
+	if (mMCCubeVertexUVBuffer != 0)
+	{
+		deleteBufferObject(&mMCCubeVertexUVBuffer);
+		mMCCubeVertexUVBuffer = 0;
+	}
+
+	if (mMCCubeVAOID != 0)
+	{
+		deleteVertexArrayObject(&mMCCubeVAOID);
+	}
+
+	if (mMCCubeTextureID != 0)
+	{
+		deleteTexture(&mMCCubeTextureID);
+		mMCCubeTextureID = 0;
 	}
 }
 
@@ -983,6 +1021,148 @@ void COpenGLRenderer::initializeTestObjects()
 
 /*
 */
+void COpenGLRenderer::initializeMCCube(unsigned int textureObjectId)
+{
+	std::wstring wresourceFilenameVS;
+	std::wstring wresourceFilenameFS;
+	std::string resourceFilenameVS;
+	std::string resourceFilenameFS;
+
+	// If resource files cannot be found, return
+	if (!CWideStringHelper::GetResourceFullPath(VERTEX_SHADER_MC_CUBE, wresourceFilenameVS, resourceFilenameVS) ||
+		!CWideStringHelper::GetResourceFullPath(FRAGMENT_SHADER_MC_CUBE, wresourceFilenameFS, resourceFilenameFS))
+	{
+		cout << "ERROR: Unable to find one or more resources: " << endl;
+		cout << "  " << VERTEX_SHADER_MC_CUBE << endl;
+		cout << "  " << FRAGMENT_SHADER_MC_CUBE << endl;
+		return;
+	}
+
+	if (createShaderProgram(
+		&mMCCubeShaderProgramID,
+		resourceFilenameVS.c_str(),
+		resourceFilenameFS.c_str()
+	))
+	{
+		useShaderProgram(&mMCCubeShaderProgramID);
+
+		mMCCubeTextureID = textureObjectId;
+
+		// Get the shader uniform/attribute locations
+
+		// Attributes change per-vertex
+		sh_TestPositionAttribLocation = glGetAttribLocation(mMCCubeShaderProgramID, "aPosition");
+		sh_TestColorAttribLocation = glGetAttribLocation(mMCCubeShaderProgramID, "aColor");
+		sh_MCCubeUVAttribLocation = glGetAttribLocation(mMCCubeShaderProgramID, "aUV");
+		// Uniforms change per-object
+		sh_ModelUniformLocation = glGetUniformLocation(mMCCubeShaderProgramID, "uModelMatrix");
+		sh_ViewUniformLocation = glGetUniformLocation(mMCCubeShaderProgramID, "uViewMatrix");
+		sh_ProjUniformLocation = glGetUniformLocation(mMCCubeShaderProgramID, "uProjMatrix");
+		mMCCubeTextureUniformLocation = glGetUniformLocation(mMCCubeShaderProgramID, "textureSampler");
+
+		// Create and bind a vertex array object
+		mMCCubeVAOID = generateVertexArrayObjectID();
+
+		// Test cube geometry.
+		GLfloat vertexPositions[] =
+		{
+			-1.0f, -1.0f, -1.0f,
+			-1.0f, -1.0f,  1.0f,
+			-1.0f,  1.0f, -1.0f,
+			-1.0f,  1.0f,  1.0f,
+			1.0f, -1.0f, -1.0f,
+			1.0f, -1.0f,  1.0f,
+			1.0f,  1.0f, -1.0f,
+			1.0f,  1.0f,  1.0f
+		};
+
+		// Generate a buffer for the vertices and set its data
+		glGenBuffers(1, &mMCCubeVertexPositionBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, mMCCubeVertexPositionBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertexPositions), vertexPositions, GL_STATIC_DRAW);
+		// Link the vertex position buffer with the shader
+		glEnableVertexAttribArray(sh_TestPositionAttribLocation);
+		glVertexAttribPointer(sh_TestPositionAttribLocation, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
+
+		GLfloat vertexColors[] =
+		{
+			1.0f, 1.0f, 1.0f, // -x, -y, -z
+			1.0f, 1.0f, 1.0f, // -x, -y, +z
+			1.0f, 1.0f, 1.0f, // -x, +y, -z
+			1.0f, 1.0f, 1.0f, // -x, +y, +z
+			1.0f, 1.0f, 1.0f, // +x, -y, -z
+			1.0f, 1.0f, 1.0f, // +x, -y, +z
+			1.0f, 1.0f, 1.0f, // +x, +y, -z
+			1.0f, 1.0f, 1.0f  // +x, +y, +z
+		};
+
+		// Generate a buffer for the colors and set its data
+		glGenBuffers(1, &mMCCubeVertexColorBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, mMCCubeVertexColorBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertexColors), vertexColors, GL_STATIC_DRAW);
+		// Link the color buffer with the shader
+		glVertexAttribPointer(sh_TestColorAttribLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(sh_TestColorAttribLocation);
+
+		GLfloat vertexUVs[] =
+		{
+			0.00f, 0.3f,
+			0.00f, 0.6f,
+			0.25f, 0.3f,
+			0.25f, 0.6f,
+			0.75f, 0.3f,
+			0.75f, 0.6f,
+			0.50f, 0.3f,
+			0.50f, 0.6f
+		};
+
+		// Generate a buffer for the UVs and set its data
+		glGenBuffers(1, &mMCCubeVertexUVBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, mMCCubeVertexUVBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertexUVs), vertexUVs, GL_STATIC_DRAW);
+		// Link the UV buffer with the shader
+		glVertexAttribPointer(sh_MCCubeUVAttribLocation, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
+		glEnableVertexAttribArray(sh_MCCubeUVAttribLocation);
+
+		short indices[] =
+		{
+			0, 1, 2, // -x
+			1, 3, 2,
+
+			4, 6, 5, // +x
+			5, 6, 7,
+
+			0, 5, 1, // -y
+			0, 4, 5,
+
+			2, 7, 6, // +y
+			2, 3, 7,
+
+			0, 6, 4, // -z
+			0, 2, 6,
+
+			1, 7, 3, // +z
+			1, 5, 7
+		};
+
+		// Generate a buffer for the triangle indices and set its data
+		glGenBuffers(1, &mMCCubeIndexBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mMCCubeIndexBuffer);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+		// Unbind vertex array
+		glBindVertexArray(0);
+
+		// Unbind buffers
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+		glUseProgram(0);
+	}
+}
+
+/*
+*/
 bool COpenGLRenderer::allocateGraphicsMemoryForMenuItem(
 	float topX, 
 	float topY,
@@ -1150,6 +1330,83 @@ void COpenGLRenderer::renderTestObject(MathHelper::Matrix4 *objectTransformation
 		m_OpenGLError = checkOpenGLError("glDrawElements(GL_TRIANGLES)");
 		if (m_OpenGLError)
 			return;		
+
+		// Unbind vertex array
+		glBindVertexArray(0);
+
+		// Unbind shader program
+		glUseProgram(0);
+	}
+}
+
+/*
+*/
+void COpenGLRenderer::renderMCCube(MathHelper::Matrix4 *objectTransformation)
+{
+	if (m_windowWidth > 0
+		&& m_windowHeight > 0
+		&& !m_OpenGLError)
+	{
+		if (!useShaderProgram(&mMCCubeShaderProgramID))
+		{
+			m_OpenGLError = true;
+			glUseProgram(0);
+			return;
+		}
+
+		// BIND VERTEX ARRAY OBJECT !
+		// ============================================================================================================
+		glBindVertexArray(mMCCubeVAOID);
+
+		// ====== Update Model View Projection matrices and pass them to the shader====================================
+		// This needs to be done per-frame because the values change over time
+		sh_ModelUniformLocation = glGetUniformLocation(mMCCubeShaderProgramID, "uModelMatrix");
+		sh_ViewUniformLocation = glGetUniformLocation(mMCCubeShaderProgramID, "uViewMatrix");
+		sh_ProjUniformLocation = glGetUniformLocation(mMCCubeShaderProgramID, "uProjMatrix");
+
+		if (objectTransformation == NULL)
+		{
+			MathHelper::Matrix4 modelMatrix = MathHelper::SimpleModelMatrix(0.0f);
+			glUniformMatrix4fv(sh_ModelUniformLocation, 1, GL_FALSE, &(modelMatrix.m[0][0]));
+		}
+		else
+		{
+			glUniformMatrix4fv(sh_ModelUniformLocation, 1, GL_FALSE, &(objectTransformation->m[0][0]));
+		}
+
+		MathHelper::Matrix4 viewMatrix = MathHelper::SimpleViewMatrix(m_cameraDistance);
+		glUniformMatrix4fv(sh_ViewUniformLocation, 1, GL_FALSE, &(viewMatrix.m[0][0]));
+
+		MathHelper::Matrix4 projectionMatrix = MathHelper::SimpleProjectionMatrix(float(m_windowWidth) / float(m_windowHeight));
+		glUniformMatrix4fv(sh_ProjUniformLocation, 1, GL_FALSE, &(projectionMatrix.m[0][0]));
+
+		// Set the texture sampler uniform
+		if (mMCCubeTextureUniformLocation >= 0 && mMCCubeTextureID >= 0)
+		{
+			// DO NOT CALL glEnable(GL_TEXTURE_2D) OR OPENGL WILL RETURN AN "1280" ERROR
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, mMCCubeTextureID);
+			glUniform1i(mMCCubeTextureUniformLocation, 0);
+		}
+		else
+		{
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+
+		// ====== DRAW ================================================================================================
+
+		// Draw 
+		glDrawElements(
+			GL_TRIANGLES,      // Triangles
+			(6 * 2) * 3,       // Number of indices: 36 indices (six faces, two triangles per face, 3 indices per triangle)
+			GL_UNSIGNED_SHORT, // Data type
+			0);
+
+		// Check for OpenGL errors
+		m_OpenGLError = checkOpenGLError("glDrawElements(GL_TRIANGLES)");
+		if (m_OpenGLError)
+			return;
 
 		// Unbind vertex array
 		glBindVertexArray(0);

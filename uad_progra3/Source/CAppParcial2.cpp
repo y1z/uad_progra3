@@ -67,6 +67,11 @@ void CAppParcial2::run()
 			getOpenGLRenderer()->setWindowHeight(getGameWindow()->getHeight());
 			// Initialize a test cube
 			getOpenGLRenderer()->initializeTestObjects();
+			// MCCube
+			if (!initializeMCCube())
+			{
+				return;
+			}
 
 			// Create our menu (add all menu items)
 			if (!initializeMenu())
@@ -79,6 +84,73 @@ void CAppParcial2::run()
 			getGameWindow()->mainLoop(this);
 		}
 	}
+}
+
+/* */
+bool CAppParcial2::initializeMCCube()
+{
+	std::wstring wresourceFilenameTexture;
+	std::string resourceFilenameTexture;
+
+	// If resource files cannot be found, return
+	if (!CWideStringHelper::GetResourceFullPath(MC_CUBE_TEXTURE, wresourceFilenameTexture, resourceFilenameTexture))
+	{
+		cout << "ERROR: Unable to find one or more resources: " << endl;
+		cout << "  " << MC_CUBE_TEXTURE << endl;
+		return false;
+	}
+
+	// Initialize the texture
+	unsigned int mcCUbeTextureID = -1;
+
+	TGAFILE tgaFile;
+	tgaFile.imageData = NULL;
+
+	if (LoadTGAFile(resourceFilenameTexture.c_str(), &tgaFile))
+	{
+		if (tgaFile.imageData == NULL ||
+			tgaFile.imageHeight < 0 ||
+			tgaFile.imageWidth < 0)
+		{
+			if (tgaFile.imageData != NULL)
+			{
+				delete[] tgaFile.imageData;
+			}
+			return false;
+		}
+
+		// Create a texture object for the menu, and copy the texture data to graphics memory
+		if (!getOpenGLRenderer()->createTextureObject(
+			&mcCUbeTextureID,
+			tgaFile.imageData,
+			tgaFile.imageWidth,
+			tgaFile.imageHeight
+		))
+		{
+			return false;
+		}
+
+		// Texture data is stored in graphics memory now, we don't need this copy anymore
+		if (tgaFile.imageData != NULL)
+		{
+			delete[] tgaFile.imageData;
+		}
+	}
+	else
+	{
+		// Free texture data
+		if (tgaFile.imageData != NULL)
+		{
+			delete[] tgaFile.imageData;
+		}
+
+		return false;
+	}
+
+	// Initialize a Minecraft cube
+	getOpenGLRenderer()->initializeMCCube(mcCUbeTextureID);
+
+	return true;
 }
 
 /* */
@@ -315,8 +387,13 @@ void CAppParcial2::render()
 			// Get a matrix that has both the object rotation and translation
 			MathHelper::Matrix4 modelMatrix = MathHelper::ModelMatrix((float)totalDegreesRotatedRadians, m_objectPosition);
 
+			CVector3 pos2 = m_objectPosition;
+			pos2 += CVector3(3.0f, 0.0f, 0.0f);
+			MathHelper::Matrix4 modelMatrix2 = MathHelper::ModelMatrix((float)totalDegreesRotatedRadians, pos2);
+
 			// No model loaded, show test cube
 			getOpenGLRenderer()->renderTestObject(&modelMatrix);
+			getOpenGLRenderer()->renderMCCube(&modelMatrix2);
 		}
 	}
 }
