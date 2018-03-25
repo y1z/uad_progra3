@@ -1066,14 +1066,28 @@ void COpenGLRenderer::initializeMCCube(unsigned int textureObjectId)
 		// Test cube geometry.
 		GLfloat vertexPositions[] =
 		{
-			-1.0f, -1.0f, -1.0f,
-			-1.0f, -1.0f,  1.0f,
-			-1.0f,  1.0f, -1.0f,
-			-1.0f,  1.0f,  1.0f,
-			1.0f, -1.0f, -1.0f,
-			1.0f, -1.0f,  1.0f,
-			1.0f,  1.0f, -1.0f,
-			1.0f,  1.0f,  1.0f
+			-1.0f,  1.0f, -1.0f,  // -x, +y, -z TOP LEFT, BACK      #0
+			-1.0f,  1.0f,  1.0f,  // -x, +y, +z TOP LEFT, FRONT     #1
+
+			 1.0f,  1.0f, -1.0f,  // +x, +y, -z TOP RIGHT, BACK     #2
+			 1.0f,  1.0f,  1.0f,  // +x, +y, +z TOP RIGHT, FRONT    #3
+
+			-1.0f, -1.0f, -1.0f,  // -x, -y, -z BOTTOM LEFT, BACK   #4
+			-1.0f, -1.0f,  1.0f,  // -x, -y, +z BOTTOM LEFT, FRONT  #5
+
+			 1.0f, -1.0f, -1.0f,  // +x, -y, -z BOTTOM RIGHT, BACK  #6
+			 1.0f, -1.0f,  1.0f,  // +x, -y, +z BOTTOM RIGHT, FRONT #7
+
+			// DUPLICATE VERTICES
+			// -------------------
+			-1.0f, -1.0f, -1.0f,  // -x, -y, -z BOTTOM LEFT, BACK   #8
+			 1.0f, -1.0f, -1.0f,  // +x, -y, -z BOTTOM RIGHT, BACK  #9
+
+		    -1.0f, -1.0f,  1.0f,  // -x, -y, +z BOTTOM LEFT, FRONT  #10
+			 1.0f, -1.0f,  1.0f,  // +x, -y, +z BOTTOM RIGHT, FRONT #11
+
+            -1.0f, -1.0f, -1.0f,  // -x, -y, -z BOTTOM LEFT, BACK   #12
+			-1.0f, -1.0f,  1.0f   // -x, -y, +z BOTTOM LEFT, FRONT  #13
 		};
 
 		// Generate a buffer for the vertices and set its data
@@ -1086,14 +1100,28 @@ void COpenGLRenderer::initializeMCCube(unsigned int textureObjectId)
 
 		GLfloat vertexColors[] =
 		{
-			1.0f, 1.0f, 1.0f, // -x, -y, -z
-			1.0f, 1.0f, 1.0f, // -x, -y, +z
-			1.0f, 1.0f, 1.0f, // -x, +y, -z
-			1.0f, 1.0f, 1.0f, // -x, +y, +z
-			1.0f, 1.0f, 1.0f, // +x, -y, -z
-			1.0f, 1.0f, 1.0f, // +x, -y, +z
-			1.0f, 1.0f, 1.0f, // +x, +y, -z
-			1.0f, 1.0f, 1.0f  // +x, +y, +z
+			1.0f, 1.0f, 1.0f, // -x, +y, -z TOP LEFT, BACK      #0
+			1.0f, 1.0f, 1.0f, // -x, +y, +z TOP LEFT, FRONT     #1
+
+			1.0f, 1.0f, 1.0f, // +x, +y, -z TOP RIGHT, BACK     #2
+			1.0f, 1.0f, 1.0f, // +x, +y, +z TOP RIGHT, FRONT    #3
+
+			1.0f, 1.0f, 1.0f, // -x, -y, -z BOTTOM LEFT, BACK   #4
+			1.0f, 1.0f, 1.0f, // -x, -y, +z BOTTOM LEFT, FRONT  #5
+			
+			1.0f, 1.0f, 1.0f, // +x, -y, -z BOTTOM RIGHT, BACK  #6
+			1.0f, 1.0f, 1.0f, // +x, -y, +z BOTTOM RIGHT, FRONT #7
+
+            // DUPLICATE VERTICES
+			// -------------------
+			1.0f, 1.0f, 1.0f, // -x, -y, -z BOTTOM LEFT, BACK   #8
+			1.0f, 1.0f, 1.0f, // +x, -y, -z BOTTOM RIGHT, BACK  #9
+
+			1.0f, 1.0f, 1.0f, // -x, -y, +z BOTTOM LEFT, FRONT  #10
+			1.0f, 1.0f, 1.0f, // +x, -y, +z BOTTOM RIGHT, FRONT #11
+
+			1.0f, 1.0f, 1.0f, // -x, -y, -z BOTTOM LEFT, BACK   #12
+			1.0f, 1.0f, 1.0f  // +x, -y, +z BOTTOM RIGHT, FRONT #13
 		};
 
 		// Generate a buffer for the colors and set its data
@@ -1106,14 +1134,23 @@ void COpenGLRenderer::initializeMCCube(unsigned int textureObjectId)
 
 		GLfloat vertexUVs[] =
 		{
-			0.00f, 0.3f,
-			0.00f, 0.6f,
-			0.25f, 0.3f,
-			0.25f, 0.6f,
-			0.75f, 0.3f,
-			0.75f, 0.6f,
-			0.50f, 0.3f,
-			0.50f, 0.6f
+			0.25f, 0.33f, // TOP LEFT, BACK
+			0.25f, 0.66f, // TOP LEFT, FRONT
+			0.50f, 0.33f, // TOP RIGHT, BACK
+			0.50f, 0.66f, // TOP RIGHT, FRONT
+			0.00f, 0.33f, // BOTTOM LEFT, BACK 
+			0.00f, 0.66f, // BOTTOM LEFT, FRONT
+			0.75f, 0.33f, // BOTTOM RIGHT, BACK
+			0.75f, 0.66f, // BOTTOM RIGHT, FRONT
+
+			// DUPLICATES
+			// ----------
+			0.25f, 0.0f,  // BOTTOM LEFT, BACK
+			0.50f, 0.0f,  // BOTTOM RIGHT, BACK
+			0.25f, 1.0f,  // BOTTOM LEFT, FRONT
+			0.50f, 1.0f,  // BOTTOM RIGHT, FRONT
+			1.0f,  0.33f, // BOTTOM LEFT, BACK
+			1.0f,  0.66f  // BOTTOM LEFT, FRONT
 		};
 
 		// Generate a buffer for the UVs and set its data
@@ -1126,23 +1163,23 @@ void COpenGLRenderer::initializeMCCube(unsigned int textureObjectId)
 
 		short indices[] =
 		{
-			0, 1, 2, // -x
-			1, 3, 2,
+			0, 1, 2, // TOP #1
+			2, 1, 3, // TOP #2
 
-			4, 6, 5, // +x
-			5, 6, 7,
+			0, 4, 1, // LEFT #1
+			1, 4, 5, // LEFT #2
 
-			0, 5, 1, // -y
-			0, 4, 5,
+			3, 7, 2, // RIGHT #1
+			2, 7, 6, // RIGHT #2
 
-			2, 7, 6, // +y
-			2, 3, 7,
+			2, 9, 0, // BACK #1
+			0, 9, 8, // BACK #2
 
-			0, 6, 4, // -z
-			0, 2, 6,
+			1, 10, 3,// FRONT #1
+			3, 10, 11,//FRONT #2
 
-			1, 7, 3, // +z
-			1, 5, 7
+			13, 12, 7,//BOTTOM #1
+			7, 12, 6  //BOTTOM #2
 		};
 
 		// Generate a buffer for the triangle indices and set its data
