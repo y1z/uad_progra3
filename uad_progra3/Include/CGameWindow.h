@@ -57,6 +57,8 @@ private:
 
 	static int  newWidth;
 	static int  newHeight;
+	static double stCursorPosX;
+	static double stCursorPosY;
 
 	// Initialize GLFW library
 	void initializeGLFW();
@@ -66,6 +68,8 @@ private:
 	static void resizeCallback(GLFWwindow * window, int width, int height);
 	// This callback will be called by GLFW when a physical key is pressed in the keyboard
 	static void keyboardCallback(GLFWwindow * window, int key, int scancode, int action, int mods);
+	// This callback will be called by GLFW when the mouse is moved
+	static void cursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
 
 	// Process user input (keyboard, mouse)
 	void processInput(void *appPointer);
