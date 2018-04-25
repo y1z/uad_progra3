@@ -375,7 +375,7 @@ void CAppParcial2::render()
 				m_p3DModel->getNumFaces(), 
 				color,
 				&modelMatrix,
-				COpenGLRenderer::EPRIMITIVE_MODE::LINES,
+				COpenGLRenderer::EPRIMITIVE_MODE::TRIANGLES,
 				false
 			);
 		}
@@ -390,6 +390,11 @@ void CAppParcial2::render()
 			CVector3 pos2 = m_objectPosition;
 			pos2 += CVector3(3.0f, 0.0f, 0.0f);
 			MathHelper::Matrix4 modelMatrix2 = MathHelper::ModelMatrix((float)totalDegreesRotatedRadians, pos2);
+
+			/*
+				MathHelper::Matrix4 viewMatrix = MathHelper::SimpleViewMatrix(m_cameraDistance);
+				MathHelper::Matrix4 projectionMatrix = MathHelper::SimpleProjectionMatrix(float(m_windowWidth) / float(m_windowHeight));
+			*/
 
 			// No model loaded, show test cube
 			getOpenGLRenderer()->renderTestObject(&modelMatrix);
@@ -406,16 +411,8 @@ bool CAppParcial2::load3DModel(const char * const filename)
 	std::string resourceFilenameVS;
 	std::string resourceFilenameFS;
 
-	// If resource files cannot be found, return
-	if (!CWideStringHelper::GetResourceFullPath(VERTEX_SHADER_3D_OBJECTS, wresourceFilenameVS, resourceFilenameVS) ||
-		!CWideStringHelper::GetResourceFullPath(FRAGMENT_SHADER_3D_OBJECTS, wresourceFilenameFS, resourceFilenameFS))
-	{
-		cout << "ERROR: Unable to find one or more resources: " << endl;
-		cout << "  " << VERTEX_SHADER_3D_OBJECTS << endl;
-		cout << "  " << FRAGMENT_SHADER_3D_OBJECTS << endl;
-
-		return false;
-	}
+	char *vertexShaderToLoad = VERTEX_SHADER_3D_OBJECT;
+	char *fragmentShaderToLoad = FRAGMENT_SHADER_3D_OBJECT;
 
 	// Unload any current 3D model
 	unloadCurrent3DModel();
@@ -434,11 +431,41 @@ bool CAppParcial2::load3DModel(const char * const filename)
 
 	if (loaded)
 	{
+		// By default, shaders to be loaded are for non-textured objects, but if the model has a valid texture filename and UVs, 
+		// load the appropriate shader instead 
+		if (m_p3DModel->hasUVs() && m_p3DModel->hasTextureFilename())
+		{
+			vertexShaderToLoad = VERTEX_SHADER_TEXTURED_3D_OBJECT;
+			fragmentShaderToLoad = FRAGMENT_SHADER_TEXTURED_3D_OBJECT;
+		}
+		
+		// TO-DO: LOAD TEXTURE AND ALSO CREATE TEXTURE OBJECT !!!!
+
+		// TO-DO: LOAD ALL POSSIBLE SHADERS FOR 3D OBJECT UP FRONT AND THEN JUST SWITCH THE ACTIVE ONE
+
+		// If resource files cannot be found, return
+		if (!CWideStringHelper::GetResourceFullPath(vertexShaderToLoad, wresourceFilenameVS, resourceFilenameVS) ||
+			!CWideStringHelper::GetResourceFullPath(fragmentShaderToLoad, wresourceFilenameFS, resourceFilenameFS))
+		{
+			cout << "ERROR: Unable to find one or more resources: " << endl;
+			cout << "  " << vertexShaderToLoad << endl;
+			cout << "  " << fragmentShaderToLoad << endl;
+
+			return false;
+		}
+		
+		// Create a shader program for this object
+		getOpenGLRenderer()->createShaderProgram(
+			&m_currentModelShaderId, 
+			resourceFilenameVS.c_str(), 
+			resourceFilenameFS.c_str());
+
+		// Save the shader program ID in the model as well
+		m_p3DModel->setShaderProgramId(m_currentModelShaderId);
+
 		// Allocate graphics memory for object
 		loaded = getOpenGLRenderer()->allocateGraphicsMemoryForObject(
 			m_p3DModel->getShaderProgramId(),
-			resourceFilenameVS.c_str(),
-			resourceFilenameFS.c_str(),
 			m_p3DModel->getGraphicsMemoryObjectId(),
 			m_p3DModel->getModelVertices(),
 			m_p3DModel->getNumVertices(),
@@ -474,6 +501,12 @@ void CAppParcial2::unloadCurrent3DModel()
 			m_p3DModel->getShaderProgramId(),
 			m_p3DModel->getGraphicsMemoryObjectId()
 		);
+
+		// Free up texture object memory
+		if (m_currentModelTextureObject > 0)
+		{
+			getOpenGLRenderer()->deleteTexture(m_p3DModel->getTextureObjectId());
+		}
 
 		// Delete 3D object
 		delete m_p3DModel;

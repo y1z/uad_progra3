@@ -10,6 +10,8 @@ using namespace std;
 
 #include "../Include/C3DModel.h"
 #include "../Include/C3DModel_Obj.h"
+#include "../Include/C3DModel_STL.h"
+#include "../Include/C3DModel_3DS.h"
 
 /* */
 C3DModel::C3DModel()
@@ -25,7 +27,12 @@ C3DModel::C3DModel()
 	m_numUVCoords(0), 
 	m_numFaces(0),
 	m_graphicsMemoryObjectId(0),
-	m_shaderProgramId(0)
+	m_shaderProgramId(0),
+	m_textureObjectId(0),
+	m_modelHasNormals(false),
+	m_modelHasUVs(false),
+	m_modelHasTextureFilename(false),
+	m_modelTextureFilename(nullptr)
 {
 	cout << "Constructor: C3DModel()" << endl;
 }
@@ -77,6 +84,11 @@ void C3DModel::reset()
 		delete[] m_uvCoordsRaw;
 		m_uvCoordsRaw = NULL;
 	}
+	if (m_modelTextureFilename != nullptr)
+	{
+		delete[] m_modelTextureFilename;
+		m_modelTextureFilename = nullptr;
+	}
 
 	m_numVertices = 0;
 	m_numNormals = 0;
@@ -87,6 +99,10 @@ void C3DModel::reset()
 
 	m_graphicsMemoryObjectId = 0;
 	m_shaderProgramId = 0;
+	m_textureObjectId = 0;
+	m_modelHasNormals = false;
+	m_modelHasUVs = false;
+	m_modelHasTextureFilename = false;
 }
 
 /*
@@ -119,11 +135,15 @@ C3DModel* C3DModel::load(const char * const filename)
 		}
 		else if (!fileExtension.compare("3ds"))
 		{
-			cout << "3DS file format reading not implemented" << endl;
+			cout << "Loading 3DS model..." << endl;
+			newModel = new C3DModel_3DS();
+			newModel->loadFromFile(filename);
 		}
 		else if (!fileExtension.compare("stl"))
 		{
-			cout << "STL file format reading not implemented" << endl;
+			cout << "Loading STL model..." << endl;
+			newModel = new C3DModel_STL();
+			newModel->loadFromFile(filename);
 		}
 		else if (!fileExtension.compare("fbx"))
 		{
@@ -530,5 +550,9 @@ bool C3DModel::parseObjLine(std::string line, bool countOnly, int lineNumber)
 */
 void C3DModel::computeFaceNormals()
 {
+	// Calculate face normals
+	// ...
 
+	// After calculating the normals, set the flag to true
+	// m_modelHasNormals = true;
 }

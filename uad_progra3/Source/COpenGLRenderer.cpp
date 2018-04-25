@@ -257,8 +257,6 @@ bool COpenGLRenderer::freeGraphicsMemoryForObject(unsigned int *shaderProgramId,
 */
 bool COpenGLRenderer::allocateGraphicsMemoryForObject(
 	unsigned int *shaderProgramId,
-	const char *vertexShader,
-	const char *fragmentShader,
 	unsigned int *vertexArrayObjectID,
 	GLfloat *vertices, int numVertices,
 	GLfloat *normals, int numNormals,
@@ -267,8 +265,9 @@ bool COpenGLRenderer::allocateGraphicsMemoryForObject(
 	unsigned short *indicesNormals, int numIndicesNormals,
 	unsigned short *indicesUVCoords, int numIndicesUVCoords)
 {
-	if (shaderProgramId == NULL || !createShaderProgram(shaderProgramId, vertexShader, fragmentShader))
+	if (shaderProgramId == NULL || *shaderProgramId <= 0)
 	{
+		cout << "Error: Invalid shader object ID" << endl;
 		return false;
 	}
 
@@ -467,16 +466,20 @@ bool COpenGLRenderer::allocateGraphicsMemoryForObject(
 	GLuint vertexPositionBuffer = 0;
 	GLuint indicesVertexBuffer = 0;
 
-	if (shaderProgramId == nullptr 
-		|| vertexArrayObjectID == nullptr
+	if (shaderProgramId == nullptr || *shaderProgramId <= 0)
+	{
+		cout << "Error: Invalid shader object ID" << endl;
+		return false;
+	}
+
+	if (vertexArrayObjectID == nullptr
 		|| vertices == nullptr 
 		|| indicesVertices == nullptr 
-		|| *shaderProgramId <= 0
 		|| !useShaderProgram(shaderProgramId))
 	{
 		return false;
 	}
-
+	
 	*vertexArrayObjectID = 0;
 
 	// Attributes change per-vertex

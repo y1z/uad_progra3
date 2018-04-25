@@ -11,7 +11,8 @@ using namespace std;
 #include "../Include/C3DModel.h"
 #include "../Include/C3DModel_Obj.h"
 
-/* */
+/* 
+*/
 C3DModel_Obj::C3DModel_Obj() :
 	C3DModel(),
 	m_currentVertex(0),
@@ -22,7 +23,8 @@ C3DModel_Obj::C3DModel_Obj() :
 	cout << "Constructor: C3DModel_Obj()" << endl;
 }
 
-/* */
+/* 
+*/
 C3DModel_Obj::~C3DModel_Obj()
 {
 	cout << "Destructor: C3DModel_Obj()" << endl;
@@ -46,7 +48,6 @@ void C3DModel_Obj::reset()
 bool C3DModel_Obj::loadFromFile(const char * const filename)
 {
 	bool readFileOk = false;
-	bool modelNeedsNormals = false;
 
 	// Free any previous resources
 	reset();
@@ -77,12 +78,13 @@ bool C3DModel_Obj::loadFromFile(const char * const filename)
 		//   face normal for normal
 		if (m_numNormals == 0)
 		{
-			modelNeedsNormals = true;
+			m_modelHasNormals = false;
 			m_numNormals = m_numVertices;
 		}
 		if (m_numUVCoords == 0)
 		{
 			m_numUVCoords = m_numVertices;
+			m_modelHasUVs = false;
 		}
 
 		// Allocate memory for the arrays
@@ -110,7 +112,7 @@ bool C3DModel_Obj::loadFromFile(const char * const filename)
 		{
 			m_Initialized = true;
 
-			if (modelNeedsNormals)
+			if (!m_modelHasNormals)
 			{
 				computeFaceNormals();
 			}
@@ -154,15 +156,11 @@ bool C3DModel_Obj::readObjFile(const char * filename, bool countOnly)
 }
 
 /*
-* NOTE: This code reads the .obj file format and can skip normal/UV coords information if the file doesn't have it,
-*
-* BUT !
-*
-* The renderer code assumes the object will have vertices AND normals AND UV coords. So this code or the renderer code needs to be updated for the case
-* where the object doesn't have them...
-* TO-DO...
-* Also, this reads files with triangles, not quads. This is also a TO-DO...
-*/
+ * NOTE: This code reads the .obj file format and can skip normal/UV coords information if the file doesn't have it,
+ *
+ * TO-DO...
+ * Also, this reads files with triangles, not quads. This is also a TO-DO...
+ */
 bool C3DModel_Obj::parseObjLine(std::string line, bool countOnly, int lineNumber)
 {
 	bool parsed = false;

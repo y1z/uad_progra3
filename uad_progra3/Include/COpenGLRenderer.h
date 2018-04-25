@@ -115,11 +115,10 @@ public:
 
 	// =================================================================
 	// Allocates graphics memory for a given 3D object 
+	// Note: shader program must be already created
 	// =================================================================
 	bool allocateGraphicsMemoryForObject(
 		unsigned int *shaderProgramId,
-		const char *vertexShader, 
-		const char *fragmentShader,
 		unsigned int *vertexArrayObjectID, 
 		GLfloat *vertices, int numVertices,
 		GLfloat *normals, int numNormals,
@@ -129,7 +128,8 @@ public:
 		unsigned short *indicesUVCoords, int numIndicesUVCoords);
 
 	// =================================================================
-	// Allocates graphics memory for a given 3D object 
+	// Allocates graphics memory for a given 3D object
+	// Note: shader program must be already created
 	// =================================================================
 	bool allocateGraphicsMemoryForObject(
 		const unsigned int * const shaderProgramId,
