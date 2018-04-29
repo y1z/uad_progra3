@@ -37,6 +37,9 @@ private:
 	// Texture object ID for the current model
 	unsigned int m_currentModelTextureObject;
 
+	// Texture object ID for minecraft cube
+	unsigned int m_mcCubeTextureID;
+
 protected:
 	// Method to initialize the menu
 	bool initializeMenu();
@@ -84,6 +87,9 @@ private:
 
 	// Move camera away/closer
 	void moveCamera(float direction);
+
+	//
+	bool loadTexture(const char *filename, unsigned int *newTextureID);
 };
 
 #endif // !CAPPPARCIAL2_H

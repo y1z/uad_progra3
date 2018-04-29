@@ -8,6 +8,11 @@
 #include <GLFW/glfw3.h>
 
 #include "MathHelper.h"
+#include "COpenGLShaderProgram.h"
+
+#include <map>
+#include <vector>
+using namespace std;
 
 #define BUFFER_OFFSET(a) ((void*)(a))
 #define MIN_CAMERA_DISTANCE 5.0f
@@ -36,34 +41,38 @@ private:
 	int m_windowHeight;
 	bool m_OpenGLError;
 
-	GLint sh_ModelUniformLocation;
-	GLint sh_ViewUniformLocation;
-	GLint sh_ProjUniformLocation;
-	GLint sh_colorUniformLocation;
+	std::map<int, COpenGLShaderProgram*> m_shaderProgramWrappers;
+	std::vector<std::string> m_expectedUniformsInShader;
+	std::vector<std::string> m_expectedAttributesInShader;
+
+	//GLint sh_ModelUniformLocation;
+	//GLint sh_ViewUniformLocation;
+	//GLint sh_ProjUniformLocation;
+	//GLint sh_colorUniformLocation;
 
 	float m_cameraDistance; // Distance from camera view point to target point, expressed in OpenGL units
 
 	// TEST OBJECT VARS
 	// When no 3D object is loaded, we display a test object (spinning cube)
 	// ===========================
-	GLint sh_TestPositionAttribLocation;
-	GLint sh_TestColorAttribLocation;
+	//GLint sh_TestPositionAttribLocation;
+	//GLint sh_TestColorAttribLocation;
 
 	GLuint mTestshaderProgramID;
 	GLuint mVertexPositionArrayObjectID;
-	GLuint mVertexPositionBuffer;
-	GLuint mVertexColorBuffer;
-	GLuint mIndexBuffer;
+	//GLuint mVertexPositionBuffer;
+	//GLuint mVertexColorBuffer;
+	//GLuint mIndexBuffer;
 
 	GLuint mMCCubeShaderProgramID;
 	GLuint mMCCubeVAOID;
-	GLint  sh_MCCubeUVAttribLocation;
-	GLuint mMCCubeVertexUVBuffer;
-	GLuint mMCCubeVertexPositionBuffer;
-	GLuint mMCCubeVertexColorBuffer;
-	GLuint mMCCubeIndexBuffer;
-	GLint  mMCCubeTextureUniformLocation;
-	GLuint mMCCubeTextureID;
+	//GLint  sh_MCCubeUVAttribLocation;
+	//GLuint mMCCubeVertexUVBuffer;
+	//GLuint mMCCubeVertexPositionBuffer;
+	//GLuint mMCCubeVertexColorBuffer;
+	//GLuint mMCCubeIndexBuffer;
+	//GLint  mMCCubeTextureUniformLocation;
+	//GLuint mMCCubeTextureID;
 	// ===========================
 
 	//
@@ -107,6 +116,9 @@ private:
 
 	//
 	GLenum primitiveModeToGLEnum(EPRIMITIVE_MODE mode) const;
+
+	//
+	COpenGLShaderProgram* getShaderProgramWrapper(unsigned int id);
 
 public:
 	// Constructor and Destructor
@@ -160,8 +172,8 @@ public:
 
 	//
 	bool createShaderProgram(
-		unsigned int *shaderProgramId, 
-		const char *vertexShader, 
+		unsigned int *shaderProgramId,
+		const char *vertexShader,
 		const char *fragmentShader);
 
 	//
@@ -210,8 +222,8 @@ public:
 	void initializeTestObjects();
 
 	//
-	void renderMCCube(MathHelper::Matrix4 *objectTransformation = NULL);
-	void initializeMCCube(unsigned int textureObjectId);
+	void renderMCCube(unsigned int cubeTextureID, MathHelper::Matrix4 *objectTransformation = NULL);
+	void initializeMCCube();
 
 	//
 	bool checkOpenGLError(char *operationAttempted);

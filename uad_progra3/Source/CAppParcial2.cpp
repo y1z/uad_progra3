@@ -41,6 +41,11 @@ CAppParcial2::~CAppParcial2()
 {
 	cout << "Destructor: ~CAppParcial2()" << endl;
 	unloadCurrent3DModel();
+
+	if (m_mcCubeTextureID > 0)
+	{
+		getOpenGLRenderer()->deleteTexture(&m_mcCubeTextureID);
+	}
 }
 
 /* */
@@ -89,6 +94,7 @@ void CAppParcial2::run()
 /* */
 bool CAppParcial2::initializeMCCube()
 {
+	m_mcCubeTextureID = 0;
 	std::wstring wresourceFilenameTexture;
 	std::string resourceFilenameTexture;
 
@@ -101,27 +107,47 @@ bool CAppParcial2::initializeMCCube()
 	}
 
 	// Initialize the texture
-	unsigned int mcCUbeTextureID = -1;
-
-	TGAFILE tgaFile;
-	tgaFile.imageData = NULL;
-
-	if (LoadTGAFile(resourceFilenameTexture.c_str(), &tgaFile))
+	if (!loadTexture(resourceFilenameTexture.c_str(), &m_mcCubeTextureID))
 	{
-		if (tgaFile.imageData == NULL ||
+		return false;
+	}
+
+	// Initialize a Minecraft cube
+	getOpenGLRenderer()->initializeMCCube();
+
+	return true;
+}
+
+/* Read texture file and generate an OpenGL texture object */
+bool CAppParcial2::loadTexture(const char *filename, unsigned int *newTextureID)
+{
+	TGAFILE tgaFile;
+	tgaFile.imageData = nullptr;
+
+	if (filename == nullptr || newTextureID == nullptr)
+	{
+		return false;
+	}
+
+	*newTextureID = 0;
+
+	if (LoadTGAFile(filename, &tgaFile))
+	{
+		if (tgaFile.imageData == nullptr ||
 			tgaFile.imageHeight < 0 ||
 			tgaFile.imageWidth < 0)
 		{
-			if (tgaFile.imageData != NULL)
+			if (tgaFile.imageData != nullptr)
 			{
 				delete[] tgaFile.imageData;
 			}
+
 			return false;
 		}
 
 		// Create a texture object for the menu, and copy the texture data to graphics memory
 		if (!getOpenGLRenderer()->createTextureObject(
-			&mcCUbeTextureID,
+			newTextureID,
 			tgaFile.imageData,
 			tgaFile.imageWidth,
 			tgaFile.imageHeight
@@ -131,7 +157,7 @@ bool CAppParcial2::initializeMCCube()
 		}
 
 		// Texture data is stored in graphics memory now, we don't need this copy anymore
-		if (tgaFile.imageData != NULL)
+		if (tgaFile.imageData != nullptr)
 		{
 			delete[] tgaFile.imageData;
 		}
@@ -139,7 +165,7 @@ bool CAppParcial2::initializeMCCube()
 	else
 	{
 		// Free texture data
-		if (tgaFile.imageData != NULL)
+		if (tgaFile.imageData != nullptr)
 		{
 			delete[] tgaFile.imageData;
 		}
@@ -147,11 +173,9 @@ bool CAppParcial2::initializeMCCube()
 		return false;
 	}
 
-	// Initialize a Minecraft cube
-	getOpenGLRenderer()->initializeMCCube(mcCUbeTextureID);
-
 	return true;
 }
+
 
 /* */
 bool CAppParcial2::initializeMenu()
@@ -204,50 +228,14 @@ bool CAppParcial2::initializeMenu()
 		// Set the generated shader program in the menu object
 		menu->setShaderProgramId(menuShaderProgramId);
 
-		TGAFILE tgaFile;
-		tgaFile.imageData = NULL;
-
-		if (LoadTGAFile(resourceFilenameTexture.c_str(), &tgaFile))
+		// Read texture file and generate an OpenGL texture object
+		if (loadTexture(resourceFilenameTexture.c_str(), &textureObjectId))
 		{
-			if (tgaFile.imageData == NULL ||
-				tgaFile.imageHeight < 0 ||
-				tgaFile.imageWidth < 0)
-			{
-				if (tgaFile.imageData != NULL)
-				{
-					delete[] tgaFile.imageData;
-				}
-				return false;
-			}
-
-			// Create a texture object for the menu, and copy the texture data to graphics memory
-			if (!getOpenGLRenderer()->createTextureObject(
-				&textureObjectId,
-				tgaFile.imageData,
-				tgaFile.imageWidth,
-				tgaFile.imageHeight
-			))
-			{
-				return false;
-			}
-
 			// Set the generated texture object in the menu object
 			menu->setTextureObjectId(textureObjectId);
-
-			// Texture data is stored in graphics memory now, we don't need this copy anymore
-			if (tgaFile.imageData != NULL)
-			{
-				delete[] tgaFile.imageData;
-			}
 		}
 		else
 		{
-			// Free texture data
-			if (tgaFile.imageData != NULL)
-			{
-				delete[] tgaFile.imageData;
-			}
-
 			return false;
 		}
 
@@ -398,7 +386,7 @@ void CAppParcial2::render()
 
 			// No model loaded, show test cube
 			getOpenGLRenderer()->renderTestObject(&modelMatrix);
-			getOpenGLRenderer()->renderMCCube(&modelMatrix2);
+			getOpenGLRenderer()->renderMCCube(m_mcCubeTextureID, &modelMatrix2);
 		}
 	}
 }
@@ -422,7 +410,7 @@ bool CAppParcial2::load3DModel(const char * const filename)
 
 	if (m_p3DModel == nullptr)
 	{
-		cout << "ERROR: Unable read model from file" << endl;
+		cout << "ERROR: Unable to read model from file" << endl;
 		return false;
 	}
 
@@ -435,13 +423,24 @@ bool CAppParcial2::load3DModel(const char * const filename)
 		// load the appropriate shader instead 
 		if (m_p3DModel->hasUVs() && m_p3DModel->hasTextureFilename())
 		{
+			// Switch shaders to textured object ones
 			vertexShaderToLoad = VERTEX_SHADER_TEXTURED_3D_OBJECT;
 			fragmentShaderToLoad = FRAGMENT_SHADER_TEXTURED_3D_OBJECT;
-		}
-		
-		// TO-DO: LOAD TEXTURE AND ALSO CREATE TEXTURE OBJECT !!!!
 
-		// TO-DO: LOAD ALL POSSIBLE SHADERS FOR 3D OBJECT UP FRONT AND THEN JUST SWITCH THE ACTIVE ONE
+			unsigned int newTextureID = 0;
+
+			// LOAD TEXTURE AND ALSO CREATE TEXTURE OBJECT
+			if (loadTexture(m_p3DModel->getTextureFilename(), &newTextureID))
+			{
+				m_p3DModel->setTextureObjectId(newTextureID);
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		// TO-DO (IMPROVMENT): LOAD ALL POSSIBLE SHADERS FOR 3D OBJECT UP FRONT AND THEN JUST SWITCH THE ACTIVE ONE
 
 		// If resource files cannot be found, return
 		if (!CWideStringHelper::GetResourceFullPath(vertexShaderToLoad, wresourceFilenameVS, resourceFilenameVS) ||
@@ -503,7 +502,7 @@ void CAppParcial2::unloadCurrent3DModel()
 		);
 
 		// Free up texture object memory
-		if (m_currentModelTextureObject > 0)
+		if (m_p3DModel->getTextureObjectId() > 0)
 		{
 			getOpenGLRenderer()->deleteTexture(m_p3DModel->getTextureObjectId());
 		}
