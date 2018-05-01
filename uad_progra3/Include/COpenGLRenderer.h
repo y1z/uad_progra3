@@ -45,34 +45,16 @@ private:
 	std::vector<std::string> m_expectedUniformsInShader;
 	std::vector<std::string> m_expectedAttributesInShader;
 
-	//GLint sh_ModelUniformLocation;
-	//GLint sh_ViewUniformLocation;
-	//GLint sh_ProjUniformLocation;
-	//GLint sh_colorUniformLocation;
-
 	float m_cameraDistance; // Distance from camera view point to target point, expressed in OpenGL units
 
 	// TEST OBJECT VARS
 	// When no 3D object is loaded, we display a test object (spinning cube)
 	// ===========================
-	//GLint sh_TestPositionAttribLocation;
-	//GLint sh_TestColorAttribLocation;
+	GLuint m_testCubeShaderProgramID;
+	GLuint m_testCubeVAOID;
 
-	GLuint mTestshaderProgramID;
-	GLuint mVertexPositionArrayObjectID;
-	//GLuint mVertexPositionBuffer;
-	//GLuint mVertexColorBuffer;
-	//GLuint mIndexBuffer;
-
-	GLuint mMCCubeShaderProgramID;
-	GLuint mMCCubeVAOID;
-	//GLint  sh_MCCubeUVAttribLocation;
-	//GLuint mMCCubeVertexUVBuffer;
-	//GLuint mMCCubeVertexPositionBuffer;
-	//GLuint mMCCubeVertexColorBuffer;
-	//GLuint mMCCubeIndexBuffer;
-	//GLint  mMCCubeTextureUniformLocation;
-	//GLuint mMCCubeTextureID;
+	GLuint m_mCCubeShaderProgramID;
+	GLuint m_mCCubeVAOID;
 	// ===========================
 
 	//
@@ -119,6 +101,9 @@ private:
 
 	//
 	COpenGLShaderProgram* getShaderProgramWrapper(unsigned int id);
+
+	//
+	bool deleteShaderProgram(unsigned int *shaderProgramId);
 
 public:
 	// Constructor and Destructor
@@ -173,9 +158,6 @@ public:
 		unsigned int *shaderProgramId,
 		const char *vertexShader,
 		const char *fragmentShader);
-
-	//
-	bool deleteShaderProgram(unsigned int *shaderProgramId);
 
 	//
 	bool createTextureObject(
