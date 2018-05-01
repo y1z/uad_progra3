@@ -165,9 +165,7 @@ public:
 		float topX, float topY, float menuItemHeight,
 		float *uvCoords,
 		unsigned int *shaderProgramId,
-		unsigned int *vertexArrayObjectID,
-		int *colorUniformLocation,
-		int *textureUniformLocation
+		unsigned int *vertexArrayObjectID
 	);
 
 	//
@@ -209,8 +207,6 @@ public:
 		unsigned int *shaderProgramId, 
 		unsigned int *textureObjectId,
 		unsigned int *vertexArrayObjectId,
-		int *colorUniformLocation, 
-		int *textureUniformLocation,
 		GLfloat *menuItemColor);
 
 	//

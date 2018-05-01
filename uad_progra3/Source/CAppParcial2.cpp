@@ -262,9 +262,8 @@ bool CAppParcial2::initializeMenu()
 				menuItemHeight,
 				UV,
 				&menuShaderProgramId,
-				&vaoMenuItemId,
-				&colorUniformLocation,
-				&textureUniformLocation);
+				&vaoMenuItemId
+			);
 
 			// If operation failed
 			if (!generatedMenuItemGeometry)
@@ -272,10 +271,7 @@ bool CAppParcial2::initializeMenu()
 				menu->cleanupGraphicsObjects(getOpenGLRenderer());
 				return false;
 			}
-
-			menu->setColorUniformLocation(colorUniformLocation);
-			menu->setTextureUniformLocation(textureUniformLocation);
-			
+	
 			menu->addMenuItem(menuOptions[i].c_str(), currentX, currentY, vaoMenuItemId);
 			currentY -= deltaY;
 
@@ -560,7 +556,7 @@ void CAppParcial2::onF3(int mods)
 /* */
 void CAppParcial2::onMouseMove(float deltaX, float deltaY)
 {
-	if (deltaX < 100 && deltaY < 100)
+	if (deltaX < 100.0f && deltaY < 100.0f)
 	{
 		float moveX = -deltaX * DEFAULT_CAMERA_MOVE_SPEED;
 		float moveZ = -deltaY * DEFAULT_CAMERA_MOVE_SPEED;

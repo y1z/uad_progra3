@@ -14,7 +14,6 @@ using namespace std;
 #include "../Include/CWideStringHelper.h"
 
 /*
-###
 */
 COpenGLRenderer::COpenGLRenderer():
 	m_OpenGLError{ false },
@@ -33,7 +32,6 @@ COpenGLRenderer::COpenGLRenderer():
 }
 
 /*
-###
 */
 COpenGLRenderer::~COpenGLRenderer()
 {
@@ -156,6 +154,9 @@ bool COpenGLRenderer::createShaderProgram(unsigned int *shaderProgramId, const c
 			// Search for uniforms and attributes
 			// NOTE: We're assuming these attrib and uniforms are in the shader
 
+			cout << "SHADER: " << vertexShader << endl;
+			cout << "SHADER: " << fragmentShader << endl;
+
 			// Uniforms
 			for (size_t idx = 0; idx < m_expectedUniformsInShader.size(); idx++)
 			{
@@ -165,13 +166,11 @@ bool COpenGLRenderer::createShaderProgram(unsigned int *shaderProgramId, const c
 				{
 					// Set the uniform location in the shader program
 					newShaderProgramWrapper->setUniformLocation(m_expectedUniformsInShader[idx], uniformLocation);
+					cout << "INFO: Found uniform location for: " << m_expectedUniformsInShader[idx].c_str() << endl;
 				}
 				else
 				{
-					cout << "SHADER: " << vertexShader << endl;
-					cout << "SHADER: " << fragmentShader << endl;
-					cout << "WARNING: Unable to get shader program uniform location for: " << m_expectedUniformsInShader[idx].c_str() << endl;
-					// return false;
+					//cout << "WARNING: Unable to get uniform location for: " << m_expectedUniformsInShader[idx].c_str() << endl;
 				}
 			}
 
@@ -184,13 +183,11 @@ bool COpenGLRenderer::createShaderProgram(unsigned int *shaderProgramId, const c
 				{
 					// Set the uniform location in the shader program
 					newShaderProgramWrapper->setAttributeLocation(m_expectedAttributesInShader[idx], attributeLocation);
+					cout << "INFO: Found attribute location for: " << m_expectedAttributesInShader[idx].c_str() << endl;
 				}
 				else
 				{
-					cout << "SHADER: " << vertexShader << endl;
-					cout << "SHADER: " << fragmentShader << endl;
-					cout << "WARNING: Unable to get shader program attribute location for: " << m_expectedAttributesInShader[idx].c_str() << endl;
-					// return false;
+					//cout << "WARNING: Unable to get attribute location for: " << m_expectedAttributesInShader[idx].c_str() << endl;
 				}
 			}	
 
@@ -1020,8 +1017,6 @@ bool COpenGLRenderer::renderMenuItem(
 	unsigned int *shaderProgramId,
 	unsigned int *textureObjectId,
 	unsigned int *vertexArrayObjectId, 
-	int *colorUniformLocation, 
-	int *textureUniformLocation,
 	GLfloat *menuItemColor
 )
 {
@@ -1055,7 +1050,7 @@ bool COpenGLRenderer::renderMenuItem(
 		// Set the texture sampler uniform
 		if (shaderProgramWrapper->getTextureSamplerUniformLocation() >= 0 && *textureObjectId >= 0)
 		{
-			// DO NOT CALL glEnable(GL_TEXTURE_2D) OR OPENGL WILL RETURN AN "1280" ERROR
+			// DO NOT CALL glEnable(GL_TEXTURE_2D) OR OPENGL WILL RETURN AN "1282" ERROR
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, *textureObjectId);
 			glUniform1i(shaderProgramWrapper->getTextureSamplerUniformLocation(), 0);
@@ -1066,10 +1061,10 @@ bool COpenGLRenderer::renderMenuItem(
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 
-		/*
 		// Bind vertex array object
 		glBindVertexArray(*vertexArrayObjectId);
 
+		/*
 		// Pass the color value to the uniform
 		if (*colorUniformLocation >= 0)
 		{
@@ -1453,14 +1448,11 @@ bool COpenGLRenderer::allocateGraphicsMemoryForMenuItem(
 	float menuItemHeight,
 	float *uvCoords,
 	unsigned int *shaderProgramId,
-	unsigned int *vertexArrayObjectID,
-	int *colorUniformLocation,
-	int *textureUniformLocation)
+	unsigned int *vertexArrayObjectID)
 {
 	// Use shader program
 	if (shaderProgramId != NULL
-		&& vertexArrayObjectID != NULL 
-		&& colorUniformLocation != NULL)
+		&& vertexArrayObjectID != NULL)
 	{
 		if (!useShaderProgram(shaderProgramId))
 		{

@@ -24,8 +24,6 @@ private:
 
 	unsigned int m_shaderProgramId;
 	unsigned int m_textureObjectId;
-	int m_colorUniformLocation;
-	int m_textureUniformLocation;
 
 	// The menu is a double-linked list of CMenuItem objects
 	CCircularDoubleLinkedList<CGameMenuItem> *m_MenuItemList;
@@ -67,8 +65,6 @@ public:
 	//
 	void setShaderProgramId(unsigned int id) { m_shaderProgramId = id; }
 	void setTextureObjectId(unsigned int id) { m_textureObjectId = id; }
-	void setColorUniformLocation(int loc) { m_colorUniformLocation = loc; }
-	void setTextureUniformLocation(int loc) { m_textureUniformLocation = loc; }
 };
 
 #endif // !CGAMEMENU_H
