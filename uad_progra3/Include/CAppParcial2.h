@@ -8,7 +8,8 @@
 #include "C3DModel.h"
 #include "CVector3.h"
 
-#define DEFAULT_ROTATION_SPEED 90.0
+#define DEFAULT_ROTATION_SPEED 90.0f
+#define DEFAULT_CAMERA_MOVE_SPEED 0.015f
 
 // Class that inherits from Base class CApp
 // Base class CApp has members for: CGameWindow, CGameMenu, and COpenGLRenderer, which we can access through the public/protected methods
@@ -30,9 +31,20 @@ private:
 	//  Object rotation speed (degrees per second)
 	double m_rotationSpeed;
 
+	// Shader program for the current model
+	unsigned int m_currentModelShaderId;
+
+	// Texture object ID for the current model
+	unsigned int m_currentModelTextureObject;
+
+	// Texture object ID for minecraft cube
+	unsigned int m_mcCubeTextureID;
+
 protected:
 	// Method to initialize the menu
 	bool initializeMenu();
+	// Method to initialize a MC cube and its texture
+	bool initializeMCCube();
 
 public:
 	// Constructors and destructor
@@ -42,6 +54,9 @@ public:
 
 	// Inherited methods from CApp
 	// ---------------------------
+
+	// Method to initialize any objects for this class
+	void initialize();
 
 	// Method to update any objecs based on time elapsed since last frame
 	void update(double deltaTime);
@@ -61,6 +76,8 @@ public:
 	// This derived class only uses F2/F3
 	void onF2(int mods);
 	void onF3(int mods);
+
+	void onMouseMove(float deltaX, float deltaY);
 	
 private:
 
@@ -70,6 +87,9 @@ private:
 
 	// Move camera away/closer
 	void moveCamera(float direction);
+
+	//
+	bool loadTexture(const char *filename, unsigned int *newTextureID);
 };
 
 #endif // !CAPPPARCIAL2_H

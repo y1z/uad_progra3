@@ -35,6 +35,8 @@ int  CGameWindow::keyMods                   = 0;
 
 int  CGameWindow::newWidth                  = 0;
 int  CGameWindow::newHeight                 = 0;
+double CGameWindow::stCursorPosX            = 0.0;
+double CGameWindow::stCursorPosY            = 0.0;
 
 /* Default constructor
 */
@@ -42,7 +44,9 @@ CGameWindow::CGameWindow(COpenGLRenderer * renderer) :
 	m_ReferenceRenderer{ renderer },
 	m_Width{ CGameWindow::DEFAULT_WINDOW_WIDTH },
 	m_Height{ CGameWindow::DEFAULT_WINDOW_HEIGHT },
-	m_InitializedGLFW{ false }
+	m_InitializedGLFW{ false },
+	m_CursorPosX{0.0},
+	m_CursorPosY{0.0}
 {
 	initializeGLFW();
 }
@@ -53,7 +57,9 @@ CGameWindow::CGameWindow(COpenGLRenderer * renderer, int width, int height) :
 	m_ReferenceRenderer{ renderer },
 	m_Width{ width }, 
 	m_Height{ height },
-	m_InitializedGLFW{ false }
+	m_InitializedGLFW{ false },
+	m_CursorPosX{ 0.0 },
+	m_CursorPosY{ 0.0 }
 {
 	initializeGLFW();
 }
@@ -140,6 +146,61 @@ bool CGameWindow::create(const char *windowTitle)
 	/* Keyboard callback */
 	glfwSetKeyCallback(m_Window, keyboardCallback);
 
+	/* Cursor position callback */
+	glfwSetCursorPosCallback(m_Window, cursorPositionCallback);
+
+	/*
+     * http://www.glfw.org/docs/latest/input_guide.html#cursor_pos
+	 * "If you wish to implement mouse motion based camera controls or other input schemes that require unlimited mouse movement, 
+	 *  set the cursor mode to GLFW_CURSOR_DISABLED."
+	 *  This will hide the cursor and lock it to the specified window. GLFW will then take care of all the details of cursor re-centering and 
+	 *  offset calculation and providing the application with a virtual cursor position. This virtual position is provided normally via both 
+	 *  the cursor position callback and through polling.
+     */
+	glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	// Get the desktop resolution.
+	const GLFWvidmode *videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	int windowPosXOffset = 15;
+
+	// Set position of the GLFW window
+	if (videoMode)
+	{
+		glfwSetWindowPos(
+			m_Window,
+			//(videoMode->width - m_Width) / 2,
+			windowPosXOffset,
+			(videoMode->height - m_Height) / 2
+		);
+
+		// Get the handle to the console window
+		HWND consoleWindow = GetConsoleWindow();
+		
+		// Set the position of the console window
+		if (consoleWindow)
+		{
+			RECT r;
+			int extraHeight = 60;
+
+			// Get console window current dimensions
+			GetWindowRect(consoleWindow, &r);
+
+			// Set console window dimensions/position
+			MoveWindow(consoleWindow, 
+				windowPosXOffset + m_Width + windowPosXOffset,
+				((videoMode->height - (m_Height + extraHeight)) / 2),
+				r.right - r.left, m_Height + extraHeight,
+				TRUE);
+
+			// Set console window position
+			/*SetWindowPos(
+				consoleWindow, 0, 
+				m_Width + 20, 
+				((videoMode->height - m_Height) / 2), 
+				0, 0, SWP_NOSIZE | SWP_NOZORDER); */
+		}
+	}
+
 	return true;
 }
 
@@ -161,6 +222,7 @@ void CGameWindow::mainLoop(void *appPointer)
 	double fps = 0.0;
 	__int64 CounterStart = 0;
 	int numFramesRendered = 0;
+	float deltaCursorPosX = 0.0f, deltaCursorPosY = 0.0f;
 	LARGE_INTEGER li;
 
 	if (m_Window == NULL || appPointer == NULL || m_ReferenceRenderer == NULL)
@@ -202,6 +264,29 @@ void CGameWindow::mainLoop(void *appPointer)
 
 		if (delta_time > 0.0)
 		{
+			// Get mouse position
+			// DISABLED
+			// Using callback instead of polling every frame, performance is better
+			// glfwGetCursorPos(m_Window, &currCursorPosX, &currCursorPosY);
+
+			// Calculate delta from last frame
+			deltaCursorPosX = (float)stCursorPosX - (float)m_CursorPosX;
+			deltaCursorPosY = (float)stCursorPosY - (float)m_CursorPosY;
+
+			// Whenever cursor moves...
+			if (deltaCursorPosX != 0.0f && deltaCursorPosY != 0.0f)
+			{
+				//cout << "Cursor position: (" << m_CursorPosX << "," << m_CursorPosY << ")" << endl;
+				//cout << "Delta cursor pos: (" << deltaCursorPosX << "," << currCursorPosY - m_CursorPosY << ")" << endl;
+
+				// Save new cursor position
+				m_CursorPosX = stCursorPosX;
+				m_CursorPosY = stCursorPosY;
+
+				((CApp *)appPointer)->onMouseMove(deltaCursorPosX, deltaCursorPosY);
+			}
+
+			//
 			accumulator += delta_time;
 
 			while (accumulator >= dt) {
@@ -337,6 +422,14 @@ void CGameWindow::keyboardCallback(GLFWwindow * window, int key, int scancode, i
 			break;
 		}
 	}
+}
+
+/*
+*/
+void CGameWindow::cursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
+{
+	stCursorPosX = xpos;
+	stCursorPosY = ypos;
 }
 
 /*

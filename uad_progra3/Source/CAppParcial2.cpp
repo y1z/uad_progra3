@@ -41,11 +41,24 @@ CAppParcial2::~CAppParcial2()
 {
 	cout << "Destructor: ~CAppParcial2()" << endl;
 	unloadCurrent3DModel();
+
+	if (m_mcCubeTextureID > 0)
+	{
+		getOpenGLRenderer()->deleteTexture(&m_mcCubeTextureID);
+	}
+}
+
+/* */
+void CAppParcial2::initialize()
+{
+
 }
 
 /* */
 void CAppParcial2::run()
 {
+	initialize();
+
 	// Check if CGameWindow object and window library been initialized
 	if (canRun())
 	{
@@ -59,6 +72,11 @@ void CAppParcial2::run()
 			getOpenGLRenderer()->setWindowHeight(getGameWindow()->getHeight());
 			// Initialize a test cube
 			getOpenGLRenderer()->initializeTestObjects();
+			// MCCube
+			if (!initializeMCCube())
+			{
+				return;
+			}
 
 			// Create our menu (add all menu items)
 			if (!initializeMenu())
@@ -72,6 +90,92 @@ void CAppParcial2::run()
 		}
 	}
 }
+
+/* */
+bool CAppParcial2::initializeMCCube()
+{
+	m_mcCubeTextureID = 0;
+	std::wstring wresourceFilenameTexture;
+	std::string resourceFilenameTexture;
+
+	// If resource files cannot be found, return
+	if (!CWideStringHelper::GetResourceFullPath(MC_CUBE_TEXTURE, wresourceFilenameTexture, resourceFilenameTexture))
+	{
+		cout << "ERROR: Unable to find one or more resources: " << endl;
+		cout << "  " << MC_CUBE_TEXTURE << endl;
+		return false;
+	}
+
+	// Initialize the texture
+	if (!loadTexture(resourceFilenameTexture.c_str(), &m_mcCubeTextureID))
+	{
+		return false;
+	}
+
+	// Initialize a Minecraft cube
+	getOpenGLRenderer()->initializeMCCube();
+
+	return true;
+}
+
+/* Read texture file and generate an OpenGL texture object */
+bool CAppParcial2::loadTexture(const char *filename, unsigned int *newTextureID)
+{
+	TGAFILE tgaFile;
+	tgaFile.imageData = nullptr;
+
+	if (filename == nullptr || newTextureID == nullptr)
+	{
+		return false;
+	}
+
+	*newTextureID = 0;
+
+	if (LoadTGAFile(filename, &tgaFile))
+	{
+		if (tgaFile.imageData == nullptr ||
+			tgaFile.imageHeight < 0 ||
+			tgaFile.imageWidth < 0)
+		{
+			if (tgaFile.imageData != nullptr)
+			{
+				delete[] tgaFile.imageData;
+			}
+
+			return false;
+		}
+
+		// Create a texture object for the menu, and copy the texture data to graphics memory
+		if (!getOpenGLRenderer()->createTextureObject(
+			newTextureID,
+			tgaFile.imageData,
+			tgaFile.imageWidth,
+			tgaFile.imageHeight
+		))
+		{
+			return false;
+		}
+
+		// Texture data is stored in graphics memory now, we don't need this copy anymore
+		if (tgaFile.imageData != nullptr)
+		{
+			delete[] tgaFile.imageData;
+		}
+	}
+	else
+	{
+		// Free texture data
+		if (tgaFile.imageData != nullptr)
+		{
+			delete[] tgaFile.imageData;
+		}
+
+		return false;
+	}
+
+	return true;
+}
+
 
 /* */
 bool CAppParcial2::initializeMenu()
@@ -124,50 +228,14 @@ bool CAppParcial2::initializeMenu()
 		// Set the generated shader program in the menu object
 		menu->setShaderProgramId(menuShaderProgramId);
 
-		TGAFILE tgaFile;
-		tgaFile.imageData = NULL;
-
-		if (LoadTGAFile(resourceFilenameTexture.c_str(), &tgaFile))
+		// Read texture file and generate an OpenGL texture object
+		if (loadTexture(resourceFilenameTexture.c_str(), &textureObjectId))
 		{
-			if (tgaFile.imageData == NULL ||
-				tgaFile.imageHeight < 0 ||
-				tgaFile.imageWidth < 0)
-			{
-				if (tgaFile.imageData != NULL)
-				{
-					delete[] tgaFile.imageData;
-				}
-				return false;
-			}
-
-			// Create a texture object for the menu, and copy the texture data to graphics memory
-			if (!getOpenGLRenderer()->createTextureObject(
-				&textureObjectId,
-				tgaFile.imageData,
-				tgaFile.imageWidth,
-				tgaFile.imageHeight
-			))
-			{
-				return false;
-			}
-
 			// Set the generated texture object in the menu object
 			menu->setTextureObjectId(textureObjectId);
-
-			// Texture data is stored in graphics memory now, we don't need this copy anymore
-			if (tgaFile.imageData != NULL)
-			{
-				delete[] tgaFile.imageData;
-			}
 		}
 		else
 		{
-			// Free texture data
-			if (tgaFile.imageData != NULL)
-			{
-				delete[] tgaFile.imageData;
-			}
-
 			return false;
 		}
 
@@ -194,9 +262,8 @@ bool CAppParcial2::initializeMenu()
 				menuItemHeight,
 				UV,
 				&menuShaderProgramId,
-				&vaoMenuItemId,
-				&colorUniformLocation,
-				&textureUniformLocation);
+				&vaoMenuItemId
+			);
 
 			// If operation failed
 			if (!generatedMenuItemGeometry)
@@ -204,10 +271,7 @@ bool CAppParcial2::initializeMenu()
 				menu->cleanupGraphicsObjects(getOpenGLRenderer());
 				return false;
 			}
-
-			menu->setColorUniformLocation(colorUniformLocation);
-			menu->setTextureUniformLocation(textureUniformLocation);
-			
+	
 			menu->addMenuItem(menuOptions[i].c_str(), currentX, currentY, vaoMenuItemId);
 			currentY -= deltaY;
 
@@ -279,7 +343,7 @@ void CAppParcial2::render()
 	else // Otherwise, render active object if loaded (or test cube if no object is loaded)
 	{
 		// White 
-		float color[3] = {0.95f, 0.95f, 0.95f};
+		float color[3] = {1.0f, 1.0f, 1.0f};
 
 		if (m_p3DModel != NULL && m_p3DModel->isInitialized())
 		{
@@ -292,9 +356,12 @@ void CAppParcial2::render()
 			getOpenGLRenderer()->renderObject(
 				m_p3DModel->getShaderProgramId(),
 				m_p3DModel->getGraphicsMemoryObjectId(),
+				m_p3DModel->getTextureObjectId(),
 				m_p3DModel->getNumFaces(), 
 				color,
-				&modelMatrix
+				&modelMatrix,
+				COpenGLRenderer::EPRIMITIVE_MODE::TRIANGLES,
+				false
 			);
 		}
 		else
@@ -305,8 +372,18 @@ void CAppParcial2::render()
 			// Get a matrix that has both the object rotation and translation
 			MathHelper::Matrix4 modelMatrix = MathHelper::ModelMatrix((float)totalDegreesRotatedRadians, m_objectPosition);
 
+			CVector3 pos2 = m_objectPosition;
+			pos2 += CVector3(3.0f, 0.0f, 0.0f);
+			MathHelper::Matrix4 modelMatrix2 = MathHelper::ModelMatrix((float)totalDegreesRotatedRadians, pos2);
+
+			/*
+				MathHelper::Matrix4 viewMatrix = MathHelper::SimpleViewMatrix(m_cameraDistance);
+				MathHelper::Matrix4 projectionMatrix = MathHelper::SimpleProjectionMatrix(float(m_windowWidth) / float(m_windowHeight));
+			*/
+
 			// No model loaded, show test cube
 			getOpenGLRenderer()->renderTestObject(&modelMatrix);
+			getOpenGLRenderer()->renderMCCube(m_mcCubeTextureID, &modelMatrix2);
 		}
 	}
 }
@@ -319,33 +396,72 @@ bool CAppParcial2::load3DModel(const char * const filename)
 	std::string resourceFilenameVS;
 	std::string resourceFilenameFS;
 
-	// If resource files cannot be found, return
-	if (!CWideStringHelper::GetResourceFullPath(VERTEX_SHADER_3D_OBJECTS, wresourceFilenameVS, resourceFilenameVS) ||
-		!CWideStringHelper::GetResourceFullPath(FRAGMENT_SHADER_3D_OBJECTS, wresourceFilenameFS, resourceFilenameFS))
-	{
-		cout << "ERROR: Unable to find one or more resources: " << endl;
-		cout << "  " << VERTEX_SHADER_3D_OBJECTS << endl;
-		cout << "  " << FRAGMENT_SHADER_3D_OBJECTS << endl;
-
-		return false;
-	}
+	char *vertexShaderToLoad = VERTEX_SHADER_3D_OBJECT;
+	char *fragmentShaderToLoad = FRAGMENT_SHADER_3D_OBJECT;
 
 	// Unload any current 3D model
 	unloadCurrent3DModel();
 	
 	// Create new 3D object
-	m_p3DModel = new C3DModel();
+	m_p3DModel = C3DModel::load(filename);
+
+	if (m_p3DModel == nullptr)
+	{
+		cout << "ERROR: Unable to read model from file" << endl;
+		return false;
+	}
 
 	// Load object from file
-	bool loaded = m_p3DModel->loadFromFile(filename);
+	bool loaded = m_p3DModel->isInitialized();
 
 	if (loaded)
 	{
+		// By default, shaders to be loaded are for non-textured objects, but if the model has a valid texture filename and UVs, 
+		// load the appropriate shader instead 
+		if (m_p3DModel->hasUVs() && m_p3DModel->hasTextures())
+		{
+			// Switch shaders to textured object ones
+			vertexShaderToLoad = VERTEX_SHADER_TEXTURED_3D_OBJECT;
+			fragmentShaderToLoad = FRAGMENT_SHADER_TEXTURED_3D_OBJECT;
+
+			unsigned int newTextureID = 0;
+
+			// LOAD TEXTURE AND ALSO CREATE TEXTURE OBJECT
+			if (loadTexture(m_p3DModel->getTextureFilename(), &newTextureID))
+			{
+				m_p3DModel->setTextureObjectId(newTextureID);
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		// TO-DO (IMPROVMENT): LOAD ALL POSSIBLE SHADERS FOR 3D OBJECT UP FRONT AND THEN JUST SWITCH THE ACTIVE ONE
+
+		// If resource files cannot be found, return
+		if (!CWideStringHelper::GetResourceFullPath(vertexShaderToLoad, wresourceFilenameVS, resourceFilenameVS) ||
+			!CWideStringHelper::GetResourceFullPath(fragmentShaderToLoad, wresourceFilenameFS, resourceFilenameFS))
+		{
+			cout << "ERROR: Unable to find one or more resources: " << endl;
+			cout << "  " << vertexShaderToLoad << endl;
+			cout << "  " << fragmentShaderToLoad << endl;
+
+			return false;
+		}
+		
+		// Create a shader program for this object
+		getOpenGLRenderer()->createShaderProgram(
+			&m_currentModelShaderId, 
+			resourceFilenameVS.c_str(), 
+			resourceFilenameFS.c_str());
+
+		// Save the shader program ID in the model as well
+		m_p3DModel->setShaderProgramId(m_currentModelShaderId);
+
 		// Allocate graphics memory for object
 		loaded = getOpenGLRenderer()->allocateGraphicsMemoryForObject(
 			m_p3DModel->getShaderProgramId(),
-			resourceFilenameVS.c_str(),
-			resourceFilenameFS.c_str(),
 			m_p3DModel->getGraphicsMemoryObjectId(),
 			m_p3DModel->getModelVertices(),
 			m_p3DModel->getNumVertices(),
@@ -382,6 +498,12 @@ void CAppParcial2::unloadCurrent3DModel()
 			m_p3DModel->getGraphicsMemoryObjectId()
 		);
 
+		// Free up texture object memory
+		if (m_p3DModel->getTextureObjectId() > 0)
+		{
+			getOpenGLRenderer()->deleteTexture(m_p3DModel->getTextureObjectId());
+		}
+
 		// Delete 3D object
 		delete m_p3DModel;
 		m_p3DModel = NULL;
@@ -398,7 +520,7 @@ void CAppParcial2::onF2(int mods)
 	ZeroMemory(&ofn, sizeof(ofn));
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner   = NULL;
-	ofn.lpstrFilter = L"Obj Files\0*.obj\0All files\0*.*\0";
+	ofn.lpstrFilter = L" Obj Files\0*.obj\0 Stl Files\0*.stl\0 3DS Files\0*.3ds\0 All files\0*.*\0";
 	ofn.lpstrFile   = &wideStringBuffer[0];
 	ofn.nMaxFile    = MAX_PATH;
 	ofn.lpstrTitle  = L"Select a model file";
@@ -429,6 +551,22 @@ void CAppParcial2::onF3(int mods)
 	else
 	{
 		moveCamera(1.0f);
+	}
+}
+
+/* */
+void CAppParcial2::onMouseMove(float deltaX, float deltaY)
+{
+	if (deltaX < 100.0f && deltaY < 100.0f)
+	{
+		float moveX = -deltaX * DEFAULT_CAMERA_MOVE_SPEED;
+		float moveZ = -deltaY * DEFAULT_CAMERA_MOVE_SPEED;
+
+		float currPos[3];
+		m_objectPosition.getValues(currPos);
+		currPos[0] += moveX;
+		currPos[2] += moveZ;
+		m_objectPosition.setValues(currPos);
 	}
 }
 

@@ -8,6 +8,11 @@
 #include <GLFW/glfw3.h>
 
 #include "MathHelper.h"
+#include "COpenGLShaderProgram.h"
+
+#include <map>
+#include <vector>
+using namespace std;
 
 #define BUFFER_OFFSET(a) ((void*)(a))
 #define MIN_CAMERA_DISTANCE 5.0f
@@ -19,29 +24,37 @@
 // *NOTE: This code has been tested to work fine on NVidia cards. Radeon cards seem to behave differently...
 class COpenGLRenderer
 {
+public:
+	enum EPRIMITIVE_MODE
+	{
+		POINTS = 0,
+		LINES,
+		LINE_STRIP,
+		LINE_LOOP,
+		TRIANGLES,
+		TRIANGLE_STRIP,
+		TRIANGLE_FAN
+	};
+
 private:
 	int m_windowWidth;
 	int m_windowHeight;
 	bool m_OpenGLError;
 
-	GLint sh_ModelUniformLocation;
-	GLint sh_ViewUniformLocation;
-	GLint sh_ProjUniformLocation;
-	GLint sh_colorUniformLocation;
+	std::map<int, COpenGLShaderProgram*> m_shaderProgramWrappers;
+	std::vector<std::string> m_expectedUniformsInShader;
+	std::vector<std::string> m_expectedAttributesInShader;
 
 	float m_cameraDistance; // Distance from camera view point to target point, expressed in OpenGL units
 
 	// TEST OBJECT VARS
 	// When no 3D object is loaded, we display a test object (spinning cube)
 	// ===========================
-	GLint sh_TestPositionAttribLocation;
-	GLint sh_TestColorAttribLocation;
+	GLuint m_testCubeShaderProgramID;
+	GLuint m_testCubeVAOID;
 
-	GLuint mTestshaderProgramID;
-	GLuint mVertexPositionArrayObjectID;
-	GLuint mVertexPositionBuffer;
-	GLuint mVertexColorBuffer;
-	GLuint mIndexBuffer;
+	GLuint m_mCCubeShaderProgramID;
+	GLuint m_mCCubeVAOID;
 	// ===========================
 
 	//
@@ -69,7 +82,7 @@ private:
 	);
 
 	//
-	bool useShaderProgram(unsigned int *shaderProgramId) const;
+	bool useShaderProgram(const unsigned int * const shaderProgramId) const;
 
 	//
 	GLuint generateVertexArrayObjectID() const;
@@ -83,6 +96,15 @@ private:
 	//
 	void deleteVertexArrayObject(GLuint *id);
 
+	//
+	GLenum primitiveModeToGLEnum(EPRIMITIVE_MODE mode) const;
+
+	//
+	COpenGLShaderProgram* getShaderProgramWrapper(unsigned int id);
+
+	//
+	bool deleteShaderProgram(unsigned int *shaderProgramId);
+
 public:
 	// Constructor and Destructor
 	COpenGLRenderer();
@@ -90,11 +112,10 @@ public:
 
 	// =================================================================
 	// Allocates graphics memory for a given 3D object 
+	// Note: shader program must be already created
 	// =================================================================
 	bool allocateGraphicsMemoryForObject(
 		unsigned int *shaderProgramId,
-		const char *vertexShader, 
-		const char *fragmentShader,
 		unsigned int *vertexArrayObjectID, 
 		GLfloat *vertices, int numVertices,
 		GLfloat *normals, int numNormals,
@@ -102,6 +123,16 @@ public:
 		unsigned short *indicesVertices, int numIndicesVert,
 		unsigned short *indicesNormals, int numIndicesNormals,
 		unsigned short *indicesUVCoords, int numIndicesUVCoords);
+
+	// =================================================================
+	// Allocates graphics memory for a given 3D object
+	// Note: shader program must be already created
+	// =================================================================
+	bool allocateGraphicsMemoryForObject(
+		const unsigned int * const shaderProgramId,
+		unsigned int *vertexArrayObjectID,
+		GLfloat *vertices, int numVertices,
+		unsigned short *indicesVertices, int numIndicesVert);
 
 	// =================================================================
 	// Free graphics memory for a given 3D object 
@@ -119,19 +150,14 @@ public:
 		float topX, float topY, float menuItemHeight,
 		float *uvCoords,
 		unsigned int *shaderProgramId,
-		unsigned int *vertexArrayObjectID,
-		int *colorUniformLocation,
-		int *textureUniformLocation
+		unsigned int *vertexArrayObjectID
 	);
 
 	//
 	bool createShaderProgram(
-		unsigned int *shaderProgramId, 
-		const char *vertexShader, 
+		unsigned int *shaderProgramId,
+		const char *vertexShader,
 		const char *fragmentShader);
-
-	//
-	bool deleteShaderProgram(unsigned int *shaderProgramId);
 
 	//
 	bool createTextureObject(
@@ -141,20 +167,29 @@ public:
 		int height);
 
 	// 
+	bool renderWireframeObject(
+		unsigned int *shaderProgramId,
+		unsigned int *vertexArrayObjectId,
+		int numFaces,
+		GLfloat *objectColor,
+		MathHelper::Matrix4 *objectTransformation);
+
+	// 
 	bool renderObject(
-		unsigned int *shaderProgramId, 
-		unsigned int *vertexArrayObjectId, 
-		int numFaces, 
-		GLfloat *objectColor, 
-		MathHelper::Matrix4 *objectTransformation = NULL);
+		unsigned int *shaderProgramId,
+		unsigned int *vertexArrayObjectId,
+		unsigned int *textureObjectId,
+		int numFaces,
+		GLfloat *objectColor,
+		MathHelper::Matrix4 *objectTransformation = NULL,
+		EPRIMITIVE_MODE mode = TRIANGLES,
+		bool drawIndexedPrimitives = false);
 
 	//
 	bool renderMenuItem(
 		unsigned int *shaderProgramId, 
 		unsigned int *textureObjectId,
 		unsigned int *vertexArrayObjectId,
-		int *colorUniformLocation, 
-		int *textureUniformLocation,
 		GLfloat *menuItemColor);
 
 	//
@@ -164,6 +199,10 @@ public:
 	//
 	void renderTestObject(MathHelper::Matrix4 *objectTransformation = NULL);
 	void initializeTestObjects();
+
+	//
+	void renderMCCube(unsigned int cubeTextureID, MathHelper::Matrix4 *objectTransformation = NULL);
+	void initializeMCCube();
 
 	//
 	bool checkOpenGLError(char *operationAttempted);
@@ -192,9 +231,6 @@ public:
 
 	//
 	void clearScreen() { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
-
-	//
-	void drawGrid();
 
 	//
 	void drawString(unsigned int *textureObjectId, std::string &text, float x, float y, CVector3 &color);

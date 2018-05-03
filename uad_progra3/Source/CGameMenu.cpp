@@ -12,8 +12,6 @@ CGameMenu::CGameMenu() :
 	m_MenuItemWidth{DEFAULT_MENU_ITEM_WIDTH},
 	m_MenuItemHeight{DEFAULT_MENU_ITEM_HEIGHT},
 	m_shaderProgramId{ 0 },
-	m_colorUniformLocation{ 0 },
-	m_textureUniformLocation{ 0 },
 	m_textureObjectId{ 0 }
 {
 	cout << "Constructor: CGameMenu()" << endl;
@@ -61,8 +59,6 @@ void CGameMenu::render(COpenGLRenderer * const renderer)
 				&m_shaderProgramId,
 				&m_textureObjectId,
 				menuItem->getArrayObjectID(),
-				&m_colorUniformLocation,
-				&m_textureUniformLocation,
 				color
 			);
 		}
@@ -83,8 +79,6 @@ void CGameMenu::render(COpenGLRenderer * const renderer)
 						&m_shaderProgramId,
 						&m_textureObjectId,
 						menuItem->getArrayObjectID(),
-						&m_colorUniformLocation,
-						&m_textureUniformLocation,
 						color
 					);
 				}

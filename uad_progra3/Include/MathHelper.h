@@ -57,6 +57,40 @@ namespace MathHelper
 			           translation.getX(), translation.getY(), translation.getZ(), 1.0f);
 	}
 
+	//
+	inline static Matrix4 Multiply(Matrix4 m1, Matrix4 m2)
+	{
+		// TO-DO
+		return IdentityMatrix();
+	}
+
+	// Return a View Matrix given the Camera vectors
+	inline static Matrix4 ViewMatrix(CVector3 camEyePos, CVector3 camLookAt, CVector3 camUpVec)
+	{
+		// Calculate forward vector from target to eye
+		CVector3 forward = camEyePos - camLookAt;
+		forward.normalize();
+
+		// Calculate left vector
+		CVector3 left = camUpVec.cross(forward);
+		left.normalize();
+
+		// Recalculate the orthonormal up vector
+		CVector3 up = forward.cross(left);
+
+		// Calculate inverse translation from camEyePos to camLookAt
+		float inverseTranslateX = -(left.X    * camEyePos.X) - (left.Y    * camEyePos.Y) - (left.Z    * camEyePos.Z);
+		float inverseTranslateY = -(up.X      * camEyePos.X) - (up.Y      * camEyePos.Y) - (up.Z      * camEyePos.Z);
+		float inverseTranslateZ = -(forward.X * camEyePos.X) - (forward.Y * camEyePos.Y) - (forward.Z * camEyePos.Z);
+
+		return Matrix4(left.X,    left.Y,    left.Z,    inverseTranslateX,
+			           up.X,      up.Y,      up.Z,      inverseTranslateY,
+			           forward.X, forward.Y, forward.Z, inverseTranslateZ,
+			           0.0f,      0.0f,      0.0f,      1.0f);
+
+		// Transpose??
+	}
+
 	inline static Matrix4 SimpleViewMatrix(float cameraDistance)
 	{
 		// Camera is at 60 degrees to the ground, in the YZ plane.
