@@ -26,7 +26,7 @@ protected:
 	bool m_Initialized;                                               // Does this C3DModel object contain valid data? (loaded from file)
 	bool m_modelHasNormals;											  // Flag to determine if this model has normals
 	bool m_modelHasUVs;												  // Flag to determine if this model has UVs
-	bool m_modelHasTextureFilename;									  // Flag to determine if this model has a valid texture filename
+	bool m_modelHasTextures;										  // Flag to determine if this model has a valid texture filename
 	char *m_modelTextureFilename;
 
 	virtual void reset();                                             // Cleanup any allocated memory
@@ -83,7 +83,7 @@ public:
 
 	bool hasNormals() const { return m_modelHasNormals; }
 	bool hasUVs() const { return m_modelHasUVs; }
-	bool hasTextureFilename() const { return m_modelHasTextureFilename; }
+	bool hasTextures() const { return m_modelHasTextures; }
 
 	const char * const getTextureFilename() const { return m_modelTextureFilename; }
 };

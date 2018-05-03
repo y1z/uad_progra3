@@ -713,9 +713,12 @@ bool COpenGLRenderer::renderWireframeObject(
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+	unsigned int noTexture = 0;
+
 	return renderObject(
 		shaderProgramId,
 		vertexArrayObjectId,
+		&noTexture, // no texture
 		numFaces,
 		objectColor,
 		objectTransformation,
@@ -730,6 +733,7 @@ bool COpenGLRenderer::renderWireframeObject(
 bool COpenGLRenderer::renderObject(
 	unsigned int *shaderProgramId, 
 	unsigned int *vertexArrayObjectId, 
+	unsigned int *textureObjectId,
 	int numFaces, 
 	GLfloat *objectColor,
 	MathHelper::Matrix4 *objectTransformation,
@@ -740,6 +744,8 @@ bool COpenGLRenderer::renderObject(
 		&& m_windowHeight > 0
 		&& vertexArrayObjectId != NULL 
 		&& *vertexArrayObjectId > 0
+		&& textureObjectId != NULL 
+		&& *textureObjectId > 0
 		&& numFaces > 0
 		&& objectColor != NULL
 		&& !m_OpenGLError)
@@ -794,6 +800,20 @@ bool COpenGLRenderer::renderObject(
 		if (shaderProgramWrapper->getColorUniformLocation() >= 0)
 		{
 			glUniform3f(shaderProgramWrapper->getColorUniformLocation(), objectColor[0], objectColor[1], objectColor[2]);
+		}
+
+		// Set the texture sampler uniform
+		if (shaderProgramWrapper->getTextureSamplerUniformLocation() >= 0 && *textureObjectId > 0)
+		{
+			// DO NOT CALL glEnable(GL_TEXTURE_2D) OR OPENGL WILL RETURN AN "1280" ERROR
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, *textureObjectId);
+			glUniform1i(shaderProgramWrapper->getTextureSamplerUniformLocation(), 0);
+		}
+		else
+		{
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 
 		if (drawIndexedPrimitives)
@@ -1458,7 +1478,7 @@ void COpenGLRenderer::renderMCCube(unsigned int cubeTextureID, MathHelper::Matri
 		}
 
 		// Set the texture sampler uniform
-		if (shaderProgramWrapper->getTextureSamplerUniformLocation() >= 0 && cubeTextureID >= 0)
+		if (shaderProgramWrapper->getTextureSamplerUniformLocation() >= 0 && cubeTextureID > 0)
 		{
 			// DO NOT CALL glEnable(GL_TEXTURE_2D) OR OPENGL WILL RETURN AN "1280" ERROR
 			glActiveTexture(GL_TEXTURE0);

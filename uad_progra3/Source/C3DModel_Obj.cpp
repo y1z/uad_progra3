@@ -81,10 +81,19 @@ bool C3DModel_Obj::loadFromFile(const char * const filename)
 			m_modelHasNormals = false;
 			m_numNormals = m_numVertices;
 		}
+		else
+		{
+			m_modelHasNormals = true;
+		}
+
 		if (m_numUVCoords == 0)
 		{
 			m_numUVCoords = m_numVertices;
 			m_modelHasUVs = false;
+		}
+		else
+		{
+			m_modelHasUVs = true;
 		}
 
 		// Allocate memory for the arrays
@@ -170,6 +179,7 @@ bool C3DModel_Obj::parseObjLine(std::string line, bool countOnly, int lineNumber
 	bool readingNormal = false;
 	bool readingUV = false;
 	bool readingFace = false;
+	bool readingTexture = false;
 
 	char *nextToken = NULL;
 	char *token = NULL;
@@ -182,6 +192,9 @@ bool C3DModel_Obj::parseObjLine(std::string line, bool countOnly, int lineNumber
 	int numExpectedTokens = 4;
 
 	std::vector<std::string> tokens;
+
+	std::string materialName;
+	std::string materialFilename;
 
 	token = strtok_s((char *)line.c_str(), delimiterToken, &nextToken);
 
@@ -240,6 +253,11 @@ bool C3DModel_Obj::parseObjLine(std::string line, bool countOnly, int lineNumber
 					m_numFaces++;
 				}
 			}
+			// Texture
+			else if (0 == strcmp(token, "mtllib"))
+			{
+				readingTexture = true;
+			}
 			else
 			{
 				// Unrecognized line
@@ -275,7 +293,7 @@ bool C3DModel_Obj::parseObjLine(std::string line, bool countOnly, int lineNumber
 			if (!countOnly)
 			{
 				// Verify we have the expected number of tokens
-				if (currentToken != numExpectedTokens)
+				if (currentToken != numExpectedTokens && !readingTexture)
 				{
 					cout << "Ignoring line, number of tokens doesn't match the expected." << endl;
 					cout << line.c_str() << endl;
@@ -404,6 +422,21 @@ bool C3DModel_Obj::parseObjLine(std::string line, bool countOnly, int lineNumber
 						token = NULL;
 						nextToken = NULL;
 					} // reading face
+					else if (readingTexture)
+					{
+						if (readMtllib(tokens[0], materialName, materialFilename))
+						{
+							m_modelTextureFilename = new char[materialFilename.size() + 1];
+							memset(m_modelTextureFilename, 0, materialFilename.size() + 1);
+							memcpy(m_modelTextureFilename, materialFilename.c_str(), materialFilename.size());
+							m_modelHasTextures = true;
+							parsed = true;
+						}
+						else
+						{
+							parsed = false;
+						}
+					}
 
 				} // reading
 			} // !count only
@@ -411,4 +444,79 @@ bool C3DModel_Obj::parseObjLine(std::string line, bool countOnly, int lineNumber
 	}
 
 	return parsed;
+}
+
+/* 
+ */
+bool C3DModel_Obj::readMtllib(std::string mtlLibFilename, std::string &materialName, std::string &materialFilename)
+{
+	bool readTextureName = false;
+
+	ifstream infile;
+	string lineBuffer;
+	char *nextToken = nullptr;
+	char *token = nullptr;
+	const char *delimiterToken = " \t";
+	bool readingMaterialName = false;
+	bool readingMaterialFilename = false;
+	int numToken = 0;
+
+	materialName.clear();
+	materialFilename.clear();
+
+	infile.open(mtlLibFilename);
+
+	while (!infile.eof())
+	{
+		getline(infile, lineBuffer);
+
+		readingMaterialName = false;
+		readingMaterialFilename = false;
+		numToken = 0;
+
+		token = strtok_s((char *)lineBuffer.c_str(), delimiterToken, &nextToken);
+		++numToken;
+
+		// If there are any tokens left
+		while (token != nullptr)
+		{
+			if (numToken == 1)
+			{
+				if (0 == strcmp(token, "newmtl"))
+				{
+					readingMaterialName = true;
+				}
+				else if (0 == strcmp(token, "map_Kd"))
+				{
+					readingMaterialFilename = true;
+				}
+			}
+			else if (numToken == 2)
+			{
+				if (readingMaterialName)
+				{
+					materialName.append(token);
+				}
+				else if (readingMaterialFilename)
+				{
+					materialFilename.append(token);
+					readTextureName = true;
+					break;
+				}
+			}
+
+			token = strtok_s(nullptr, delimiterToken, &nextToken);
+			++numToken;
+		}
+
+		// For now, only read the first material
+		if (readTextureName)
+		{
+			break;
+		}
+	}
+
+	infile.close();
+
+	return readTextureName;
 }

@@ -343,7 +343,7 @@ void CAppParcial2::render()
 	else // Otherwise, render active object if loaded (or test cube if no object is loaded)
 	{
 		// White 
-		float color[3] = {0.95f, 0.95f, 0.95f};
+		float color[3] = {1.0f, 1.0f, 1.0f};
 
 		if (m_p3DModel != NULL && m_p3DModel->isInitialized())
 		{
@@ -356,6 +356,7 @@ void CAppParcial2::render()
 			getOpenGLRenderer()->renderObject(
 				m_p3DModel->getShaderProgramId(),
 				m_p3DModel->getGraphicsMemoryObjectId(),
+				m_p3DModel->getTextureObjectId(),
 				m_p3DModel->getNumFaces(), 
 				color,
 				&modelMatrix,
@@ -417,7 +418,7 @@ bool CAppParcial2::load3DModel(const char * const filename)
 	{
 		// By default, shaders to be loaded are for non-textured objects, but if the model has a valid texture filename and UVs, 
 		// load the appropriate shader instead 
-		if (m_p3DModel->hasUVs() && m_p3DModel->hasTextureFilename())
+		if (m_p3DModel->hasUVs() && m_p3DModel->hasTextures())
 		{
 			// Switch shaders to textured object ones
 			vertexShaderToLoad = VERTEX_SHADER_TEXTURED_3D_OBJECT;

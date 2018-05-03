@@ -11,16 +11,20 @@ using namespace std;
 class C3DModel_Obj : public C3DModel
 {
 private:
-	int m_currentVertex, m_currentNormal, m_currentUV, m_currentFace; // Aux counters used when loading an object from file
+	int m_currentVertex, m_currentNormal, m_currentUV, m_currentFace;	// Aux counters used when loading an object from file
 
-	bool readObjFile(const char * const filename, bool countOnly);    // Read object from file 
-	bool parseObjLine(												  // Parse line
+	bool readObjFile(const char * const filename, bool countOnly);		// Read object from file 
+	bool parseObjLine(													// Parse line
 		std::string line,								  
 		bool countOnly, 
 		int lineNumber); 
+	bool readMtllib(													// Read mtllib
+		std::string mtlLibFilename,
+		std::string &materialName, 
+		std::string &materialFilename);	 
 
 protected:
-	void reset();                                                     // Cleanup any allocated memory
+	void reset();														// Cleanup any allocated memory
 	bool loadFromFile(const char * const filename);
 
 public:

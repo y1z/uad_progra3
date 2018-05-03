@@ -178,6 +178,7 @@ public:
 	bool renderObject(
 		unsigned int *shaderProgramId,
 		unsigned int *vertexArrayObjectId,
+		unsigned int *textureObjectId,
 		int numFaces,
 		GLfloat *objectColor,
 		MathHelper::Matrix4 *objectTransformation = NULL,

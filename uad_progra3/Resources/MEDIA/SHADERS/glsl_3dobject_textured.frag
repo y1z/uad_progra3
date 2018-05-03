@@ -3,13 +3,13 @@
 precision mediump float;
 
 // Ambient color. Used so the fragment is not pitch black is no light at all touches it
-const vec4 ambientLightColor = vec4(0.1, 0.1, 0.1, 1.0);
+const vec4 ambientLightColor = vec4(0.05, 0.05, 0.05, 1.0);
 
 // Position of the light
 const vec3 lightVecNormalized = normalize(vec3(0.0, 5.5, 15));
 
 // Warm yellow-ish light color
-const vec4 lightColor = vec4(1.0, 0.97, 0.9, 1.0);
+const vec4 lightColor = vec4(0.9, 0.87, 0.8, 1.0);
 
 // Varying variables
 in vec3 vNormal;
