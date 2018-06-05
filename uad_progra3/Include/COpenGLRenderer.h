@@ -234,6 +234,22 @@ public:
 
 	//
 	void drawString(unsigned int *textureObjectId, std::string &text, float x, float y, CVector3 &color);
+
+	//
+	bool isDebugContextEnabled() const;
+
+	//
+	void activateOpenGLDebugging();
+
+	//
+	static void APIENTRY debugOutputCallback(
+		GLenum source, 
+		GLenum type, 
+		GLuint id, 
+		GLenum severity,
+		GLsizei length, 
+		const GLchar *message, 
+		const GLvoid *userParam);
 };
 
 #endif // !_OPENGL_RENDERER_H
