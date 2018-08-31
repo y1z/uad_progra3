@@ -87,6 +87,11 @@ void CGameWindow::initializeGLFW()
 		//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // OLD FLAG, don't need it because we're asking for CORE profile
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+		// Ask for a debug context (only if compiling for a DEBUG configuration)
+#ifdef _DEBUG
+		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+#endif
 	}
 	else
 	{
@@ -148,6 +153,19 @@ bool CGameWindow::create(const char *windowTitle)
 
 	/* Cursor position callback */
 	glfwSetCursorPosCallback(m_Window, cursorPositionCallback);
+
+	/* Activate OpenGL debugging if possible (and if compiling for a DEBUG configuration only) */
+	m_ReferenceRenderer->activateOpenGLDebugging();
+
+	/* Check if DEBUG context is enabled */
+	if (m_ReferenceRenderer->isDebugContextEnabled())
+	{
+		cout << "OpenGL DEBUG context ENABLED" << endl;
+	}
+	else
+	{
+		cout << "OpenGL DEBUG context DISABLED" << endl;
+	}
 
 	/*
      * http://www.glfw.org/docs/latest/input_guide.html#cursor_pos

@@ -16,7 +16,7 @@ using namespace std;
 
 #define BUFFER_OFFSET(a) ((void*)(a))
 #define MIN_CAMERA_DISTANCE 5.0f
-#define MAX_CAMERA_DISTANCE 100.0f
+#define MAX_CAMERA_DISTANCE 1000.0f
 #define MOVE_CAMERA_DELTA 1.5f
 
 // Class for a simple OpenGL renderer targeted for OpenGL 4.3
@@ -234,6 +234,22 @@ public:
 
 	//
 	void drawString(unsigned int *textureObjectId, std::string &text, float x, float y, CVector3 &color);
+
+	//
+	bool isDebugContextEnabled() const;
+
+	//
+	void activateOpenGLDebugging();
+
+	//
+	static void APIENTRY debugOutputCallback(
+		GLenum source, 
+		GLenum type, 
+		GLuint id, 
+		GLenum severity,
+		GLsizei length, 
+		const GLchar *message, 
+		const GLvoid *userParam);
 };
 
 #endif // !_OPENGL_RENDERER_H

@@ -63,7 +63,7 @@ void CAppParcial2::run()
 	if (canRun())
 	{
 		// Create the Window 
-		if (getGameWindow()->create(CAPPPARCIAL2_WINDOW_TITLE))
+		if (getGameWindow()->create(CAPP_PROGRA2_PARCIAL2_WINDOW_TITLE))
 		{
 			// Set initial clear screen color
 			getOpenGLRenderer()->setClearScreenColor(0.15f, 0.75f, 0.75f);
@@ -343,6 +343,7 @@ void CAppParcial2::render()
 	else // Otherwise, render active object if loaded (or test cube if no object is loaded)
 	{
 		// White 
+		// Colors are in the 0..1 range, if you want to use RGB, use (R/255, G/255, G/255)
 		float color[3] = {1.0f, 1.0f, 1.0f};
 
 		if (m_p3DModel != NULL && m_p3DModel->isInitialized())
@@ -513,7 +514,7 @@ void CAppParcial2::unloadCurrent3DModel()
 /* */
 void CAppParcial2::onF2(int mods)
 {
-	std::wstring wideStringBuffer = L"buffer";
+	std::wstring wideStringBuffer = L"";
 	wideStringBuffer.resize(MAX_PATH);
 
 	OPENFILENAME ofn;
