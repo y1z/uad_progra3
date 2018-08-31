@@ -16,7 +16,7 @@ using namespace std;
 
 #define BUFFER_OFFSET(a) ((void*)(a))
 #define MIN_CAMERA_DISTANCE 5.0f
-#define MAX_CAMERA_DISTANCE 100.0f
+#define MAX_CAMERA_DISTANCE 1000.0f
 #define MOVE_CAMERA_DELTA 1.5f
 
 // Class for a simple OpenGL renderer targeted for OpenGL 4.3

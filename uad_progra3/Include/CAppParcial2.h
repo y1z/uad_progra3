@@ -8,9 +8,6 @@
 #include "C3DModel.h"
 #include "CVector3.h"
 
-#define DEFAULT_ROTATION_SPEED 90.0f
-#define DEFAULT_CAMERA_MOVE_SPEED 0.015f
-
 // Class that inherits from Base class CApp
 // Base class CApp has members for: CGameWindow, CGameMenu, and COpenGLRenderer, which we can access through the public/protected methods
 class CAppParcial2 : public CApp
@@ -70,14 +67,15 @@ public:
 	// Executes the action corresponding to the selected menu item
 	void executeMenuAction();
 
+	// Called when mouse moves within the window
+	void onMouseMove(float deltaX, float deltaY);
+
 	// Methods specific to CAppParcial2 only
 	// -------------------------------------
 
 	// This derived class only uses F2/F3
 	void onF2(int mods);
 	void onF3(int mods);
-
-	void onMouseMove(float deltaX, float deltaY);
 	
 private:
 
