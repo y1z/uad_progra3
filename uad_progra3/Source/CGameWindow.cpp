@@ -38,17 +38,11 @@ int  CGameWindow::newHeight                 = 0;
 double CGameWindow::stCursorPosX            = 0.0;
 double CGameWindow::stCursorPosY            = 0.0;
 
-/* Default constructor
+/* Default constructor, uses C++11 'delegate constructor' feature
 */
 CGameWindow::CGameWindow(COpenGLRenderer * renderer) :
-	m_ReferenceRenderer{ renderer },
-	m_Width{ CGameWindow::DEFAULT_WINDOW_WIDTH },
-	m_Height{ CGameWindow::DEFAULT_WINDOW_HEIGHT },
-	m_InitializedGLFW{ false },
-	m_CursorPosX{0.0},
-	m_CursorPosY{0.0}
+	CGameWindow(renderer, CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT)
 {
-	initializeGLFW();
 }
 
 /* Constructor with specific width/height
@@ -84,6 +78,13 @@ void CGameWindow::initializeGLFW()
 		/* Set hints for new window */
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);  // We want OpenGL 4.3
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
+		//
+		// Note: If the program is unable to run because the GLFW library could not be initialized,
+		//       it could be your graphics card doesn't support the OpenGL version you're requesting.
+		//       In that case, try lowering the MAJOR/MINOR version to 4.1, or if that doesn't work, try 3.0
+		//
+
 		//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // OLD FLAG, don't need it because we're asking for CORE profile
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);

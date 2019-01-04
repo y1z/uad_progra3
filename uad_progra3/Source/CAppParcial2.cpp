@@ -15,11 +15,7 @@ using namespace std;
 
 /* */
 CAppParcial2::CAppParcial2() : 
-	m_p3DModel(NULL),
-	m_currentDeltaTime{ 0.0 },
-	m_objectRotation{ 0.0 },
-	m_objectPosition{ 0.0f, 0.0f, 0.0f },
-	m_rotationSpeed{ DEFAULT_ROTATION_SPEED }
+	CAppParcial2(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT) // C++11 ability to call one constructor from another
 {
 	cout << "Constructor: CAppParcial2()" << endl;
 }
@@ -59,7 +55,7 @@ void CAppParcial2::run()
 {
 	initialize();
 
-	// Check if CGameWindow object and window library been initialized
+	// Check if CGameWindow object and third-party Window library have been initialized
 	if (canRun())
 	{
 		// Create the Window 
@@ -72,6 +68,7 @@ void CAppParcial2::run()
 			getOpenGLRenderer()->setWindowHeight(getGameWindow()->getHeight());
 			// Initialize a test cube
 			getOpenGLRenderer()->initializeTestObjects();
+
 			// MCCube
 			if (!initializeMCCube())
 			{

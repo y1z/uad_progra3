@@ -10,8 +10,6 @@ using namespace std;
 
 #include "../Include/C3DModel.h"
 #include "../Include/C3DModel_Obj.h"
-#include "../Include/C3DModel_STL.h"
-#include "../Include/C3DModel_3DS.h"
 
 /* */
 C3DModel::C3DModel()
@@ -135,15 +133,11 @@ C3DModel* C3DModel::load(const char * const filename)
 		}
 		else if (!fileExtension.compare("3ds"))
 		{
-			cout << "Loading 3DS model..." << endl;
-			newModel = new C3DModel_3DS();
-			newModel->loadFromFile(filename);
+			cout << "3DS file format reading not implemented" << endl;
 		}
 		else if (!fileExtension.compare("stl"))
 		{
-			cout << "Loading STL model..." << endl;
-			newModel = new C3DModel_STL();
-			newModel->loadFromFile(filename);
+			cout << "STL file format reading not implemented" << endl;
 		}
 		else if (!fileExtension.compare("fbx"))
 		{

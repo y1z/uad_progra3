@@ -13,6 +13,13 @@ using namespace std;
 #include "../Include/MathHelper.h"
 #include "../Include/CWideStringHelper.h"
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * ONLY MODIFY THIS FILE IF YOU KNOW WHAT YOU'RE DOING...
+ * AND EVEN THEN... BE CAREFUL...
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 /*
 */
 COpenGLRenderer::COpenGLRenderer():
@@ -744,7 +751,6 @@ bool COpenGLRenderer::renderObject(
 		&& m_windowHeight > 0
 		&& vertexArrayObjectId != NULL 
 		&& *vertexArrayObjectId > 0
-		&& textureObjectId != NULL 
 		&& numFaces > 0
 		&& objectColor != NULL
 		&& !m_OpenGLError)
@@ -802,7 +808,7 @@ bool COpenGLRenderer::renderObject(
 		}
 
 		// Set the texture sampler uniform
-		if (shaderProgramWrapper->getTextureSamplerUniformLocation() >= 0 && *textureObjectId > 0)
+		if (textureObjectId != nullptr && shaderProgramWrapper->getTextureSamplerUniformLocation() >= 0 && *textureObjectId > 0)
 		{
 			// DO NOT CALL glEnable(GL_TEXTURE_2D) OR OPENGL WILL RETURN AN "1280" ERROR
 			glActiveTexture(GL_TEXTURE0);

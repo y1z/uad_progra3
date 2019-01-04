@@ -9,7 +9,7 @@
 #define CAPP_PROGRA2_PARCIAL3_WINDOW_TITLE      "Parcial 3"
 
 #define CAPP_PROGRA3_EMPTYAPP_WINDOW_TITLE      "Empty app"
-#define CAPP_PROGRA3_PARCIAL2_WINDOW_TITLE      "Hex Grid"
+#define CAPP_PROGRA3_GEOMETRIC_WINDOW_TITLE     "Geometric shapes app"
 
 // SHADER FILENAMES
 #define VERTEX_SHADER_TEST_OBJECT               "SHADERS\\glsl_testobject.vert"

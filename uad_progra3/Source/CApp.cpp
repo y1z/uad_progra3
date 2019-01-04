@@ -6,19 +6,9 @@ using namespace std;
 #include "../Include/CApp.h"
 
 /* */
-CApp::CApp()
+CApp::CApp():
+	CApp(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT)
 {
-	cout << "Constructor: CApp()" << endl;
-
-	// Create OpenGLRenderer Object
-	m_OpenGLRenderer = new COpenGLRenderer();
-
-	// Create CGameWindow object
-	m_Window = new CGameWindow(m_OpenGLRenderer);
-
-	// Create CGameMenu Object
-	// Menu will be initialized later (menu items added)
-	m_Menu = new CGameMenu();
 }
 
 /* */

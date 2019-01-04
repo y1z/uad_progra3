@@ -8,14 +8,8 @@ using namespace std;
 
 /* */
 CAppEmpty::CAppEmpty() :
-	CApp(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT)
+	CAppEmpty(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT)
 {
-	cout << "Constructor: CAppEmpty()" << endl;
-
-	// Initialize class member variables here
-	// ======================================
-	//
-	// ======================================
 }
 
 /* */
