@@ -12,10 +12,11 @@
 #define KEY_MOD_ALT       0x0004
 #define KEY_MOD_UNUSED    0x0008
 
-// ===============================
-// BASE CLASS FOR ALL APPLICATIONS
-// The CAppParcial* classes derive from this class and are used in main( )
-// ===============================
+// ================================================================
+// One of the MAIN files for this project
+// BASE CLASS FOR ALL 'APPLICATIONS'
+// The CApp* classes derive from this class and are used in main( )
+// ================================================================
 class CApp
 {
 private:
@@ -23,7 +24,6 @@ private:
 	CGameMenu       *m_Menu;           // Pointer to our CMenu object
 	COpenGLRenderer *m_OpenGLRenderer; // Pointer to our OpenGL renderer object
 	bool m_Paused;                     // Is the app paused?  (i,e: window minimized)
-
 	bool isWindowInitialized() const;  // Is the CGameWindow object initialized ?
 	
 protected:

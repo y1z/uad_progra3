@@ -32,7 +32,7 @@ public:
 	//
 	~CColor() {}
 
-	//
+	// Note: Caller must make sure the pointers are valid
 	void getColor(float *red, float *green, float *blue) const 
 	{ 
 		*red   = m_Red; 
@@ -40,7 +40,7 @@ public:
 		*blue  = m_Blue; 
 	}
 
-	//
+	// Note: Caller must make sure the pointer is valid
 	void getColorfv(float *color) const
 	{
 		color[0] = m_Red;
@@ -48,7 +48,7 @@ public:
 		color[2] = m_Blue;
 	}
 
-	//
+	// Note: Caller must make sure the pointers are valid
 	void getColorRGB(unsigned short *red, unsigned short *green, unsigned short *blue) const 
 	{
 		*red   = (unsigned short)(m_Red   * 255.0f);

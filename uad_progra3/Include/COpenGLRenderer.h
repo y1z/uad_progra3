@@ -19,9 +19,19 @@ using namespace std;
 #define MAX_CAMERA_DISTANCE 1000.0f
 #define MOVE_CAMERA_DELTA 1.5f
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+* ONLY MODIFY THIS FILE IF YOU KNOW WHAT YOU'RE DOING...
+* AND EVEN THEN... BE CAREFUL...
+*
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+// =========================================================================================================
 // Class for a simple OpenGL renderer targeted for OpenGL 4.3
 // UAD lab PCs support it
 // *NOTE: This code has been tested to work fine on NVidia cards. Radeon cards seem to behave differently...
+// =========================================================================================================
+
 class COpenGLRenderer
 {
 public:
@@ -240,6 +250,12 @@ public:
 
 	//
 	void activateOpenGLDebugging();
+
+	// 
+	void setWireframePolygonMode() { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);	}
+
+	// 
+	void setFillPolygonMode() { glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); }
 
 	//
 	static void APIENTRY debugOutputCallback(

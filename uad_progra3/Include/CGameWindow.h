@@ -12,7 +12,17 @@
 #include <string>
 using namespace std;
 
-// Class CGameWindow
+// =================================================================================================================================================================
+// Another one of the MAIN files for this project
+//
+// Class to represent a Window that supports OpenGL (or DirectX if the support is added later, which in that case the base class would have common/shared stuff and 
+// and the support for OpenGL/DirectX would be better in subclasses; aka Abstract Factory pattern...).
+//
+// Since we only have OpenGL support, the pointer to the OpenGLRenderer is stored here, as well as the pointer to the GLFW window. 
+// The GLFW library is what we use to load all OpenGL extensions without having to look for entry points in the DLL ourselves.
+//
+// =================================================================================================================================================================
+
 class CGameWindow
 {
 public:

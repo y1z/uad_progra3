@@ -6,6 +6,19 @@
 #include <string>
 using namespace std;
 
+// ========================================================================================================================================
+// Class that represents a 3D Model
+// 
+// A 3D model has: vertices, normals, and UV coords.
+// This class has float pointers for storing dynamically allocated arrays to those values. We also need 'indices' to all those values, 
+// so we also have ushort pointers for storing dynamically allocated arrays for the indices.
+//
+// Since we're storing the model data in the graphics memory, we need to keep track of it, and the way to do that is by
+// having 'identifiers' that OpenGL gives us when we store the data. The m_graphicsMemoryObjectId class variable is the identifier 
+// for this data. We also have a couple other identifiers for the texture (if the object uses one), and the Shader.
+// 
+// ========================================================================================================================================
+
 class C3DModel
 {
 protected:
