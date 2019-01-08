@@ -294,7 +294,7 @@ COpenGLShaderProgram* COpenGLRenderer::getShaderProgramWrapper(unsigned int id)
 
 /*
 */
-bool COpenGLRenderer::freeGraphicsMemoryForObject(unsigned int *shaderProgramId, unsigned int *vertexArrayObjectID)
+bool COpenGLRenderer::freeGraphicsMemoryForObject(/*unsigned int *shaderProgramId,*/ unsigned int *vertexArrayObjectID)
 {
 	bool deletedVertexArrayObjectId = false;
 
@@ -937,7 +937,7 @@ bool COpenGLRenderer::renderMenuItem(
 
 /*
 */
-void COpenGLRenderer::initializeTestObjects()
+void COpenGLRenderer::initializeColorCube()
 {
 	std::wstring wresourceFilenameVS;
 	std::wstring wresourceFilenameFS;
@@ -945,12 +945,12 @@ void COpenGLRenderer::initializeTestObjects()
 	std::string resourceFilenameFS;
 
 	// If resource files cannot be found, return
-	if (!CWideStringHelper::GetResourceFullPath(VERTEX_SHADER_TEST_OBJECT,   wresourceFilenameVS, resourceFilenameVS) ||
-		!CWideStringHelper::GetResourceFullPath(FRAGMENT_SHADER_TEST_OBJECT, wresourceFilenameFS, resourceFilenameFS))
+	if (!CWideStringHelper::GetResourceFullPath(VERTEX_SHADER_3D_OBJECT_COLOR,   wresourceFilenameVS, resourceFilenameVS) ||
+		!CWideStringHelper::GetResourceFullPath(FRAGMENT_SHADER_3D_OBJECT_COLOR, wresourceFilenameFS, resourceFilenameFS))
 	{
 		cout << "ERROR: Unable to find one or more resources: " << endl;
-		cout << "  " << VERTEX_SHADER_TEST_OBJECT << endl;
-		cout << "  " << FRAGMENT_SHADER_TEST_OBJECT << endl;
+		cout << "  " << VERTEX_SHADER_3D_OBJECT_COLOR << endl;
+		cout << "  " << FRAGMENT_SHADER_3D_OBJECT_COLOR << endl;
 		return;
 	}
 
@@ -1061,7 +1061,7 @@ void COpenGLRenderer::initializeTestObjects()
 
 /*
 */
-void COpenGLRenderer::initializeMCCube()
+void COpenGLRenderer::initializeTexturedCube()
 {
 	std::wstring wresourceFilenameVS;
 	std::wstring wresourceFilenameFS;
@@ -1352,7 +1352,7 @@ bool COpenGLRenderer::allocateGraphicsMemoryForMenuItem(
 
 /*
 */
-void COpenGLRenderer::renderTestObject(MathHelper::Matrix4 *objectTransformation)
+void COpenGLRenderer::renderColorCube(MathHelper::Matrix4 *objectTransformation)
 {
 	if (m_windowWidth > 0 
 		&& m_windowHeight > 0 
@@ -1429,7 +1429,7 @@ void COpenGLRenderer::renderTestObject(MathHelper::Matrix4 *objectTransformation
 
 /*
 */
-void COpenGLRenderer::renderMCCube(unsigned int cubeTextureID, MathHelper::Matrix4 *objectTransformation)
+void COpenGLRenderer::renderTexturedCube(unsigned int cubeTextureID, MathHelper::Matrix4 *objectTransformation)
 {
 	if (m_windowWidth > 0
 		&& m_windowHeight > 0

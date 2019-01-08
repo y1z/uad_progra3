@@ -148,7 +148,7 @@ public:
 	// Free graphics memory for a given 3D object 
 	// =================================================================
 	bool freeGraphicsMemoryForObject(
-		unsigned int *shaderProgramId, 
+		//unsigned int *shaderProgramId, 
 		unsigned int *vertexArrayObjectID);
 
 	// =================================================================
@@ -207,12 +207,12 @@ public:
 	void setWindowHeight(int height) { m_windowHeight = height; }
 
 	//
-	void renderTestObject(MathHelper::Matrix4 *objectTransformation = NULL);
-	void initializeTestObjects();
+	void renderColorCube(MathHelper::Matrix4 *objectTransformation = NULL);
+	void initializeColorCube();
 
 	//
-	void renderMCCube(unsigned int cubeTextureID, MathHelper::Matrix4 *objectTransformation = NULL);
-	void initializeMCCube();
+	void renderTexturedCube(unsigned int cubeTextureID, MathHelper::Matrix4 *objectTransformation = NULL);
+	void initializeTexturedCube();
 
 	//
 	bool checkOpenGLError(char *operationAttempted);

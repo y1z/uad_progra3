@@ -110,7 +110,7 @@ void CGameMenu::cleanupGraphicsObjects(COpenGLRenderer * const renderer)
 			if (menuItem != NULL)
 			{
 				cout << "deleting menu item VAO: " << *(menuItem->getArrayObjectID()) << endl;
-				renderer->freeGraphicsMemoryForObject(&m_shaderProgramId, menuItem->getArrayObjectID());
+				renderer->freeGraphicsMemoryForObject(/*&m_shaderProgramId,*/ menuItem->getArrayObjectID());
 			}
 		}
 
@@ -125,7 +125,7 @@ void CGameMenu::cleanupGraphicsObjects(COpenGLRenderer * const renderer)
 				if (menuItem != NULL)
 				{
 					cout << "deleting menu item VAO: " << *(menuItem->getArrayObjectID()) << endl;
-					renderer->freeGraphicsMemoryForObject(&m_shaderProgramId, menuItem->getArrayObjectID());
+					renderer->freeGraphicsMemoryForObject(/*&m_shaderProgramId,*/ menuItem->getArrayObjectID());
 				}
 
 				currentNode = currentNode->getNext();

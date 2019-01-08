@@ -77,6 +77,9 @@ public:
 
 protected:
 	virtual bool initializeMenu() = 0;
+
+	// Helper method to load a TGA texture
+	bool loadTexture(const char *filename, unsigned int *newTextureID);
 };
 
 #endif // !CAPP_H

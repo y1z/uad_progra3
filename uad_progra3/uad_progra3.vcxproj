@@ -168,8 +168,10 @@
     <ClInclude Include="Include\C3DModel.h" />
     <ClInclude Include="Include\C3DModel_Obj.h" />
     <ClInclude Include="Include\CApp.h" />
+    <ClInclude Include="Include\CAppCubeTest.h" />
     <ClInclude Include="Include\CAppEmpty.h" />
-    <ClInclude Include="Include\CAppParcial2.h" />
+    <ClInclude Include="Include\CAppGeometricFigures.h" />
+    <ClInclude Include="Include\CAppObjLoader.h" />
     <ClInclude Include="Include\CBinaryTree.h" />
     <ClInclude Include="Include\CBinaryTreeNode.h" />
     <ClInclude Include="Include\CCircularDoubleLinkedList.h" />
@@ -199,8 +201,10 @@
     <ClCompile Include="Source\C3DModel.cpp" />
     <ClCompile Include="Source\C3DModel_Obj.cpp" />
     <ClCompile Include="Source\CApp.cpp" />
+    <ClCompile Include="Source\CAppCubeTest.cpp" />
     <ClCompile Include="Source\CAppEmpty.cpp" />
-    <ClCompile Include="Source\CAppParcial2.cpp" />
+    <ClCompile Include="Source\CAppGeometricFigures.cpp" />
+    <ClCompile Include="Source\CAppObjLoader.cpp" />
     <ClCompile Include="Source\CCircularDoubleLinkedList.cpp" />
     <ClCompile Include="Source\CCircularDoubleLinkedListNode.cpp" />
     <ClCompile Include="Source\CGameMenu.cpp" />

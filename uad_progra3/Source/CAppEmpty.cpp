@@ -47,14 +47,15 @@ void CAppEmpty::initialize()
 /* */
 void CAppEmpty::run()
 {
-	initialize();
-
 	// Check if CGameWindow object AND Graphics API specific Window library have been initialized
 	if (canRun())
 	{
 		// Create the Window 
+		// Note: The following create() method creates the Window itself. Do NOT make any OpenGL calls before this line, your app WILL crash.
 		if (getGameWindow()->create(CAPP_PROGRA3_EMPTYAPP_WINDOW_TITLE))
 		{
+			initialize();
+
 			// Set initial clear screen color
 			getOpenGLRenderer()->setClearScreenColor(0.25f, 0.0f, 0.75f);
 
