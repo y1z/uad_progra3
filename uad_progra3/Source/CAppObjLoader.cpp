@@ -36,11 +36,6 @@ CAppObjLoader::~CAppObjLoader()
 {
 	cout << "Destructor: ~CAppObjLoader()" << endl;
 	unloadCurrent3DModel();
-
-	if (m_mcCubeTextureID > 0)
-	{
-		getOpenGLRenderer()->deleteTexture(&m_mcCubeTextureID);
-	}
 }
 
 /* */
@@ -66,14 +61,6 @@ void CAppObjLoader::run()
 			// Initialize window width/height in the renderer
 			getOpenGLRenderer()->setWindowWidth(getGameWindow()->getWidth());
 			getOpenGLRenderer()->setWindowHeight(getGameWindow()->getHeight());
-			// Initialize a test cube
-			//getOpenGLRenderer()->initializeTestObjects();
-
-			// MCCube
-			if (!initializeMCCube())
-			{
-				return;
-			}
 
 			// Create our menu (add all menu items)
 			if (!initializeMenu())
@@ -86,33 +73,6 @@ void CAppObjLoader::run()
 			getGameWindow()->mainLoop(this);
 		}
 	}
-}
-
-/* */
-bool CAppObjLoader::initializeMCCube()
-{
-	m_mcCubeTextureID = 0;
-	std::wstring wresourceFilenameTexture;
-	std::string resourceFilenameTexture;
-
-	// If resource files cannot be found, return
-	//if (!CWideStringHelper::GetResourceFullPath(MC_CUBE_TEXTURE, wresourceFilenameTexture, resourceFilenameTexture))
-	//{
-	//	cout << "ERROR: Unable to find one or more resources: " << endl;
-	//	cout << "  " << MC_CUBE_TEXTURE << endl;
-	//	return false;
-	//}
-
-	// Initialize the texture
-	if (!loadTexture(resourceFilenameTexture.c_str(), &m_mcCubeTextureID))
-	{
-		return false;
-	}
-
-	// Initialize a Minecraft cube
-	//getOpenGLRenderer()->initializeMCCube();
-
-	return true;
 }
 
 /* */
@@ -302,27 +262,6 @@ void CAppObjLoader::render()
 				COpenGLRenderer::EPRIMITIVE_MODE::TRIANGLES,
 				false
 			);
-		}
-		else
-		{
-			// convert total degrees rotated to radians;
-			double totalDegreesRotatedRadians = m_objectRotation * 3.1459 / 180.0;
-
-			// Get a matrix that has both the object rotation and translation
-			MathHelper::Matrix4 modelMatrix = MathHelper::ModelMatrix((float)totalDegreesRotatedRadians, m_objectPosition);
-
-			CVector3 pos2 = m_objectPosition;
-			pos2 += CVector3(3.0f, 0.0f, 0.0f);
-			MathHelper::Matrix4 modelMatrix2 = MathHelper::ModelMatrix((float)totalDegreesRotatedRadians, pos2);
-
-			/*
-			MathHelper::Matrix4 viewMatrix = MathHelper::SimpleViewMatrix(m_cameraDistance);
-			MathHelper::Matrix4 projectionMatrix = MathHelper::SimpleProjectionMatrix(float(m_windowWidth) / float(m_windowHeight));
-			*/
-
-			// No model loaded, show test cube
-			//getOpenGLRenderer()->renderTestObject(&modelMatrix);
-			//getOpenGLRenderer()->renderMCCube(m_mcCubeTextureID, &modelMatrix2);
 		}
 	}
 }

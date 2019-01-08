@@ -9,11 +9,7 @@
 #include "CVector3.h"
 
 /* ******************************************************************************************************************************************
-* This class shows an example of how to display two cubes on screen, one of them has a texture, and the other one has colours only
-* Each of these cubes is rendered using a diferent Shader.
-* The geometry of these cubes is saved to graphics memory only once during startup, and then in the render loop,
-* each cube can be rendered using a reference to that geometry saved in the graphics memory. Displaying more than one of those objects
-* in screen can be achieved by making two render calls, using different positions, but using the same graphics memory reference of the cube.
+* This class shows an example of how to load a 3D Object (.obj format) from file.
 * ******************************************************************************************************************************************/
 
 // Class that inherits from Base class CApp
@@ -42,14 +38,9 @@ private:
 	// Texture object ID for the current model
 	unsigned int m_currentModelTextureObject;
 
-	// Texture object ID for minecraft cube
-	unsigned int m_mcCubeTextureID;
-
 protected:
 	// Method to initialize the menu
 	bool initializeMenu();
-	// Method to initialize a MC cube and its texture
-	bool initializeMCCube();
 
 public:
 	// Constructors and destructor
