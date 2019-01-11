@@ -49,9 +49,9 @@ public:
 	// Method to render the app
 	void render();
 
-	// -----------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------
 	// Other inherited methods from CApp. These are optional to override.
-	// Only provide an implementation in this DERIVD class if you need them to do something different than the base class CApp
+	// Only provide an implementation in this DERIVED class if you need them to do something different than the base class CApp
 	// -----------------------------------------------------------------------------------------------------------------------
 
 	// Executes the action corresponding to the selected menu item

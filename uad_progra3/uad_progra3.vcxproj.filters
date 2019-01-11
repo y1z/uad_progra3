@@ -81,9 +81,6 @@
     <ClInclude Include="Include\CAppEmpty.h">
       <Filter>Header Files\App</Filter>
     </ClInclude>
-    <ClInclude Include="Include\CAppParcial2.h">
-      <Filter>Header Files\App</Filter>
-    </ClInclude>
     <ClInclude Include="Include\CBinaryTree.h">
       <Filter>Header Files\DataStructures</Filter>
     </ClInclude>
@@ -135,6 +132,15 @@
     <ClInclude Include="Include\C3DModel.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
+    <ClInclude Include="Include\CAppCubeTest.h">
+      <Filter>Header Files\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CAppObjLoader.h">
+      <Filter>Header Files\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\CAppGeometricFigures.h">
+      <Filter>Header Files\App</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -150,9 +156,6 @@
       <Filter>Source Files\App</Filter>
     </ClCompile>
     <ClCompile Include="Source\CAppEmpty.cpp">
-      <Filter>Source Files\App</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CAppParcial2.cpp">
       <Filter>Source Files\App</Filter>
     </ClCompile>
     <ClCompile Include="Source\CCircularDoubleLinkedList.cpp">
@@ -190,6 +193,15 @@
     </ClCompile>
     <ClCompile Include="Source\C3DModel_Obj.cpp">
       <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CAppCubeTest.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CAppObjLoader.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CAppGeometricFigures.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
