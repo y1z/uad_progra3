@@ -60,6 +60,9 @@ private:
 
 	int m_numFacesPyramid;
 	int m_renderPolygonMode;
+	int numFacesTri;
+
+
 
 protected:
 
@@ -106,8 +109,13 @@ public:
 	void onF3(int mods);
 
 private:
+	
 
 	void createPyramidGeometry();
+	void createSphereGeometry(unsigned int PointsX,unsigned int PointsY , float Size);
+	void createTorusGeometry();
+	void createIcsaedroGeometry();
+	void createTri();
 	void normcrossprod(float v1[3], float v2[3], float out[3]);
 	void normalize(float v[3]);
 

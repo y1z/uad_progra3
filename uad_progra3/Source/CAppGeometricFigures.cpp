@@ -8,6 +8,7 @@ using namespace std;
 #include "../Include/CAppGeometricFigures.h"
 #include "../Include/CWideStringHelper.h"
 
+
 /* */
 CAppGeometricFigures::CAppGeometricFigures() :
 	CAppGeometricFigures(CGameWindow::DEFAULT_WINDOW_WIDTH, CGameWindow::DEFAULT_WINDOW_HEIGHT)
@@ -54,7 +55,8 @@ CAppGeometricFigures::~CAppGeometricFigures()
 	// =================================================
 }
 
-/* */
+/*TODO : Agregar mis figuras geometircas aqui 
+*/
 void CAppGeometricFigures::initialize()
 {
 	// Initialize app-specific stuff here
@@ -135,9 +137,11 @@ void CAppGeometricFigures::initialize()
 		cout << "  " << MC_LEAVES_TEXTURE << endl;
 		return;
 	}
-
+	// TODO : Agregar mis metodos aqui 
 	m_initialized = true;
-	createPyramidGeometry();
+	//createTri();
+	createSphereGeometry(6, 6, 1.f);
+	//createPyramidGeometry();
 }
 
 /* */
@@ -264,7 +268,6 @@ void CAppGeometricFigures::render()
 				false
 			);
 		}
-
 		// =================================
 	}
 }
@@ -305,7 +308,8 @@ void CAppGeometricFigures::createPyramidGeometry()
 	};
 
 	m_numFacesPyramid = 6;
-
+	/*La puta 't' significa 
+	 TRIS */
 	unsigned short tIndices[18] = {
 		0, 1, 2,    
 		0, 2, 4,    
@@ -314,7 +318,7 @@ void CAppGeometricFigures::createPyramidGeometry()
 		1, 3, 2,
 		2, 3, 4
 	};
-
+	// son para los shaders 
 	float nData[18] = {
 		0.0, 0.0, 0.0,
 		0.0, 0.0, 0.0,
@@ -366,7 +370,7 @@ void CAppGeometricFigures::createPyramidGeometry()
 		nData[(i * 3) + 1] = norm[1];
 		nData[(i * 3) + 2] = norm[2];
 	}
-
+	
 	// Allocate graphics memory for object
 	loaded = getOpenGLRenderer()->allocateGraphicsMemoryForObject(
 		&m_colorModelShaderId,
@@ -385,6 +389,117 @@ void CAppGeometricFigures::createPyramidGeometry()
 		6
 	);
 
+	if (!loaded)
+	{
+		m_numFacesPyramid = 0;
+
+		if (m_pyramidVertexArrayObject > 0)
+		{
+			getOpenGLRenderer()->freeGraphicsMemoryForObject(&m_pyramidVertexArrayObject);
+			m_pyramidVertexArrayObject = 0;
+		}
+	}
+}
+// TODO : Crear la Geometria para la esphera 
+void CAppGeometricFigures::createSphereGeometry(unsigned int PointsX, unsigned int PointsY, float Size){
+	float RadioY = 1.0f * Size;	
+	float RadioX = 1.0f * Size;
+	float z = 1.0f * Size;
+	
+	const float FullCircleRadians = 2 * (PI * RadioX);	
+
+	float AngleX = FullCircleRadians / PointsX;
+	float AngleY = FullCircleRadians / PointsY;
+
+	CVector3 Test(RadioX, RadioY, z);
+
+	float Debugtemp1 = 0.f;
+	float Debugtemp2 = 0.f;
+
+	for (int i = 0; i < PointsX; ++i)
+	{
+		Debugtemp1 = (Test.X * cos(AngleX)) + (Test.Y * -sin(AngleY));
+		Debugtemp2 = (Test.Y * cos(AngleY)) + (Test.X * sin(AngleX)) ;
+		AngleX +=FullCircleRadians / PointsX;
+		AngleY +=FullCircleRadians / PointsY;
+	}
+
+ 	CVector3 Points(RadioX, RadioY, z);
+	float *ptr_points = new float[PointsX];
+
+	for (int i = 0; i < PointsX / 3; ++i)
+	{
+		for (int j = 0; j < 3; ++j)
+		{
+			MathHelper::ModelMatrix;
+		
+		}
+		
+	}
+	
+	delete[]ptr_points;
+}
+
+// TODO : Crear la geometria para la dona 
+void CAppGeometricFigures::createTorusGeometry(){
+
+}
+// TODO : Crear la geometria para el Icsaedro 
+void CAppGeometricFigures::createIcsaedroGeometry()
+{
+
+}
+
+void CAppGeometricFigures::createTri(){
+
+	m_numFacesPyramid = 1;
+	// Posiciones x,y,z
+	float vertixData[9] = 
+	{
+		0.f,0.f,0.f,
+		0.5f,1.f,0.f,
+		1.f,0.f,0.f
+	};
+	/*El orden en el que se van a 
+	connectar los puntos */
+	unsigned short IndicesData[3] =
+	{
+		0,2,1
+	};
+	/*para las normales */
+	float nData[3] = {
+		0.0, 0.0, 0.0,
+	};
+	/*para las indices de los normales */
+	unsigned short nIndices[3] = {
+		0, 0, 0,
+
+	};
+	/*Cordenadas uv de cada triangulo */
+	float uvVerex[2] = {
+		0.0f,0.0f
+	};
+
+	unsigned short uvCoords[6] = {
+		0,0,
+		0,0,
+		0,0
+	};
+
+	bool loaded = false;
+
+	// Allocate graphics memory for object
+	loaded =  getOpenGLRenderer()->allocateGraphicsMemoryForObject(
+		&m_colorModelShaderId,
+		&m_pyramidVertexArrayObject,
+		vertixData,3,//
+		nData,1,//
+		uvVerex,1,
+		IndicesData,1,
+		nIndices,1,
+		uvCoords,3
+	);
+	
 	if (!loaded)
 	{
 		m_numFacesPyramid = 0;

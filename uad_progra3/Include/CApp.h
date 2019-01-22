@@ -3,6 +3,7 @@
 #ifndef CAPP_H
 #define CAPP_H
 
+#include <cmath>
 #include "CGameWindow.h"
 #include "CGameMenu.h"
 #include "COpenGLRenderer.h"

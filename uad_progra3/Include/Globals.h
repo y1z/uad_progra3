@@ -3,6 +3,8 @@
 #ifndef _GLOBALS_H
 #define _GLOBALS_H
 
+const float PI = 3.14159f;
+
 // WINDOW TITLES
 #define CAPP_PROGRA3_EMPTYAPP_WINDOW_TITLE      "Empty app - OpenGL + GLFW Library initialization"
 #define CAPP_PROGRA3_CUBES_WINDOW_TITLE         "Cubes app"

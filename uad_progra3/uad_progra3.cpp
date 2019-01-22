@@ -15,8 +15,19 @@ using namespace std;
 
 int main()
 {
+
+	float Ray = 3.14159f * 2;
+
+	//float temp = P3 / 8;
+
+	CVector3 Test(2.f, 2.f, 2.f);
+	for(int i = 0; i < 80;++i)
+	{
+		CVector3 Result = MathHelper::RotateZ(Test, Ray);
+	}
+
 	CApp *app = NULL;                  // Pointer to BASE class CApp
-	app = new CAppEmpty(800, 600);  // Using pointer to base class, create a new object of DERIVED class
+	app = new CAppGeometricFigures(800, 600);  // Using pointer to base class, create a new object of DERIVED class
 	app->run();                        // Run the app
 	delete app;                        // Delete pointer
 	app = NULL;                        // Set pointer to NULL

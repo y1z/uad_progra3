@@ -100,7 +100,8 @@ public:
 	void requestWindowClose();
 
 	// Is GLFW framework initialized?
-	inline bool isLibraryInitialized() const { return m_InitializedGLFW; }
+	inline bool isLibraryInitialized() const { return m_InitializedGLFW; } 
+
 
 	// Getters for window dimentions
 	inline int getWidth() const  { return m_Width; }

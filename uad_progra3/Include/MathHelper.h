@@ -3,8 +3,9 @@
 // These are some simple math helpers to enable the template to render a spinning cube. It is not a complete math library.
 // You can replace this with your favorite math library that's suitable for your target platforms, e.g. DirectXMath or GLM.
 
-#include <math.h>
+#include <cmath>
 #include "CVector3.h"
+#include "Globals.h"
 
 namespace MathHelper
 {
@@ -115,4 +116,49 @@ namespace MathHelper
 			           0.0f,                    0.0f,     -50.0f / (50.0f - 1.0f), (-50.0f * 1.0f) / (50.0f - 1.0f),
 			           0.0f,                    0.0f,     -1.0f,                   0.0f);
 	}
+
+	inline static CVector3 RotateZ(CVector3 &Other, float angleInRadians)
+	{
+		float cosine = cosf(angleInRadians);
+		float sine = sinf(angleInRadians);
+
+
+		// Creamos la matrice de rotation Para el eje Z
+          const Matrix4 RatationMatrixZ(cosine, -sine, 0.f, 0.f,
+								       					      	sine, cosine, 0.f, 0.f,
+												      	      	0.f, 0.f, 1.0f, 0.f,
+													            	0.f, 0.f, 0.f, 1.0f);
+		// El producto punto Matrice * Vector para 
+	  for(int i = 0; i < 3;++i)
+		{
+			float temp = ((Other.X * RatationMatrixZ.m[i][0])
+										+ (Other.Y * RatationMatrixZ.m[i][1])
+										+ (Other.Z *RatationMatrixZ.m[i][2]));
+			// Asignar valor a Eje respectivo 
+			if (i == 0)
+				Other.X = temp;
+			else if (i == 1)
+				Other.Y = temp;
+			else{
+				Other.Z = temp;
+			}
+
+		}
+
+		return Other;
+
+	}
+
+	inline static CVector3 RotateY(CVector3 &Other, float angleInRadians)
+	{
+		float cosine = cosf(angleInRadians);
+		float sine = sinf(angleInRadians);
+
+		const	Matrix4 RatationMatrixZ(cosine, 0.f, sine, 0.f,
+																		   0.f, 1.f, 0.f, 0.f,
+																		 -sine, 0.f, cosine, 0.f,
+																		   0.f, 0.f, 0.f, 1.0f);
+	}
+
+
 }

@@ -317,7 +317,7 @@ bool COpenGLRenderer::allocateGraphicsMemoryForObject(
 	GLfloat *normals, int numNormals,
 	GLfloat *UVcoords, int numUVCoords,
 	unsigned short *indicesVertices, int numIndicesVert,
-	unsigned short *indicesNormals, int numIndicesNormals,
+	unsigned short *indicesNormals, int numIndicesNormals,                            
 	unsigned short *indicesUVCoords, int numIndicesUVCoords)
 {
 	if (shaderProgramId == NULL || *shaderProgramId <= 0)
