@@ -8,6 +8,7 @@ using namespace std;
 #include "../Include/CAppGeometricFigures.h"
 #include "../Include/CWideStringHelper.h"
 
+#define PI_OVER_180 3.14129/180
 
 /* */
 CAppGeometricFigures::CAppGeometricFigures() :
@@ -388,7 +389,7 @@ void CAppGeometricFigures::createPyramidGeometry()
 		tIndices,
 		6
 	);
-
+		
 	if (!loaded)
 	{
 		m_numFacesPyramid = 0;
