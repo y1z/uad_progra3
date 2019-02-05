@@ -2,8 +2,9 @@
 
 #ifndef _GLOBALS_H
 #define _GLOBALS_H
-
-const float PI = 3.14159f;
+// MATH 
+#define PI_OVER_180 3.14129/180
+#define PI  3.14159f
 
 // WINDOW TITLES
 #define CAPP_PROGRA3_EMPTYAPP_WINDOW_TITLE      "Empty app - OpenGL + GLFW Library initialization"

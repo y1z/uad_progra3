@@ -34,4 +34,5 @@
 #
 
 *.ipc
+*.ipch 
 *.suo

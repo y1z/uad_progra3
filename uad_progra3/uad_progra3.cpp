@@ -4,6 +4,7 @@
 #include "stdafx.h"
 
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 #include "Include/CGameWindow.h"
@@ -15,16 +16,13 @@ using namespace std;
 
 int main()
 {
+	//float FullCircleRadions = 6.283185f;
 
-	float Ray = 3.14159f * 2;
-
-	//float temp = P3 / 8;
-
-	CVector3 Test(2.f, 2.f, 2.f);
-	for(int i = 0; i < 80;++i)
-	{
-		CVector3 Result = MathHelper::RotateZ(Test, Ray);
-	}
+	//CVector3 Test(2.f, 2.f, 2.f);
+	//for(int i = 0; i < 80;++i)
+	//{
+	//	CVector3 Result = MathHelper::RotateXY(Test, FullCircleRadions);
+	//}
 
 	CApp *app = NULL;                  // Pointer to BASE class CApp
 	app = new CAppGeometricFigures(800, 600);  // Using pointer to base class, create a new object of DERIVED class

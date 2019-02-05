@@ -1,14 +1,14 @@
 #include "../stdafx.h"
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 #include <assert.h>
 #include "../Include/Globals.h"
 #include "../Include/CAppGeometricFigures.h"
 #include "../Include/CWideStringHelper.h"
-
-#define PI_OVER_180 3.14129/180
 
 /* */
 CAppGeometricFigures::CAppGeometricFigures() :
@@ -140,8 +140,11 @@ void CAppGeometricFigures::initialize()
 	}
 	// TODO : Agregar mis metodos aqui 
 	m_initialized = true;
+
+	ParserFBX("MODELS\\FBX\\Test_Cube_Ascii.fbx");
+
 	//createTri();
-	createSphereGeometry(6, 6, 1.f);
+	//createSphereGeometry(6, 6, 1.f);
 	//createPyramidGeometry();
 }
 
@@ -272,7 +275,6 @@ void CAppGeometricFigures::render()
 		// =================================
 	}
 }
-
 /* */
 void CAppGeometricFigures::onMouseMove(float deltaX, float deltaY)
 {
@@ -281,7 +283,6 @@ void CAppGeometricFigures::onMouseMove(float deltaX, float deltaY)
 	//
 	// ===============================================
 }
-
 /* */
 void CAppGeometricFigures::createPyramidGeometry()
 {
@@ -454,6 +455,7 @@ void CAppGeometricFigures::createIcsaedroGeometry()
 void CAppGeometricFigures::createTri(){
 
 	m_numFacesPyramid = 1;
+
 	// Posiciones x,y,z
 	float vertixData[9] = 
 	{
@@ -467,17 +469,18 @@ void CAppGeometricFigures::createTri(){
 	{
 		0,2,1
 	};
+
 	/*para las normales */
 	float nData[3] = {
 		0.0, 0.0, 0.0,
 	};
+
 	/*para las indices de los normales */
 	unsigned short nIndices[3] = {
 		0, 0, 0,
-
 	};
 	/*Cordenadas uv de cada triangulo */
-	float uvVerex[2] = {
+	float uvVertex[2] = {
 		0.0f,0.0f
 	};
 
@@ -495,7 +498,7 @@ void CAppGeometricFigures::createTri(){
 		&m_pyramidVertexArrayObject,
 		vertixData,3,//
 		nData,1,//
-		uvVerex,1,
+		uvVertex,1,
 		IndicesData,1,
 		nIndices,1,
 		uvCoords,3
@@ -513,6 +516,374 @@ void CAppGeometricFigures::createTri(){
 	}
 }
 
+/*!
+	\fn Takes a relative path to an FBX file then parser 
+	\param NameOfFile is the locaction of the file that goin to be parse
+*/
+void CAppGeometricFigures::ParserFBX(const char* PathOfFile)
+{
+	std::wstring wresourceFilenameTexture;
+	std::string resourceFilenameTexture;
+
+	if (!CWideStringHelper::GetResourceFullPath("MODELS\\FBX\\Test_Cube_Ascii.fbx"
+		, wresourceFilenameTexture, resourceFilenameTexture)) 
+	{
+		std::cout << "ERROR : With path ";
+	}
+
+	/*! \var ComparasionStr is use to search for tokens */
+	string ComparasionStr;
+	string ResultStr;
+	/*! \var To know when we find the part of the file we need */
+	bool isInformationRelevant = false;
+
+	ifstream File(resourceFilenameTexture.c_str());
+
+	int CountProperty = 0;
+	int CountVertices = 0;
+	int CountPolygonVertex = 0;
+	int CountEdges = 0;
+	int CountNormals = 0;
+	int CountUVs = 0;
+	int CountUVIndex = 0;
+
+	// for conversion from string to in or float 
+	std::string::size_type sz;
+
+
+	float *ptr_Vertices = nullptr;
+	float *ptr_Normal = nullptr;
+	float*ptr_UV = nullptr;
+
+	 short *ptr_Polygon = nullptr;
+	unsigned short *ptr_UVindex = nullptr;
+
+	if(File.is_open())
+	{
+		char temp = '\0';
+		// this token we tell us wen we get to the other tokens 
+		const char *TokenObjects = "Objects:";
+		// all the properties of the 3d objets we are parsing
+		const char *TokenVertices = "Vertices:";
+		const char *TokenPolygonVertexIndex = "PolygonVertexIndex:";
+		const char *TokenEdges = "Edges:";
+		const char *TokenNormals = "Normals:";
+		const char *TokenUV = "UV:";
+		const char *TokenUVIndex = "UVIndex:";
+
+
+		/*! where the value are going to be stored */
+
+		uint8_t LengthOfToken = 0;
+		
+		bool HaveUV = false;
+		do
+		{
+			File >> temp;
+			if(!isInformationRelevant && temp == 'O')
+			{
+				LengthOfToken = strlen(TokenObjects);
+				for (size_t i = 0; i <LengthOfToken; i++)
+				{
+					ComparasionStr += temp;
+					File >> temp;
+				}
+				if (ComparasionStr == TokenObjects)
+				{
+					isInformationRelevant = true;
+				}
+				// This else is for skiping the line
+				// a get to the next one 
+				else{
+					getline(File, ComparasionStr);
+				}
+			}
+			else if(isInformationRelevant)
+			{
+				bool GoodToken = false;
+				if(temp == 'V')
+				{
+					GoodToken =	isTokenValid(File, ComparasionStr, TokenVertices,temp);
+					if (GoodToken)
+					{
+						GetValueFromStr(File, ptr_Vertices, CountVertices);
+					}
+				}
+				else if(temp == 'N')
+				{
+					GoodToken = isTokenValid(File, ComparasionStr, TokenNormals, temp);
+					if (GoodToken)
+					{
+						GetValueFromStr(File, ptr_Normal, CountNormals);
+					}
+				}
+				else if (temp == 'P')
+				{
+					GoodToken = isTokenValid(File, ComparasionStr, TokenPolygonVertexIndex, temp);
+					if (GoodToken)
+					{
+						GetValueFromStr(File, ptr_Polygon, CountPolygonVertex);
+					}
+				}
+				else if(temp == 'U' && !HaveUV)
+				{
+					GoodToken = isTokenValid(File, ComparasionStr, TokenUV, temp);
+					if (GoodToken)
+					{
+						GetValueFromStr(File, ptr_UV, CountUVs);
+						HaveUV = true;
+					}
+				}
+				else if(HaveUV && temp == 'U')
+				{
+					GoodToken = isTokenValid(File, ComparasionStr, TokenUVIndex, temp);
+					if (GoodToken)
+					{
+						GetValueFromStr(File, ptr_UVindex, CountUVIndex);
+					}
+				}
+				else
+				{
+					getline(File, ComparasionStr);
+				}
+
+			}
+			ComparasionStr.clear();
+		} while (!File.eof());
+	}
+	else {
+		std::cout << "ERROR : cannot find File\n";
+	}
+
+	File.close();
+	bool loaded = false;
+
+	m_numFacesPyramid = CountPolygonVertex / 3;
+
+	unsigned short *ptr_FakeNormalIncies = new 	unsigned short[CountNormals];
+	short indexCount = 1;
+	for (int i = 0; i < CountNormals; ++i)
+	{
+		ptr_FakeNormalIncies[i] = indexCount;
+		if(i % 3 ==0 && i > 1)
+		{
+			indexCount++;
+		}
+
+	}
+
+	for (int i = 0; i < CountPolygonVertex; ++i)
+	{
+		if (ptr_Polygon[i] < 0)
+		{
+			ptr_Polygon[i] =abs(ptr_Polygon[i]);
+			ptr_Polygon[i] -= 1 ;
+		}
+	}
+
+	 unsigned short * ptr_Trasfer = new unsigned short[CountPolygonVertex];
+
+	 for(int i = 0; i < CountPolygonVertex; ++i)
+	 {
+		 ptr_Trasfer[i] = ptr_Polygon[i];
+	 }
+
+
+	// Allocate graphics memory for object
+	loaded = getOpenGLRenderer()->allocateGraphicsMemoryForObject(
+		&m_colorModelShaderId,
+		&m_pyramidVertexArrayObject,
+		ptr_Vertices, CountVertices,//
+		ptr_Normal, CountNormals,//
+		ptr_UV, CountUVs,
+		ptr_Trasfer, CountPolygonVertex,
+		ptr_FakeNormalIncies, CountNormals,
+		ptr_UVindex, CountUVIndex
+	);
+
+	if (!loaded)
+	{
+		m_numFacesPyramid = 0;
+
+		if (m_pyramidVertexArrayObject > 0)
+		{
+			getOpenGLRenderer()->freeGraphicsMemoryForObject(&m_pyramidVertexArrayObject);
+			m_pyramidVertexArrayObject = 0;
+		}
+	}
+
+	if (ptr_Vertices != nullptr)
+	{
+		delete[] ptr_Vertices;
+	}
+	if (ptr_Normal != nullptr)
+	{
+		delete[] ptr_Normal;
+	}
+	if (ptr_UV != nullptr)
+	{
+		delete[]ptr_UV;
+	}
+	if (ptr_UVindex != nullptr)
+	{
+		delete[] ptr_UVindex;
+	}
+	if (ptr_Polygon != nullptr)
+	{
+		delete[] ptr_Polygon;
+	}
+	if (ptr_Trasfer != nullptr)
+	{
+		delete[] ptr_Trasfer;
+	}
+	if (ptr_FakeNormalIncies != nullptr)
+	{
+		delete[] ptr_FakeNormalIncies;
+	}
+}
+
+bool CAppGeometricFigures::isTokenValid(ifstream &inFile, string &Str, const char *Token, char CurrentChr)
+{
+	uint16_t TokenLength = strlen(Token);
+
+	for (int i = 0; i < TokenLength; ++i)
+	{
+		Str += CurrentChr;
+		inFile >> CurrentChr;
+	}
+
+	if (Str == Token)
+		return true;
+
+	return false;
+}
+// get Value Fuction
+/*!
+	\fn GetValueFromStr This Function WILL alter the pointer thats past to it 
+	\param inFile the file for input
+	\param ptr_float a reference to a pointer 
+	\param Count to know how many parperty iva parsed 
+*/
+void CAppGeometricFigures::GetValueFromStr(ifstream &inFile, float *&ptr_float,int &Count)
+{
+	char temp = '0';
+	string NumReader;
+	while (temp != '{')
+	{
+		inFile >> temp;
+		NumReader += temp;
+	}
+	// gets rid of the char '{'
+	NumReader.resize(NumReader.size() - 1);
+	Count = stoi(NumReader);
+	NumReader.clear();
+	// ignore the chars 'a' and ':' 
+	inFile >> temp;
+	inFile >> temp;
+
+	ptr_float = new float[Count];
+	int index = 0;
+
+	while (temp != '}')
+	{
+		inFile >> temp;
+		NumReader += temp;
+		if (temp == ',')
+		{
+			ptr_float[index] = stof(NumReader);
+			index++;
+			NumReader.clear();
+		}
+		else if (temp == '}')
+		{
+			// gets rid of the char '{'
+			NumReader.resize(NumReader.size() - 1);
+			ptr_float[index] = stof(NumReader);
+		}
+	}
+
+}
+
+// sobre carga 
+void CAppGeometricFigures::GetValueFromStr(ifstream &inFile,unsigned short *&ptr_Ushort, int &Count)
+{
+	char temp = '0';
+	string NumReader;
+	while (temp != '{')
+	{
+		inFile >> temp;
+		NumReader += temp;
+	}
+	// gets rid of the char '{'
+	NumReader.resize(NumReader.size() - 1);
+	Count = stoi(NumReader);
+	NumReader.clear();
+	// ignore the chars 'a' and ':' 
+	inFile >> temp;
+	inFile >> temp;
+
+	ptr_Ushort = new unsigned short[Count];
+	int index = 0;
+
+	while (temp != '}')
+	{
+		inFile >> temp;
+		NumReader += temp;
+		if (temp == ',')
+		{
+			ptr_Ushort[index] = stoi(NumReader);
+			index++;
+			NumReader.clear();
+		}
+		else if (temp == '}')
+		{
+			// gets rid of the char '{'
+			NumReader.resize(NumReader.size() - 1);
+			ptr_Ushort[index] = stoi(NumReader);
+		}
+	}
+
+}
+
+void CAppGeometricFigures::GetValueFromStr(ifstream &inFile, short *&ptr_short, int &Count)
+{
+	char temp = '0';
+	string NumReader;
+	while (temp != '{')
+	{
+		inFile >> temp;
+		NumReader += temp;
+	}
+	// gets rid of the char '{'
+	NumReader.resize(NumReader.size() - 1);
+	Count = stoi(NumReader);
+	NumReader.clear();
+	// ignore the chars 'a' and ':' 
+	inFile >> temp;
+	inFile >> temp;
+
+	ptr_short = new short[Count];
+	int index = 0;
+
+	while (temp != '}')
+	{
+		inFile >> temp;
+		NumReader += temp;
+		if (temp == ',')
+		{
+			ptr_short[index] = stoi(NumReader);
+			index++;
+			NumReader.clear();
+		}
+		else if (temp == '}')
+		{
+			// gets rid of the char '{'
+			NumReader.resize(NumReader.size() - 1);
+			ptr_short[index] = stoi(NumReader);
+		}
+	}
+
+}
 /* */
 void CAppGeometricFigures::onF2(int mods)
 {

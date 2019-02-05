@@ -117,14 +117,14 @@ namespace MathHelper
 			           0.0f,                    0.0f,     -1.0f,                   0.0f);
 	}
 
-	inline static CVector3 RotateZ(CVector3 &Other, float angleInRadians)
+	inline static CVector3 RotateXY(CVector3 &Other, float angleInRadians)
 	{
 		float cosine = cosf(angleInRadians);
 		float sine = sinf(angleInRadians);
 
 
 		// Creamos la matrice de rotation Para el eje Z
-          const Matrix4 RatationMatrixZ(cosine, -sine, 0.f, 0.f,
+           Matrix4 RatationMatrixZ(cosine, -sine, 0.f, 0.f,
 								       					      	sine, cosine, 0.f, 0.f,
 												      	      	0.f, 0.f, 1.0f, 0.f,
 													            	0.f, 0.f, 0.f, 1.0f);

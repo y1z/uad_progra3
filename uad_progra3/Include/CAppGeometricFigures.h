@@ -109,13 +109,26 @@ public:
 	void onF3(int mods);
 
 private:
-	
-
 	void createPyramidGeometry();
+	// myFunctions
 	void createSphereGeometry(unsigned int PointsX,unsigned int PointsY , float Size);
 	void createTorusGeometry();
 	void createIcsaedroGeometry();
 	void createTri();
+	// parser For Fbx 
+	void ParserFBX(const char *PathOfFile);
+	/*!
+	\fn isTokenValid checks input from a file and then varafias if the token is there.
+	\param File is where we receive input from .
+	\param Str use for comperasion between itself and the Token .
+	\param Token is the token we are looking for .
+	\param CurrentChr is the char that is activli reading the file .
+	*/
+	bool isTokenValid(ifstream &inFile, string &Str, const char *Token,char CurrentChr);
+	void GetValueFromStr(ifstream &inFile, float *&ptr_float, int &Count);
+	void GetValueFromStr(ifstream &inFile, unsigned short *&ptr_float, int &Count);
+	void GetValueFromStr(ifstream &inFile, short *&ptr_float, int &Count);
+
 	void normcrossprod(float v1[3], float v2[3], float out[3]);
 	void normalize(float v[3]);
 
