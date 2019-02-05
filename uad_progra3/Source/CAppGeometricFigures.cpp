@@ -141,7 +141,7 @@ void CAppGeometricFigures::initialize()
 	// TODO : Agregar mis metodos aqui 
 	m_initialized = true;
 
-	ParserFBX("MODELS\\FBX\\Test_Cube_Ascii.fbx");
+	ParserFBX("MODELS\\FBX\\Pyro_Head_Ascii.fbx");
 
 	//createTri();
 	//createSphereGeometry(6, 6, 1.f);
@@ -525,7 +525,7 @@ void CAppGeometricFigures::ParserFBX(const char* PathOfFile)
 	std::wstring wresourceFilenameTexture;
 	std::string resourceFilenameTexture;
 
-	if (!CWideStringHelper::GetResourceFullPath("MODELS\\FBX\\Test_Cube_Ascii.fbx"
+	if (!CWideStringHelper::GetResourceFullPath(PathOfFile
 		, wresourceFilenameTexture, resourceFilenameTexture)) 
 	{
 		std::cout << "ERROR : With path ";
@@ -546,9 +546,6 @@ void CAppGeometricFigures::ParserFBX(const char* PathOfFile)
 	int CountNormals = 0;
 	int CountUVs = 0;
 	int CountUVIndex = 0;
-
-	// for conversion from string to in or float 
-	std::string::size_type sz;
 
 
 	float *ptr_Vertices = nullptr;
@@ -693,12 +690,12 @@ void CAppGeometricFigures::ParserFBX(const char* PathOfFile)
 	loaded = getOpenGLRenderer()->allocateGraphicsMemoryForObject(
 		&m_colorModelShaderId,
 		&m_pyramidVertexArrayObject,
-		ptr_Vertices, CountVertices,//
-		ptr_Normal, CountNormals,//
-		ptr_UV, CountUVs,
-		ptr_Trasfer, CountPolygonVertex,
-		ptr_FakeNormalIncies, CountNormals,
-		ptr_UVindex, CountUVIndex
+		ptr_Vertices, CountVertices / 3,//
+		ptr_Normal, CountNormals / 3,//
+		ptr_UV, CountUVs / 2 ,
+		ptr_Trasfer, CountPolygonVertex / 3,
+		ptr_FakeNormalIncies, CountNormals / 3,
+		ptr_UVindex, CountUVIndex / 3
 	);
 
 	if (!loaded)
