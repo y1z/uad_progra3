@@ -37,3 +37,5 @@
 *.ipch 
 *.suo
 *.vcxproj
+*.tlog
+*.log 
