@@ -36,3 +36,4 @@
 *.ipc
 *.ipch 
 *.suo
+*.vcxproj
