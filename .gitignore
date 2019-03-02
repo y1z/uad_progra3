@@ -37,5 +37,5 @@
 *.ipch 
 *.suo
 *.vcxproj
-*.tlog
-*.log 
+*.html
+*.png
