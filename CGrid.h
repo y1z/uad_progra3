@@ -16,6 +16,8 @@ class CAppHexgrid;
 the grid and is in-charge of initialization and rendering 
 of the grid, however this class need to be provided a 
 "COpenGLRenderer" and "CGameWindow" to achieve this goal.
+\date 03--April--2019
+\author Yhaliff Said Barraza
 */
 
 

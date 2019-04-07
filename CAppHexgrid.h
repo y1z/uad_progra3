@@ -10,7 +10,7 @@
 	render of the hexagrid is taken care of by CGrid
 	\author Yhaliff Said Barraza Zubia
 	\date 05/March/2019
-	\version 0.90
+	\version 1.00
 */
 
 class CGrid;

@@ -8,7 +8,6 @@
 
 using namespace std;
 
-
 #include "Include/MathHelper.h"
 // -------------------------default includes----------------//
 #include "Include/CGameWindow.h"
@@ -30,13 +29,15 @@ using namespace std;
 
 int main()
 {
-
 	HANDLE Threads[2];
 	DWORD ThreadIDs[2];
 
 	FBXContainer DataTrasfer;
 	CParser3d parse;
 	COctTree OctreeStatic;
+	COctTree OctreeDymanic;
+
+	OctreeDymanic.isDynamic = true;
 
 	parse.ParseFBXFile("MODELS\\FBX\\Pyro_Head_Ascii.fbx");
 	parse.GetModelData(DataTrasfer);
@@ -44,6 +45,7 @@ int main()
 	parse.GetModelData(DataTrasfer);
 
 	OctreeStatic.Model = &DataTrasfer;
+	OctreeDymanic.Model = &DataTrasfer;
 
 	Threads[0] = CreateThread(NULL, 0,
 														reinterpret_cast<LPTHREAD_START_ROUTINE> (&COctTree::ThreadFunction),
@@ -52,14 +54,20 @@ int main()
 
 	WaitForSingleObject(Threads[0], INFINITE);
 
-
-	//int x = 0;
+	Threads[1] = CreateThread(NULL, 0,
+														reinterpret_cast<LPTHREAD_START_ROUTINE> (&COctTree::ThreadFunction),
+														reinterpret_cast<LPVOID>(&OctreeDymanic), 0,
+														&ThreadIDs[0]);
+	WaitForSingleObject(Threads[1], INFINITE);
 
 	CApp *app = NULL;    // Pointer to BASE class CApp
 	app = new CAppHexgrid(1920, 1080, 3, 3);  // Using pointer to base class, create a new object of DERIVED class
 	app->run();                        // Run the app
 	delete app;                        // Delete pointer
 	app = NULL;                        // Set pointer to NULL
+
+	CloseHandle(Threads[0]);
+	CloseHandle(Threads[1]);
 
 	return 0;
 }

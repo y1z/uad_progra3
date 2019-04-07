@@ -206,6 +206,10 @@ void COctNode::InitPrintContent()
 	PrintContent(DepthTracker);
 }
 
+/*
+\param Geometry [out] is used to contain all the vertices 
+\param Depth [in] this value is used to know how much of the Octree you what to use 
+*/
 void COctNode::GetGeometry(std::deque<CVector3>& Geometry, int Depth)
 {
 	if (Depth <= 8)
@@ -270,6 +274,7 @@ void COctNode::PrintContent(std::string &DepthTracker)
 
 	for (int i = 0; i < 8; ++i)
 	{
+		// to get Recursion 
 		if (mptr_OtherNodes[i] != nullptr)
 		{
 			mptr_OtherNodes[i]->PrintContent(DepthTracker);

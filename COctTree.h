@@ -21,10 +21,13 @@ private:// variables
 public:
 	bool isDynamic = false;
 	FBXContainer *Model = nullptr;
+private:
+	short * mptr_Indeces = nullptr;
 public:// functions 
 	void Init(FBXContainer &GeometryData);
 	void InsertValues(FBXContainer &GeometryData);
 	void PrintContent();
+	void GetGeomety(FBXContainer &GeometryData);
 
 	static DWORD WINAPI ThreadFunction(LPVOID param);
 };

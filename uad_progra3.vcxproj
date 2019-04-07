@@ -172,7 +172,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAppHexgrid.h" />
-    <ClInclude Include="CEntregaFinal.h" />
     <ClInclude Include="CGrid.h" />
     <ClInclude Include="CGridCell.h" />
     <ClInclude Include="COctNode.h" />
@@ -208,7 +207,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CAppHexgrid.cpp" />
-    <ClCompile Include="CEntregaFinal.cpp" />
     <ClCompile Include="CGrid.cpp" />
     <ClCompile Include="CGridCell.cpp" />
     <ClCompile Include="COctNode.cpp" />
@@ -239,6 +237,9 @@
     <ClCompile Include="Source\LoadTGA.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="uad_progra3.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
