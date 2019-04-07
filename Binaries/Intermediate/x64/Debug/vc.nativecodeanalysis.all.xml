@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?><DEFECTS><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\y_here\desktop\uad_progra3</FILEPATH>
+      <FILENAME>coctnode.cpp</FILENAME>
+      <LINE>3</LINE>
+      <COLUMN>10</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'COctNode::mptr_OtherNodes' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>COctNode::{ctor}</FUNCTION>
+    <DECORATED>??0COctNode@@QEAA@XZ</DECORATED>
+    <FUNCLINE>3</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\y_here\desktop\uad_progra3</FILEPATH>
+      <FILENAME>coctnode.cpp</FILENAME>
+      <LINE>15</LINE>
+      <COLUMN>10</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'COctNode::mptr_OtherNodes' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>COctNode::{ctor}</FUNCTION>
+    <DECORATED>??0COctNode@@QEAA@MM@Z</DECORATED>
+    <FUNCLINE>15</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\y_here\desktop\uad_progra3</FILEPATH>
+      <FILENAME>coctnode.cpp</FILENAME>
+      <LINE>28</LINE>
+      <COLUMN>10</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'COctNode::mptr_OtherNodes' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>COctNode::{ctor}</FUNCTION>
+    <DECORATED>??0COctNode@@QEAA@QEAVCVector3@@W4NodeSelection@0@M@Z</DECORATED>
+    <FUNCLINE>28</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT></DEFECTS>

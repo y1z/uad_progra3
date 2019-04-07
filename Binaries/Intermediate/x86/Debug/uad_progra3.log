@@ -1,0 +1,537 @@
+﻿  CAppHexgrid.cpp
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(177): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(954): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(962): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(421): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(446): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(463): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(74): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(83): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(89): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(95): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(101): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(107): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(482): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(2483): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(2497): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(9717): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10244): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10276): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10755): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10770): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(11213): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(12946): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(12961): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14627): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14643): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14790): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14829): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14846): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14863): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(15008): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(15027): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\oaidl.h(549): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidlbase.h(7854): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidlbase.h(7870): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+  CGrid.cpp
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(177): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(954): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(962): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(421): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(446): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(463): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(74): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(83): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(89): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(95): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(101): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(107): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(482): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(2483): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(2497): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(9717): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10244): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10276): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10755): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10770): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(11213): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(12946): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(12961): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14627): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14643): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14790): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14829): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14846): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14863): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(15008): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(15027): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\oaidl.h(549): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidlbase.h(7854): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidlbase.h(7870): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\users\y_here\desktop\uad_progra3\cgrid.cpp(120): warning C4018: '<': signed/unsigned mismatch
+c:\users\y_here\desktop\uad_progra3\cgrid.cpp(143): warning C4018: '<': signed/unsigned mismatch
+c:\users\y_here\desktop\uad_progra3\cgrid.cpp(192): warning C4018: '<': signed/unsigned mismatch
+c:\users\y_here\desktop\uad_progra3\cgrid.cpp(194): warning C4267: '=': conversion from 'size_t' to 'unsigned short', possible loss of data
+c:\users\y_here\desktop\uad_progra3\cgrid.cpp(196): warning C4267: '=': conversion from 'size_t' to 'unsigned short', possible loss of data
+c:\users\y_here\desktop\uad_progra3\cgrid.cpp(198): warning C4267: '=': conversion from 'size_t' to 'unsigned short', possible loss of data
+c:\users\y_here\desktop\uad_progra3\cgrid.cpp(214): warning C4018: '<': signed/unsigned mismatch
+  CGridCell.cpp
+c:\users\y_here\desktop\uad_progra3\cgridcell.cpp(47): warning C4305: '*=': truncation from 'double' to 'float'
+c:\users\y_here\desktop\uad_progra3\cgridcell.cpp(100): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  COctNode.cpp
+  COctTree.cpp
+  CParser3d.cpp
+c:\users\y_here\desktop\uad_progra3\cparser3d.cpp(68): warning C4267: '=': conversion from 'size_t' to 'uint8_t', possible loss of data
+c:\users\y_here\desktop\uad_progra3\cparser3d.cpp(163): warning C4267: 'initializing': conversion from 'size_t' to 'uint16_t', possible loss of data
+  CAppGeometricFigures.cpp
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(177): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(954): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(962): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(421): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(446): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(463): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(74): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(83): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(89): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(95): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(101): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(107): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(482): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(2483): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(2497): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(9717): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10244): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10276): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10755): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10770): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(11213): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(12946): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(12961): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14627): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14643): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14790): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14829): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14846): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14863): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(15008): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(15027): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\oaidl.h(549): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidlbase.h(7854): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidlbase.h(7870): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\users\y_here\desktop\uad_progra3\source\cappgeometricfigures.cpp(419): warning C4018: '<': signed/unsigned mismatch
+c:\users\y_here\desktop\uad_progra3\source\cappgeometricfigures.cpp(430): warning C4018: '<': signed/unsigned mismatch
+c:\users\y_here\desktop\uad_progra3\source\cappgeometricfigures.cpp(577): warning C4267: '=': conversion from 'size_t' to 'uint8_t', possible loss of data
+c:\users\y_here\desktop\uad_progra3\source\cappgeometricfigures.cpp(741): warning C4267: 'initializing': conversion from 'size_t' to 'uint16_t', possible loss of data
+  COpenGLRenderer.cpp
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(177): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(954): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(962): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(421): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(446): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(463): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(74): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(83): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(89): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(95): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(101): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(107): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(482): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(2483): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(2497): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(9717): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10244): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10276): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10755): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10770): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(11213): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(12946): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(12961): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14627): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14643): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14790): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14829): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14846): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14863): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(15008): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(15027): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\oaidl.h(549): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidlbase.h(7854): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidlbase.h(7870): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+  uad_progra3.cpp
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(177): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(954): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(962): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(421): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(446): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypesbase.h(463): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(74): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(83): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(89): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(95): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(101): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(107): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\shared\wtypes.h(482): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(2483): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(2497): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(9717): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10244): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10276): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10755): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(10770): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(11213): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(12946): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(12961): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14627): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14643): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14790): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14829): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14846): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(14863): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(15008): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidl.h(15027): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\oaidl.h(549): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidlbase.h(7854): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\program files (x86)\windows kits\8.1\include\um\objidlbase.h(7870): error C2872: 'byte': ambiguous symbol
+  c:\program files (x86)\windows kits\8.1\include\shared\rpcndr.h(176): note: could be 'unsigned char byte'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\cstddef(23): note: or       'std::byte'
+c:\users\y_here\desktop\uad_progra3\macroleswindow.h(2): warning C4005: 'NOMINMAX': macro redefinition
+  c:\users\y_here\desktop\uad_progra3\dependencies\glad\glad-4.5-core\include\glad\glad.h(614): note: see previous definition of 'NOMINMAX'
+  Generating Code...

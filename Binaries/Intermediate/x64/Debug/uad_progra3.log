@@ -1,0 +1,4 @@
+﻿  uad_progra3.cpp
+c:\users\y_here\desktop\uad_progra3\macroleswindow.h(2): warning C4005: 'NOMINMAX': macro redefinition
+  c:\users\y_here\desktop\uad_progra3\dependencies\glad\glad-4.5-core\include\glad\glad.h(614): note: see previous definition of 'NOMINMAX'
+  uad_progra3.vcxproj -> C:\Users\Y_Here\Desktop\uad_progra3\Binaries\Exe\x64\Debug\uad_progra3.exe
