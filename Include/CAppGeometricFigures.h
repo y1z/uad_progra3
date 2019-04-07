@@ -51,7 +51,7 @@ private:
 	// An OpenGL Vertex Array Object is a reference to graphics memory that tells OpenGL where to look for the geometry of the object
 	// It needs to be initialized using the allocateGraphicsMemory() method from the renderer.
 	unsigned int m_pyramidVertexArrayObject;
-	
+
 	// Identifier for the OpenGL Texture Object 
 	unsigned int m_textureID;
 
@@ -61,8 +61,6 @@ private:
 	int m_numFacesPyramid;
 	int m_renderPolygonMode;
 	int numFacesTri;
-
-
 
 protected:
 
@@ -111,20 +109,20 @@ public:
 private:
 	void createPyramidGeometry();
 	// myFunctions
-	void createSphereGeometry(unsigned int PointsX,unsigned int PointsY , float Size);
+	void createSphereGeometry(unsigned int PointsX, unsigned int PointsY, float Size);
 	void createTorusGeometry();
 	void createIcsaedroGeometry();
 	void createTri();
 	// parser For Fbx 
 	void ParserFBX(const char *PathOfFile);
 	/*!
-	\fn isTokenValid checks input from a file and then varafias if the token is there.
+	\fn isTokenValid checks input from a file and then checks if the token is there.
 	\param File is where we receive input from .
-	\param Str use for comperasion between itself and the Token .
+	\param Str use for comparison between itself and the Token .
 	\param Token is the token we are looking for .
-	\param CurrentChr is the char that is activli reading the file .
+	\param CurrentChr is the char that is actively reading the file .
 	*/
-	bool isTokenValid(ifstream &inFile, string &Str, const char *Token,char CurrentChr);
+	bool isTokenValid(ifstream &inFile, string &Str, const char *Token, char CurrentChr);
 	void GetValueFromStr(ifstream &inFile, float *&ptr_float, int &Count);
 	void GetValueFromStr(ifstream &inFile, unsigned short *&ptr_float, int &Count);
 	void GetValueFromStr(ifstream &inFile, short *&ptr_float, int &Count);

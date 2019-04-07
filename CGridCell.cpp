@@ -5,13 +5,13 @@ CGridCell::CGridCell()
 {
 	for (char i = 0; i < 6; ++i)
 	{
-		m_Positions[i].setValues(m_Size, m_Size,0);
+		m_Positions[i].setValues(m_Size, m_Size, 0);
 	}
 }
 
 //! Set size of all sides of the hexagon
 CGridCell::CGridCell(float Size)
-:m_Size(Size)
+	:m_Size(Size)
 {
 	// for initialization of the values 
 	for (char i = 0; i < 6; ++i)
@@ -40,7 +40,7 @@ CGridCell::~CGridCell()
 void CGridCell::CreateFlatTopHexagon()
 {
 	static constexpr float AnglePostion = 60.0f;//!<use to determine where to
-	                                        //!<locate individual Position for Hexagon
+																					//!<locate individual Position for Hexagon
 	for (char i = 0; i < 6; ++i)
 	{
 		float AngleDeg = AnglePostion * i;
@@ -65,6 +65,15 @@ void CGridCell::SetCenterPosition(float XPosition, float YPosition)
 {
 	m_CenterPosition.X = XPosition;
 	m_CenterPosition.Y = YPosition;
+}
+
+void CGridCell::SetZ(float ZPosition)
+{
+	m_CenterPosition.Z = ZPosition;
+	for (auto& Points : m_Positions)
+	{
+		Points.Z = ZPosition;
+	}
 }
 
 float CGridCell::GetHexagonHight() const{
@@ -95,7 +104,7 @@ void CGridCell::GetDimensionOfHexagon()
 
 void CGridCell::operator=(const CGridCell &other)
 {
-	for(int i = 0; i < 6; ++i)
+	for (int i = 0; i < 6; ++i)
 	{
 		this->m_Positions[i] = other.m_Positions[i];
 	}
@@ -130,33 +139,34 @@ void CGridCell::MoveDownRight()
 
 void CGridCell::MoveUp()
 {
-	float VerticalDistance = m_HexHight * 0.50f;
+	float VerticalDistance = m_HexHight;
 
 	m_CenterPosition.Y += VerticalDistance;
 
 	CreateFlatTopHexagon();
 }
 
-void CGridCell::TransferValue(float *& ptr_Out, int Index)
+void CGridCell::TrasnferVertices(float *& ptr_Out, int LoopCount)
 {
-	int CurrentIndex = 21 * Index;
-	
-	ptr_Out[ CurrentIndex] = m_CenterPosition.getX();
+	// total induces times the current LoopCount 
+	int CurrentIndex = 21 * LoopCount;
+
+	// always get the induces of the center first
+	ptr_Out[CurrentIndex] = m_CenterPosition.getX();
 	CurrentIndex++;
-	ptr_Out[ CurrentIndex] = m_CenterPosition.getY();
+	ptr_Out[CurrentIndex] = m_CenterPosition.getY();
 	CurrentIndex++;
-	ptr_Out[ CurrentIndex] = m_CenterPosition.getZ();
+	ptr_Out[CurrentIndex] = m_CenterPosition.getZ();
 
 	// the rest of the values  
-	for (auto Value : m_Positions)
+	for (auto Point : m_Positions)
 	{
 		CurrentIndex++;
-		ptr_Out[CurrentIndex] = Value.getX();
+		ptr_Out[CurrentIndex] = Point.getX();
 		CurrentIndex++;
-		ptr_Out[CurrentIndex] = Value.getY();
+		ptr_Out[CurrentIndex] = Point.getY();
 		CurrentIndex++;
-		ptr_Out[CurrentIndex] = Value.getZ();
-
+		ptr_Out[CurrentIndex] = Point.getZ();
 	}
 
 }

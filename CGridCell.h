@@ -22,6 +22,8 @@ public:// functions
 
 	void SetCenterPosition(float XPosition, float YPosition);
 
+	void SetZ(float ZPosition);
+
 	float GetHexagonWidth() const ;
 	float GetHexagonHight() const ;
 
@@ -32,7 +34,12 @@ public:// functions
 	void MoveDownRight();
 	void MoveUp();
 	
-	void TransferValue(float *& ptr_Out, int);
+	/*! function made to be in a for Loop
+		\fn TrasnferVertices
+		\param [out] ptr_Out the pointer that will be altered, should be a nullptr
+		\param [in] LoopCount to know the iteration of the for loop 
+	*/
+	void TrasnferVertices(float *& ptr_Out, int LoopCount);
 	//--------------------
 private:
 	void GetDimensionOfHexagon();
@@ -40,11 +47,12 @@ private:
 public: // Operators 
 	void operator= (const CGridCell &other);
 
-
+	CVector3 m_Positions[6];
 protected:// Variables 
 	CVector3 m_CenterPosition = { 0.f,0.f,0.f };
-	CVector3 m_Positions[6];
 
+
+	float m_DistanceFromCamera = -1.0f;
 	float m_Size = 1.0f;
 	float m_HexWidth = 0.f;
 	float m_HexHight = 0.f;

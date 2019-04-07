@@ -48,7 +48,8 @@ public:
 		vector<wchar_t> pathBuf;
 		DWORD copied = 0;
 
-		do {
+		do
+		{
 			pathBuf.resize(pathBuf.size() + MAX_PATH);
 			copied = GetModuleFileNameW(0, &pathBuf.at(0), (DWORD)pathBuf.size());
 		} while (copied >= pathBuf.size());
@@ -72,7 +73,7 @@ public:
 
 		// Now append the relative path where the resources are located
 		resourceFullPathUTF16.append(L"\\..\\..\\..\\..\\Resources\\MEDIA\\");
-		
+
 		// Append the filename
 		resourceFullPathUTF16.append(wResource);
 		delete[] wResource;
@@ -193,15 +194,15 @@ public:
 
 		wchar_t *wstr = new wchar_t[numWideCharsNeeded];
 		int numCharsConverted = MultiByteToWideChar(
-			CP_UTF8, 
-			0, 
-			str, 
-			(int)( sizeof(char) * (strlen(str) + 1) ), 
-			&wstr[0], 
+			CP_UTF8,
+			0,
+			str,
+			(int)(sizeof(char) * (strlen(str) + 1)),
+			&wstr[0],
 			numWideCharsNeeded);
 
-		if (numCharsConverted == 0 || 
-			numWideCharsNeeded != numCharsConverted)
+		if (numCharsConverted == 0 ||
+				numWideCharsNeeded != numCharsConverted)
 		{
 			cout << "Failed converting UTF-8 string to UTF-16" << endl;
 			return nullptr;
@@ -254,7 +255,7 @@ public:
 			NULL);
 
 		if (numCharsConverted == 0 ||
-			numCharsNeeded != numCharsConverted)
+				numCharsNeeded != numCharsConverted)
 		{
 			cout << "Failed converting UTF-16 string to UTF-8" << endl;
 			return nullptr;

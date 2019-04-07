@@ -36,14 +36,14 @@ public:
 	void setChild(CCircularDoubleLinkedListNode *child) { m_Child = child; }
 };
 
-/* 
+/*
  * -----------------------
  * TEMPLATE IMPLEMENTATION
  * -----------------------
  */
 
-/*
-*/
+ /*
+ */
 template <class T>
 CCircularDoubleLinkedListNode<T>::CCircularDoubleLinkedListNode() :
 	m_Data{ NULL },

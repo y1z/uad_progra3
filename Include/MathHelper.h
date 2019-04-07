@@ -5,7 +5,7 @@
 
 #include <cmath>
 #include "CVector3.h"
-#include "CVectorf.h"
+//#include "CVectorf.h"
 #include "Globals.h"
 
 namespace MathHelper
@@ -13,9 +13,9 @@ namespace MathHelper
 	struct Matrix4
 	{
 		Matrix4(float m00, float m01, float m02, float m03,
-			float m10, float m11, float m12, float m13,
-			float m20, float m21, float m22, float m23,
-			float m30, float m31, float m32, float m33)
+						float m10, float m11, float m12, float m13,
+						float m20, float m21, float m22, float m23,
+						float m30, float m31, float m32, float m33)
 		{
 			m[0][0] = m00; m[0][1] = m01; m[0][2] = m02; m[0][3] = m03;
 			m[1][0] = m10; m[1][1] = m11; m[1][2] = m12; m[1][3] = m13;
@@ -29,9 +29,9 @@ namespace MathHelper
 	inline static Matrix4 IdentityMatrix()
 	{
 		return Matrix4(1.0f, 0.0f, 0.0f, 0.0f,
-            		   0.0f, 1.0f, 0.0f, 0.0f,
-			           0.0f, 0.0f, 1.0f, 0.0f,
-			           0.0f, 0.0f, 0.0f, 1.0f);
+									 0.0f, 1.0f, 0.0f, 0.0f,
+									 0.0f, 0.0f, 1.0f, 0.0f,
+									 0.0f, 0.0f, 0.0f, 1.0f);
 	}
 
 	// Rotate around Y
@@ -39,27 +39,15 @@ namespace MathHelper
 	{
 		float cosine = cosf(angleInRadians);
 		float sine = sinf(angleInRadians);
-		
-		return Matrix4(cosine, 0.0f, -sine,  0.0f,
-			           0.0f,   1.0f, 0.0f,   0.0f,
-			           sine,   0.0f, cosine, 0.0f,
-			           0.0f,   0.0f, 0.0f,   1.0f);
+
+		return Matrix4(cosine, 0.0f, -sine, 0.0f,
+									 0.0f, 1.0f, 0.0f, 0.0f,
+									 sine, 0.0f, cosine, 0.0f,
+									 0.0f, 0.0f, 0.0f, 1.0f);
 	}
 
 	// Rotate around Y + Translate
 	inline static Matrix4 ModelMatrix(float angleInRadians, CVector3 translation)
-	{
-		float cosine = cosf(angleInRadians);
-		float sine = sinf(angleInRadians);
-
-		// NOTE: Remember this needs to be a transpose of the rotation matrix
-		return Matrix4(cosine,             0.0f,               -sine,              0.0f,
-			           0.0f,               1.0f,               0.0f,               0.0f,
-			           sine,               0.0f,               cosine,             0.0f,
-			           translation.getX(), translation.getY(), translation.getZ(), 1.0f);
-	}
-
-	inline static Matrix4 ModelMatrix(float angleInRadians, CVector3f translation)
 	{
 		float cosine = cosf(angleInRadians);
 		float sine = sinf(angleInRadians);
@@ -70,6 +58,18 @@ namespace MathHelper
 									 sine, 0.0f, cosine, 0.0f,
 									 translation.getX(), translation.getY(), translation.getZ(), 1.0f);
 	}
+	/*
+	inline static Matrix4 ModelMatrix(float angleInRadians, CVector3f translation)
+	{
+		float cosine = cosf(angleInRadians);
+		float sine = sinf(angleInRadians);
+
+		// NOTE: Remember this needs to be a transpose of the rotation matrix
+		return Matrix4(cosine, 0.0f, -sine, 0.0f,
+									 0.0f, 1.0f, 0.0f, 0.0f,
+									 sine, 0.0f, cosine, 0.0f,
+									 translation.getX(), translation.getY(), translation.getZ(), 1.0f);
+	}*/
 
 	//
 	inline static Matrix4 Multiply(Matrix4 m1, Matrix4 m2)
@@ -97,10 +97,10 @@ namespace MathHelper
 		float inverseTranslateY = -(up.X      * camEyePos.X) - (up.Y      * camEyePos.Y) - (up.Z      * camEyePos.Z);
 		float inverseTranslateZ = -(forward.X * camEyePos.X) - (forward.Y * camEyePos.Y) - (forward.Z * camEyePos.Z);
 
-		return Matrix4(left.X,    left.Y,    left.Z,    inverseTranslateX,
-			           up.X,      up.Y,      up.Z,      inverseTranslateY,
-			           forward.X, forward.Y, forward.Z, inverseTranslateZ,
-			           0.0f,      0.0f,      0.0f,      1.0f);
+		return Matrix4(left.X, left.Y, left.Z, inverseTranslateX,
+									 up.X, up.Y, up.Z, inverseTranslateY,
+									 forward.X, forward.Y, forward.Z, inverseTranslateZ,
+									 0.0f, 0.0f, 0.0f, 1.0f);
 
 		// Transpose??
 	}
@@ -112,10 +112,10 @@ namespace MathHelper
 		// Camera Up is hardcoded to (0, 1, 0).
 		const float sqrt3over2 = 0.86603f;
 
-		return Matrix4(1.0f,  0.0f,      0.0f,           0.0f,
-			           0.0f, sqrt3over2, 0.5f,           0.0f,
-			           0.0f, -0.5f,      sqrt3over2,     0.0f,
-			           0.0f,  0.0f,     -cameraDistance, 1.0f);
+		return Matrix4(1.0f, 0.0f, 0.0f, 0.0f,
+									 0.0f, sqrt3over2, 0.5f, 0.0f,
+									 0.0f, -0.5f, sqrt3over2, 0.0f,
+									 0.0f, 0.0f, -cameraDistance, 1.0f);
 	}
 
 	inline static Matrix4 SimpleProjectionMatrix(float aspectRatio)
@@ -124,10 +124,10 @@ namespace MathHelper
 		// FoV is hardcoded to pi/3.
 		const float cotangent = 1 / tanf(3.14159f / 6.0f);
 
-		return Matrix4(cotangent / aspectRatio, 0.0f,      0.0f,                   0.0f,
-			           0.0f,                    cotangent, 0.0f,                   0.0f,
-			           0.0f,                    0.0f,     -50.0f / (50.0f - 1.0f), (-50.0f * 1.0f) / (50.0f - 1.0f),
-			           0.0f,                    0.0f,     -1.0f,                   0.0f);
+		return Matrix4(cotangent / aspectRatio, 0.0f, 0.0f, 0.0f,
+									 0.0f, cotangent, 0.0f, 0.0f,
+									 0.0f, 0.0f, -50.0f / (50.0f - 1.0f), (-50.0f * 1.0f) / (50.0f - 1.0f),
+									 0.0f, 0.0f, -1.0f, 0.0f);
 	}
 
 	inline static CVector3 RotateXY(CVector3 &Other, float angleInRadians)
@@ -137,12 +137,12 @@ namespace MathHelper
 
 
 		// Creamos la matrice de rotation Para el eje Z
-           Matrix4 RatationMatrixZ(cosine, -sine, 0.f, 0.f,
-								       					      	sine, cosine, 0.f, 0.f,
-												      	      	0.f, 0.f, 1.0f, 0.f,
-													            	0.f, 0.f, 0.f, 1.0f);
+		Matrix4 RatationMatrixZ(cosine, -sine, 0.f, 0.f,
+														sine, cosine, 0.f, 0.f,
+														0.f, 0.f, 1.0f, 0.f,
+														0.f, 0.f, 0.f, 1.0f);
 		// El producto punto Matrice * Vector para 
-	  for(int i = 0; i < 3;++i)
+		for (int i = 0; i < 3; ++i)
 		{
 			float temp = ((Other.X * RatationMatrixZ.m[i][0])
 										+ (Other.Y * RatationMatrixZ.m[i][1])
@@ -152,7 +152,8 @@ namespace MathHelper
 				Other.X = temp;
 			else if (i == 1)
 				Other.Y = temp;
-			else{
+			else
+			{
 				Other.Z = temp;
 			}
 
@@ -168,9 +169,9 @@ namespace MathHelper
 		float sine = sinf(angleInRadians);
 
 		const	Matrix4 RatationMatrixZ(cosine, 0.f, sine, 0.f,
-																		   0.f, 1.f, 0.f, 0.f,
-																		 -sine, 0.f, cosine, 0.f,
-																		   0.f, 0.f, 0.f, 1.0f);
+																	0.f, 1.f, 0.f, 0.f,
+																	-sine, 0.f, cosine, 0.f,
+																	0.f, 0.f, 0.f, 1.0f);
 	}
 
 

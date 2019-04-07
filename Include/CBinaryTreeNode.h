@@ -5,7 +5,7 @@
 using namespace std;
 
 /* Binary Tree Node Template Class */
-template <class T> 
+template <class T>
 class CBinaryTreeNode
 {
 private:
@@ -34,11 +34,11 @@ public:
 	bool insert(T * val);
 
 	// Recursively destroy the children nodes from this node
-	void destroyTree();	
+	void destroyTree();
 };
 
 /* */
-template <class T> 
+template <class T>
 CBinaryTreeNode<T>::CBinaryTreeNode(T * val) :
 	m_pData{ val },
 	m_leftNode{ NULL },
@@ -47,14 +47,14 @@ CBinaryTreeNode<T>::CBinaryTreeNode(T * val) :
 }
 
 /* */
-template <class T> 
+template <class T>
 CBinaryTreeNode<T>::~CBinaryTreeNode()
 {
 	destroyTree();
 }
 
 /* PostOrder recursive method to destroy the children nodes from this node */
-template <class T> 
+template <class T>
 void CBinaryTreeNode<T>::destroyTree()
 {
 	if (m_leftNode != NULL)
@@ -70,7 +70,7 @@ void CBinaryTreeNode<T>::destroyTree()
 		delete m_rightNode;
 		m_rightNode = NULL;
 	}
-	
+
 	// Delete data in the node
 	if (m_pData != NULL)
 	{
@@ -80,10 +80,11 @@ void CBinaryTreeNode<T>::destroyTree()
 }
 
 /* In-Order tree-traversal processes: LEFT CHILD, CURRENT NODE, RIGHT CHILD */
-template <class T>  
+template <class T>
 void CBinaryTreeNode<T>::inOrder(std::vector<T *>*pTreeDataPtrs)
 {
-	if (m_leftNode != NULL) {
+	if (m_leftNode != NULL)
+	{
 		m_leftNode->inOrder();
 	}
 
@@ -97,13 +98,14 @@ void CBinaryTreeNode<T>::inOrder(std::vector<T *>*pTreeDataPtrs)
 		pTreeDataPtrs->push_back(m_pData);
 	}
 
-	if (m_rightNode != NULL) {
+	if (m_rightNode != NULL)
+	{
 		m_rightNode->inOrder(pTreeDataPtrs);
 	}
 }
 
 /* Pre-Order tree-traversal processes: CURRENT NODE, LEFT CHILD, RIGHT CHILD */
-template <class T> 
+template <class T>
 void CBinaryTreeNode<T>::preOrder(std::vector<T *>*pTreeDataPtrs)
 {
 	// Class 'T' needs to override the "<<" operator
@@ -116,22 +118,26 @@ void CBinaryTreeNode<T>::preOrder(std::vector<T *>*pTreeDataPtrs)
 		pTreeDataPtrs->push_back(m_pData);
 	}
 
-	if (m_leftNode != NULL) {
+	if (m_leftNode != NULL)
+	{
 		m_leftNode->preOrder(pTreeDataPtrs);
 	}
-	if (m_rightNode != NULL) {
+	if (m_rightNode != NULL)
+	{
 		m_rightNode->preOrder(pTreeDataPtrs);
 	}
 }
 
 /* Post-Order tree-traversal processes: LEFT CHILD, RIGHT CHILD, CURRENT NODE */
-template <class T> 
+template <class T>
 void CBinaryTreeNode<T>::postOrder(std::vector<T *>*pTreeDataPtrs)
 {
-	if (m_leftNode != NULL) {
+	if (m_leftNode != NULL)
+	{
 		m_leftNode->postOrder(pTreeDataPtrs);
 	}
-	if (m_rightNode != NULL) {
+	if (m_rightNode != NULL)
+	{
 		m_rightNode->postOrder(pTreeDataPtrs);
 	}
 
@@ -147,7 +153,7 @@ void CBinaryTreeNode<T>::postOrder(std::vector<T *>*pTreeDataPtrs)
 }
 
 /* */
-template <class T> 
+template <class T>
 bool CBinaryTreeNode<T>::insert(T * pVal)
 {
 	bool inserted = false;
@@ -155,21 +161,27 @@ bool CBinaryTreeNode<T>::insert(T * pVal)
 	// IMPORTANT:
 	// Compare the pointed-to value, not the pointer itself, so the overloaded '<' operator is executed, otherwise 
 	// the new value won't be inserted in the correct position.
-	if (*pVal < *m_pData) {
-		if (m_leftNode == NULL) {
+	if (*pVal < *m_pData)
+	{
+		if (m_leftNode == NULL)
+		{
 			m_leftNode = new CBinaryTreeNode<T>(pVal);
 			inserted = true;
 		}
-		else {
+		else
+		{
 			inserted = m_leftNode->insert(pVal);
 		}
 	}
-	else if (*pVal > *m_pData) {
-		if (m_rightNode == NULL) {
+	else if (*pVal > *m_pData)
+	{
+		if (m_rightNode == NULL)
+		{
 			m_rightNode = new CBinaryTreeNode<T>(pVal);
 			inserted = true;
 		}
-		else {
+		else
+		{
 			inserted = m_rightNode->insert(pVal);
 		}
 	}

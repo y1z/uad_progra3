@@ -1,16 +1,28 @@
 #include "CGrid.h"
 
-CGrid::CGrid(COpenGLRenderer * ptr_renderer, CGameWindow * ptr_GameWindow, uint32_t HexCount, CAppHexgrid &HexGrid)
-	:m_Render(ptr_renderer),m_GameWindow(ptr_GameWindow),m_CountHexagon(HexCount)
+CGrid::CGrid(COpenGLRenderer * ptr_renderer, CGameWindow * ptr_GameWindow,
+						 uint32_t HexCount, CAppHexgrid *HexGrid)
+	:mptr_Render(ptr_renderer), mptr_GameWindow(ptr_GameWindow), m_CountHexagon(HexCount)
 {
-	m_hexGrid = &HexGrid;
+	mptr_hexGrid = HexGrid;
+	m_objectRotation = 0.1;
+}
+
+CGrid::CGrid()
+{
+	m_objectRotation = 0.1;
 }
 
 CGrid::~CGrid()
-{}
+{
+	delete m_Position;
+	mptr_hexGrid = nullptr;
+}
+
 /*!
-\todo finish inti and render 
+\todo add ability to load texture
 */
+
 bool CGrid::Init()
 {
 	std::wstring wresourceFilenameVS, wresourceFilenameFS, wresourceFilenameTexture;
@@ -31,7 +43,7 @@ bool CGrid::Init()
 		return false;
 	}
 
-	if (!m_Render->createShaderProgram(
+	if (!mptr_Render->createShaderProgram(
 		&m_ColorProgramID,
 		resourceFilenameVS.c_str(),
 		resourceFilenameFS.c_str()))
@@ -40,149 +52,244 @@ bool CGrid::Init()
 		return false;
 	}
 
-	CreatGrid();
-
+	CreateGrid();
 
 	return true;
 }
 
-/*if (m_GameWindow->create(CAPP_PROGRA3_GEOMETRIC_WINDOW_TITLE))
-	{
-		Init();
-
-		// Set initial clear screen color
-		m_Render->setClearScreenColor(0.25f, 0.0f, 0.75f);
-
-		// Initialize window width/height in the renderer
-		m_Render->setWindowWidth(m_GameWindow->getWidth());
-		m_Render->setWindowHeight(m_GameWindow->getHeight());
-
-		if (m_init)
-		{
-			m_Render->setWireframePolygonMode();
-
-			// Enter main loop
-			cout << "Entering Main loop" << endl;
-			m_GameWindow->mainLoop(this);
-		}
-	}
-	return true;*/
 
 bool CGrid::Start()
 {
-	if (m_GameWindow->create(CAPP_PROGRA3_GEOMETRIC_WINDOW_TITLE))
+	if (mptr_GameWindow->create("Hexagrid App"))
 	{
 		Init();
 
 		// Set initial clear screen color
-		m_Render->setClearScreenColor(0.25f, 0.0f, 0.75f);
+		mptr_Render->setClearScreenColor(0.25f, 0.0f, 0.75f);
 
 		// Initialize window width/height in the renderer
-		m_Render->setWindowWidth(m_GameWindow->getWidth());
-		m_Render->setWindowHeight(m_GameWindow->getHeight());
+		mptr_Render->setWindowWidth(mptr_GameWindow->getWidth());
+		mptr_Render->setWindowHeight(mptr_GameWindow->getHeight());
 
 		if (m_init)
 		{
-			m_Render->setWireframePolygonMode();
+			mptr_Render->setWireframePolygonMode();
 
 			// Enter main loop
 			cout << "Entering Main loop" << endl;
-			m_GameWindow->mainLoop(m_hexGrid);
+
+			mptr_GameWindow->mainLoop(mptr_hexGrid);
 		}
 	}
 	return true;
 }
 
 void CGrid::Render(){
-	// USE THIS 
-	/*			// Render pyramid in the first position, using the color shader
-			getOpenGLRenderer()->renderObject(
-				&m_colorModelShaderId,
-				&m_pyramidVertexArrayObject,
-				&noTexture,
-				m_numFacesPyramid,
-				color,
-				&modelMatrix,
-				COpenGLRenderer::EPRIMITIVE_MODE::TRIANGLES,
-				false
-			);*/
+
+	float Color[3] = { 0.5f,0.1f,0.5f };
+
+	double totalDegreesRotatedRadians = 0.0;
+
+	totalDegreesRotatedRadians = 0.2 * 3.1459 / 180.0;
+
+	CVector3 pos2(1, 1, 1);
+
+	MathHelper::Matrix4 modelMatrix = MathHelper::ModelMatrix((float)totalDegreesRotatedRadians, pos2);
+
+	//MathHelper::Matrix4 modelMatrix2 = MathHelper::ModelMatrix((float)totalDegreesRotatedRadians, pos2);
+
+	unsigned int noTexture = 0;
+
+	mptr_Render->renderObject(
+		&m_ColorProgramID,
+		&m_VertexArrayObjectID,
+		&noTexture,
+		m_hexGridFaces,
+		Color,
+		&modelMatrix,
+		COpenGLRenderer::EPRIMITIVE_MODE::TRIANGLES,
+		false
+	);
 }
 
-void CGrid::CreatGrid()
+void CGrid::CreateGrid()
 {
-	std::vector< CGridCell> Cells;
-	for(int i =0; i < m_CountHexagon; ++i)
+	// represents the individual hexagons 
+	std::vector<CGridCell> Cells;
+
+	for (int i = 0; i < m_CountHexagon; ++i)
 	{
-		Cells.emplace_back(CGridCell(1, 0, 0));
-	} 
+		Cells.emplace_back(CGridCell(1, -3, -2));
+	}
 
 	m_hexGridFaces = Cells.size() * 6;
 
+	// without this 'if' the hexagon will look like a line 
+	if (Cells.size() == 0)
+	{
+		Cells[0].CreateFlatTopHexagon();
+		Cells[0].PrintPositions();
+	}
+
 	// needs i to be equal to 1 
 	// position of the hexagons
+	/*When creating hexagon we used the position
+	of the last one's place to know where the next one
+	goes */
+
+	uint32_t CountToMoveUp = 0;
+	bool IsGoingUp = false;
+
 	for (int i = 1; i < m_CountHexagon; ++i)
 	{
-		Cells[i] = Cells[i - 1];
-		
-		if (i % 2 == 0)
+		if( CountToMoveUp > 0 && (CountToMoveUp % m_hexGridWidth == 0) )
 		{
-			Cells[i].MoveDownRight();
+			Cells[i] = Cells[i - m_hexGridWidth];
+			Cells[i].MoveUp();
+			Cells[i].PrintPositions();
+			IsGoingUp = false;
+		}
+		else if (i == 1)
+		{
+			Cells[0].SetZ(-2);
+			Cells[0].CreateFlatTopHexagon();
+			Cells[0].PrintPositions();
+			Cells[1] = Cells[0];
+			Cells[1].MoveUpRight();
+			Cells[1].PrintPositions();
+			CountToMoveUp++;
 		}
 		else
 		{
-			Cells[i].MoveUpRight();
-		}	
+			// copy position
+			Cells[i] = Cells[i - 1];
 
+			if (IsGoingUp== false)
+			{
+				Cells[i].MoveDownRight();
+				Cells[i].PrintPositions();
+				IsGoingUp = true;
+			}
+			else
+			{
+				Cells[i].MoveUpRight();
+				Cells[i].PrintPositions();
+				IsGoingUp = false;
+			}
+		}
+		CountToMoveUp++;
 	}
 
 	float *ptr_Vertices = nullptr;
-	float *ptr_FakeNormals =(float*)calloc(m_hexGridFaces, sizeof(float));
+	float *ptr_FakeNormals = (float*)calloc(m_hexGridFaces * 3, sizeof(float));
 	float *ptr_FakeUVCoords = (float*)calloc(Cells.size() * 6 * 2, sizeof(float));
+
+	// fake normal indices 
+	unsigned short *ptr_FakeNormalIndices = new unsigned short[m_hexGridFaces * 3];
+
+	void *ptr_ResetFakeNormalIndices = ptr_FakeNormalIndices;
+
+	for (size_t i = 0; i < m_hexGridFaces; i++)
+	{
+		(*ptr_FakeNormalIndices) = i;
+		ptr_FakeNormalIndices++;
+		(*ptr_FakeNormalIndices) = i;
+		ptr_FakeNormalIndices++;
+		(*ptr_FakeNormalIndices) = i;
+		ptr_FakeNormalIndices++;
+	}
+
+	// reset the pointer to initial position
+	ptr_FakeNormalIndices = static_cast<unsigned short*>(ptr_ResetFakeNormalIndices);
+
+	// get the vertices's
 	GetVertices(Cells, ptr_Vertices);
 
-	unsigned short *ptr_IndicesVerts = new unsigned short[Cells.size() * 6];
-	for (int i = 0; i < Cells.size() -1; ++i)
+	unsigned short *ptr_IndicesVerts = new unsigned short[Cells.size() * 7 * 3];
+	// used to restart 
+	void *ptr_ResetIndeces = ptr_IndicesVerts;
+
+	// Calculate vertices's
+	printf("Printing Indices's for hexGrid\n");
+	for (int i = 0; i < Cells.size(); ++i)
 	{
-		for(int j = 0; j < 6; ++j)
+
+		for (int j = 0; j < 6; ++j)
 		{
 			if (j != 5)
 			{
-				(*ptr_IndicesVerts) = i * 18;
+				(*ptr_IndicesVerts) = i * 7;
+				std::cout << '<' << *ptr_IndicesVerts << ',';
 				ptr_IndicesVerts++;
-				(*ptr_IndicesVerts) = (i + 1 + j) * 18;
+				(*ptr_IndicesVerts) = (i * 7) + 1 + j;
+				std::cout << *ptr_IndicesVerts << ",";
 				ptr_IndicesVerts++;
-				(*ptr_IndicesVerts) = (i + 2 + j) * 18;
+				(*ptr_IndicesVerts) = (i * 7) + 2 + j;
+				std::cout << *ptr_IndicesVerts << ">\n ";
 				ptr_IndicesVerts++;
 			}
-			else{
-				(*ptr_IndicesVerts) = i * 18;
+			else
+			{
+				(*ptr_IndicesVerts) = i * 7;
+				std::cout << '<' << *ptr_IndicesVerts << ',';
 				ptr_IndicesVerts++;
-
+				(*ptr_IndicesVerts) = (i * 7) + 6;
+				std::cout << *ptr_IndicesVerts << ",";
+				ptr_IndicesVerts++;
+				(*ptr_IndicesVerts) = (i * 7) + 1;
+				std::cout << *ptr_IndicesVerts <<">\n";
+				ptr_IndicesVerts++;
 			}
-
 		}
 	}
 
-//m_Render->allocateGraphicsMemoryForObject(m_ColorProgramID, m_VertexArrayObjectID)
+	ptr_IndicesVerts = static_cast<unsigned short*>(ptr_ResetIndeces);
 
+	bool Continue = mptr_Render->allocateGraphicsMemoryForObject(&m_ColorProgramID,
+																															 &m_VertexArrayObjectID,
+																															 ptr_Vertices, (Cells.size() * 7 *3 ) / 3,
+																															 ptr_FakeNormals, (Cells.size() * 6),
+																															 ptr_FakeUVCoords, (Cells.size() * 7),
+																															 ptr_IndicesVerts, m_hexGridFaces,//cuantas caras hay 
+																															 ptr_FakeNormalIndices, m_hexGridFaces * 3,
+																															 ptr_IndicesVerts, (Cells.size() * 7  * 3) / 3);
+
+	if (!Continue)
+	{
+		m_hexGridFaces = 0;
+
+		if (m_VertexArrayObjectID > 0)
+		{
+			mptr_Render->freeGraphicsMemoryForObject(&m_VertexArrayObjectID);
+			m_VertexArrayObjectID = 0;
+		}
+	}
 
 	if (ptr_Vertices != nullptr)
+	{
 		delete[]ptr_Vertices;
+	}
+	if (ptr_FakeNormalIndices != nullptr)
+		delete[]ptr_FakeNormalIndices;
 	if (ptr_FakeNormals != nullptr)
 		free(ptr_FakeNormals);
 	if (ptr_FakeUVCoords != nullptr)
 		free(ptr_FakeUVCoords);
 	if (ptr_IndicesVerts != nullptr)
 		delete[]ptr_IndicesVerts;
+
+	ptr_ResetFakeNormalIndices = nullptr;
+	ptr_ResetIndeces = nullptr;
 }
+
 
 void CGrid::GetVertices(std::vector<CGridCell>& Vec, float *& ptr_Out)
 {
 	ptr_Out = new float[Vec.size() * 7 * 3];
-	
-	for (size_t i = 0; i < Vec.size() - 1; i++)
+
+	for (size_t i = 0; i < Vec.size(); i++)
 	{
-	 Vec[i].TransferValue(ptr_Out,i);
+		Vec[i].TrasnferVertices(ptr_Out, i);
 	}
 
 }

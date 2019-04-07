@@ -25,7 +25,7 @@ public:
 	const char * const getLabel() const { return m_Label; }
 
 	// Get menu location
-	void getLocation(float *x, float *y ) const ;
+	void getLocation(float *x, float *y) const;
 
 	// Get menu color
 	const CColor * const getColor() const { return (m_Selected ? &m_selectedColor : &m_unselectedColor); }

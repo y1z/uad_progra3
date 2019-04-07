@@ -6,7 +6,7 @@
 using namespace std;
 
 /* Binary Tree Template Class */
-template <class T> 
+template <class T>
 class CBinaryTree
 {
 public:
@@ -53,13 +53,13 @@ public:
 /* */
 template <class T >
 CBinaryTree<T>::CBinaryTree() :
-	m_rootNode{NULL}
+	m_rootNode{ NULL }
 {
 	cout << "CBinaryTree() Constructor" << endl;
 }
 
 /* */
-template <class T> 
+template <class T>
 CBinaryTree<T>::~CBinaryTree()
 {
 	cout << "CBinaryTree() Destructor" << endl;
@@ -79,44 +79,49 @@ void CBinaryTree<T>::clearTree()
 }
 
 /* Standard InOrder Binary Tree Traversal */
-template <class T>  
+template <class T>
 void CBinaryTree<T>::inOrder(std::vector<T *>*pTreeDataPtrs)
 {
-	if (m_rootNode != NULL) {
+	if (m_rootNode != NULL)
+	{
 		m_rootNode->inOrder(pTreeDataPtrs);
 	}
 }
 
 /* Standard PreOrder Binary Tree Traversal */
-template <class T > 
+template <class T >
 void CBinaryTree<T>::preOrder(std::vector<T *>*pTreeDataPtrs)
 {
-	if (m_rootNode != NULL) {
+	if (m_rootNode != NULL)
+	{
 		m_rootNode->preOrder(pTreeDataPtrs);
 	}
 }
 
 /* Standard PostOrder Binary Tree Traversal */
-template <class T>  
+template <class T>
 void CBinaryTree<T>::postOrder(std::vector<T *>*pTreeDataPtrs)
 {
-	if (m_rootNode != NULL) {
+	if (m_rootNode != NULL)
+	{
 		m_rootNode->postOrder(pTreeDataPtrs);
 	}
 }
 
 /* Insert a new value in the tree */
-template <class T>  
+template <class T>
 bool CBinaryTree<T>::insert(T * val)
 {
 	bool inserted = false;
 
-	if (m_rootNode == NULL) {
+	if (m_rootNode == NULL)
+	{
 		CBinaryTreeNode<T> *newNode = new CBinaryTreeNode<T>(val);
 		m_rootNode = newNode;
 		inserted = true;
 	}
-	else {
+	else
+	{
 		inserted = m_rootNode->insert(val);
 	}
 

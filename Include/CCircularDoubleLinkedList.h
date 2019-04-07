@@ -47,7 +47,7 @@ CCircularDoubleLinkedList<T>::~CCircularDoubleLinkedList()
 {
 	cout << "Destructor: CCircularDoubleLinkedList()" << endl;
 
-	if (m_FirstNode != NULL) 
+	if (m_FirstNode != NULL)
 	{
 		// Free all CCircularDoubleLinkedListNode<T> nodes
 		CCircularDoubleLinkedListNode<T> *aux = m_FirstNode->getNext();

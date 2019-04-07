@@ -29,7 +29,8 @@ extern "C" {
 	//    glCreateProgram()) on success, or zero on failure. 
 	//
 
-	typedef struct {
+	typedef struct
+	{
 		GLenum       type;
 		const char*  filename;
 		GLuint       shader;

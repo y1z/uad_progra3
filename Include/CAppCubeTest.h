@@ -5,18 +5,19 @@
 
 #include "Globals.h"
 #include "CApp.h"
-//#include "CVector3.h"
-#include "CVectorf.h"
+#include "CVector3.h"
+//#include "CVectorf.h" // this dll was giving me errors
+
 /* ******************************************************************************************************************************************
  * This class shows an example of how to display two cubes on screen, one of them has a texture, and the other one has colours only
- * Each of these cubes is rendered using a diferent Shader. 
+ * Each of these cubes is rendered using a diferent Shader.
  * The OpenGL renderer has a helper method to create the geometry for the cube, but it can be done manually (see CAppGeometricShapes).
- * Displaying more than one of those objects in screen can be achieved by making two render calls, using different positions, but 
+ * Displaying more than one of those objects in screen can be achieved by making two render calls, using different positions, but
  * using the same graphics memory reference of the cube.
  * ******************************************************************************************************************************************/
 
-// Class that inherits from Base class CApp
-// Base class CApp has members for: CGameWindow, CGameMenu, and COpenGLRenderer, which we can access through the public/protected methods
+ // Class that inherits from Base class CApp
+ // Base class CApp has members for: CGameWindow, CGameMenu, and COpenGLRenderer, which we can access through the public/protected methods
 class CAppCubeTest : public CApp
 {
 private:
@@ -34,10 +35,10 @@ private:
 	double m_rotationSpeed;
 
 	// Current object position
-	CVector3f m_objectPosition;
+	CVector3 m_objectPosition;
 
 	// -----------------------------------------------------------------
-	
+
 	// Texture object ID for textured cube
 	unsigned int m_texturedCubeTextureID;
 

@@ -17,7 +17,7 @@ public:
 	~CVector3();
 
 	CVector3& operator=(const CVector3 &other);
-	
+
 	CVector3 operator+(const CVector3 & other);
 	CVector3& operator+=(const CVector3 &other);
 
@@ -26,7 +26,7 @@ public:
 
 	CVector3 cross(const CVector3 & other);
 	float dot(const CVector3 & other);
-	
+
 	void setValues(float _x, float _y, float _z);
 	void setValues(float *values);
 	float getX() const { return X; }
@@ -35,6 +35,7 @@ public:
 	void getValues(float *values) const { values[0] = X; values[1] = Y; values[2] = Z; }
 	void normalize();
 	float magnitude();
+	void PrintPositions();
 
 	inline static CVector3 ZeroVector()
 	{

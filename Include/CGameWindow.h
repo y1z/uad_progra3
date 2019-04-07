@@ -26,7 +26,7 @@ using namespace std;
 class CGameWindow
 {
 public:
-	static const int DEFAULT_WINDOW_WIDTH  = 800;
+	static const int DEFAULT_WINDOW_WIDTH = 800;
 	static const int DEFAULT_WINDOW_HEIGHT = 600;
 
 private:
@@ -39,7 +39,7 @@ private:
 	double       m_CursorPosX;
 	double       m_CursorPosY;
 
-	                                       // Generic variables for F1..F12 keys, CApp derived class decides what to do for F2..F11
+	// Generic variables for F1..F12 keys, CApp derived class decides what to do for F2..F11
 	static bool requestF1;                 // F1 always toggles the menu on/off
 	static bool requestF2;                 // 
 	static bool requestF3;                 // 
@@ -53,7 +53,7 @@ private:
 	static bool requestF11;                //
 	static bool requestF12;                // F12 always exits the application
 
-	                                       // Specific keys for the actions of the menu
+																				 // Specific keys for the actions of the menu
 	static bool requestExecuteAction;      // Enter
 	static bool requestSelectNextMenuItem; // Select next menu item
 	static bool requestSelectPrevMenuItem; // Select previous menu item
@@ -100,7 +100,7 @@ public:
 	void requestWindowClose();
 
 	// Is GLFW framework initialized?
-	inline bool isLibraryInitialized() const { return m_InitializedGLFW; } 
+	inline bool isLibraryInitialized() const { return m_InitializedGLFW; }
 
 
 	// Getters for window dimensions

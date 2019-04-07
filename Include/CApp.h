@@ -26,7 +26,7 @@ private:
 	COpenGLRenderer *m_OpenGLRenderer; // Pointer to our OpenGL renderer object
 	bool m_Paused;                     // Is the app paused?  (i,e: window minimized)
 	bool isWindowInitialized() const;  // Is the CGameWindow object initialized ?
-	
+
 protected:
 	CGameWindow     * const getGameWindow()     const { return m_Window; }
 	CGameMenu       * const getMenu()           const { return m_Menu; }
@@ -73,7 +73,7 @@ public:
 	//        and the derived class MUST override these methods
 	virtual void initialize() = 0;
 	virtual void update(double delta_time) = 0;
-	virtual void run()    = 0;
+	virtual void run() = 0;
 	virtual void render() = 0;
 
 protected:

@@ -58,7 +58,7 @@ public:
 
 	// Get the number of the selected menu item
 	int getSelectedMenuItemNumber() const;
-	
+
 	// Select next/prev menu item
 	void selectMenuItem(bool next);
 
